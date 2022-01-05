@@ -73,7 +73,7 @@ Whether to use prefix vs subfolders
             value = 1
             validateRange = 1,2
         }
-        mdFileNameAndFolderNameMaxLength = @{
+        muFileNameAndFolderNameMaxLength = @{
             description = @'
 Specify a value between 32 and 255 as the maximum length of markdown file names, and their folder names (only when using subfolders for subpages (e.g. Page\Subpage.md)). File and folder names with length exceeding this value will be truncated accordingly.
 NOTE: If you are using prefixes for subpages (e.g. Page_Subpage.md), it is recommended to set this to at 100 or more.

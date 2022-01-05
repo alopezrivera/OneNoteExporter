@@ -219,7 +219,7 @@ Function New-SectionGroupConversionConfig {
                             if ($recurrence -gt 0) {
                                 $filePathRel = "$filePathRel-$recurrence"
                             }
-                            $filePathRel | Truncate-PathFileName -Length $config['mdFileNameAndFolderNameMaxLength']['value'] # Truncate to no more than 255 characters so we don't hit the folder name limit on most file systems on Windows / Linux
+                            $filePathRel | Truncate-PathFileName -Length $config['muFileNameAndFolderNameMaxLength']['value'] # Truncate to no more than 255 characters so we don't hit the folder name limit on most file systems on Windows / Linux
                         }
                         $pageCfg['filePathRelUnderscore'] = $pageCfg['filePathRel'].Replace( [io.path]::DirectorySeparatorChar, '_' )
                         $pageCfg['filePathNormal'] = & {
@@ -236,7 +236,7 @@ Function New-SectionGroupConversionConfig {
                                 [io.path]::combine( $cfg['notesDirectory'], $sectionCfg['nameCompat'], "$( $pageCfg['filePathRel'] )" )
                             }
 
-                            "$( $pathWithoutExtension | Truncate-PathFileName -Length ($config['mdFileNameAndFolderNameMaxLength']['value'] - 3) ).$($extension)" # Truncate to no more than 255 characters so we don't hit the file name limit on Windows / Linux
+                            "$( $pathWithoutExtension | Truncate-PathFileName -Length ($config['muFileNameAndFolderNameMaxLength']['value'] - 3) ).$($extension)" # Truncate to no more than 255 characters so we don't hit the file name limit on Windows / Linux
                         }
                         $pageCfg['filePathLong'] = "\\?\$( $pageCfg['filePathNormal'] )" # A non-Win32 path. Prefixing with '\\?\' allows Windows Powershell <= 5 (based on Win32) to support long absolute paths.
                         $pageCfg['filePath'] = if ($PSVersionTable.PSVersion.Major -le 5) {
@@ -249,7 +249,7 @@ Function New-SectionGroupConversionConfig {
                         $pageCfg['fileExtension'] = if ($pageCfg['filePathNormal'] -match '(\.[^.]+)$') { $matches[1] } else { '' }
                         $pageCfg['fileBaseName'] = $pageCfg['fileName'] -replace "$( [regex]::Escape($pageCfg['fileExtension']) )$", ''
                         $pageCfg['pdfExportFilePathTmp'] = [io.path]::combine( (Split-Path $pageCfg['filePath'] -Parent ), "$( $pageCfg['id'] )-$( $pageCfg['lastModifiedTimeEpoch'] ).pdf" ) # Publishing a .pdf seems to be limited to 204 characters. So we will export the .pdf to a unique file name, then rename it to the actual name
-                        $pageCfg['pdfExportFilePath'] = if ( ($pageCfg['fileName'].Length + ('.pdf'.Length - '.$($extension)'.Length)) -le $config['mdFileNameAndFolderNameMaxLength']['value']) {
+                        $pageCfg['pdfExportFilePath'] = if ( ($pageCfg['fileName'].Length + ('.pdf'.Length - '.$($extension)'.Length)) -le $config['muFileNameAndFolderNameMaxLength']['value']) {
                             $pageCfg['filePath'] -replace '\.$($extension)$', '.pdf'
                         }else {
                             $pageCfg['filePath'] -replace '.\.$($extension)$', '.pdf' # Trim 1 character in the basename when replacing the extension

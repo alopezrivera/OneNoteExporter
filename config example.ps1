@@ -33,14 +33,14 @@ $keepdocx = 1
 $docxNamingConvention = 1
 
 # Whether to use prefix vs subfolders
-# 1: Create folders for subpages (e.g. Page\Subpage.md) - Default
-# 2: Add prefixes for subpages (e.g. Page_Subpage.md)
+# 1: Create folders for subpages (e.g. Page\Subpage.<ext>) - Default
+# 2: Add prefixes for subpages (e.g. Page_Subpage.<ext>)
 $prefixFolders = 1
 
-# Specify a value between 32 and 255 as the maximum length of markdown file names, and their folder names (only when using subfolders for subpages (e.g. Page\Subpage.md)). File and folder names with length exceeding this value will be truncated accordingly.
-# NOTE: If you are using prefixes for subpages (e.g. Page_Subpage.md), it is recommended to set this to at 100 or more.
+# Specify a value between 32 and 255 as the maximum length of markdown file names, and their folder names (only when using subfolders for subpages (e.g. Page\Subpage.<ext>)). File and folder names with length exceeding this value will be truncated accordingly.
+# NOTE: If you are using prefixes for subpages (e.g. Page_Subpage.<ext>), it is recommended to set this to at 100 or more.
 # Default: 32
-$mdFileNameAndFolderNameMaxLength = 32
+$muFileNameAndFolderNameMaxLength = 32
 
 # Whether to store media in single or multiple folders
 # 1: Images stored in single 'media' folder at Notebook-level - Default
@@ -69,7 +69,7 @@ $headerTimestampEnabled = 1
 # 2: Keep double spaces
 $keepspaces = 1
 
-# Whether to clear escape symbols from md files. See: https://pandoc.org/MANUAL.html#backslash-escapes
+# Whether to clear escape symbols from markup files. See: https://pandoc.org/MANUAL.html#backslash-escapes
 # 1: Clear all '\' characters  - Default
 # 2: Clear all '\' characters except those preceding alphanumeric characters
 # 3: Keep '\' symbol escape
