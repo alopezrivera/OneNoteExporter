@@ -201,6 +201,9 @@ Function New-SectionGroupConversionConfig {
                         #   File or directory name:
                         #   - Max 255 characters long for file or folder names
                         # See: https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file?redirectedfrom=MSDN#maxpath
+                        
+                        # Get markup file extension
+                        $extension = Get-MarkupExtension $pageCfg
 
                         # Normalize the final markup file path. Page names can be very long, and can exceed the max absolute path length, or max file or folder name on a Windows system.
                         $pageCfg['filePathRel'] = & {
@@ -232,25 +235,8 @@ Function New-SectionGroupConversionConfig {
                             {
                                 [io.path]::combine( $cfg['notesDirectory'], $sectionCfg['nameCompat'], "$( $pageCfg['filePathRel'] )" )
                             }
-                            
-                            $extension = Get-MarkupExtension $pageCfg
 
-                            Write-Host "------------------"
-                            Write-Host $extension
-                            Write-Host "------------------"
-
-                            # Set extension to that of desired markup format
-                            # if ()
-                            # {
-                                
-                            # }
-                            # # If note hierarchy is to be turned into a directory structure:
-                            # else 
-                            # {
-                                
-                            # }
-
-                            "$( $pathWithoutExtension | Truncate-PathFileName -Length ($config['mdFileNameAndFolderNameMaxLength']['value'] - 3) ).md" # Truncate to no more than 255 characters so we don't hit the file name limit on Windows / Linux
+                            "$( $pathWithoutExtension | Truncate-PathFileName -Length ($config['mdFileNameAndFolderNameMaxLength']['value'] - 3) ).$($extension)" # Truncate to no more than 255 characters so we don't hit the file name limit on Windows / Linux
                         }
                         $pageCfg['filePathLong'] = "\\?\$( $pageCfg['filePathNormal'] )" # A non-Win32 path. Prefixing with '\\?\' allows Windows Powershell <= 5 (based on Win32) to support long absolute paths.
                         $pageCfg['filePath'] = if ($PSVersionTable.PSVersion.Major -le 5) {
@@ -263,10 +249,10 @@ Function New-SectionGroupConversionConfig {
                         $pageCfg['fileExtension'] = if ($pageCfg['filePathNormal'] -match '(\.[^.]+)$') { $matches[1] } else { '' }
                         $pageCfg['fileBaseName'] = $pageCfg['fileName'] -replace "$( [regex]::Escape($pageCfg['fileExtension']) )$", ''
                         $pageCfg['pdfExportFilePathTmp'] = [io.path]::combine( (Split-Path $pageCfg['filePath'] -Parent ), "$( $pageCfg['id'] )-$( $pageCfg['lastModifiedTimeEpoch'] ).pdf" ) # Publishing a .pdf seems to be limited to 204 characters. So we will export the .pdf to a unique file name, then rename it to the actual name
-                        $pageCfg['pdfExportFilePath'] = if ( ($pageCfg['fileName'].Length + ('.pdf'.Length - '.md'.Length)) -le $config['mdFileNameAndFolderNameMaxLength']['value']) {
-                            $pageCfg['filePath'] -replace '\.md$', '.pdf'
+                        $pageCfg['pdfExportFilePath'] = if ( ($pageCfg['fileName'].Length + ('.pdf'.Length - '.$($extension)'.Length)) -le $config['mdFileNameAndFolderNameMaxLength']['value']) {
+                            $pageCfg['filePath'] -replace '\.$($extension)$', '.pdf'
                         }else {
-                            $pageCfg['filePath'] -replace '.\.md$', '.pdf' # Trim 1 character in the basename when replacing the extension
+                            $pageCfg['filePath'] -replace '.\.$($extension)$', '.pdf' # Trim 1 character in the basename when replacing the extension
                         }
                         $pageCfg['levelsPrefix'] = if ($config['medialocation']['value'] -eq 2) {
                             ''
