@@ -1,0 +1,6 @@
+/.*
+!/.github
+!/.gitignore
+!/.vscode
+
+config.ps1

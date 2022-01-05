@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Macro id="M0D1B2BE7FDE14370B153CFA6BE67352B" name="Expand all Paragraphs in Notebook" category="Pages" description="Expands all Paragraphs on All Levels in each Page in the Notebook" version="24">
+  <Metadata lastModifiedDate="2020-07-15T19:51:06.000Z" />
+  <Comment text="----------------------------------------------------------------------------------" />
+  <Comment text="Expand all paragraphs in Notebook" />
+  <Comment text="----------------------------------------------------------------------------------" />
+  <ForEach var="Page">
+    <Array>QueryObjects("Page", GetCurrentNotebook())</Array>
+    <If>
+      <Condition>!$Page.isInRecycleBin &amp;&amp; !$Page.isCollapsed</Condition>
+      <ForEach var="Paragraph">
+        <Array>QueryObjects("Paragraph", $Page)</Array>
+        <If>
+          <Condition>$Paragraph.collapsed = true</Condition>
+          <Expression>$Paragraph.collapsed = false</Expression>
+        </If>
+      </ForEach>
+    </If>
+  </ForEach>
+</Macro>
