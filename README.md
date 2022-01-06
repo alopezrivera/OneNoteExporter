@@ -1,6 +1,6 @@
 # OneWayOut (`owo`)
 
-Transform all your OneNote notes into Emacs Org Mode, or any other [Pandoc-supported markup](https://pandoc.org/), using the OneNote Object Model and Pandoc. Say farewell to OneNote or back up your notes, in plain text [tailored for you](#introduction).
+Transform all your OneNote notes into Emacs Org Mode, or any other [Pandoc-supported Markdown](https://pandoc.org/), using the OneNote Object Model and Pandoc. Say farewell to OneNote or back up your notes, in plain text [tailored for you](#introduction).
 
 OneWayOut is built on the foundation of [ConvertOneNote2Markdown](https://github.com/theohbrothers/ConvertOneNote2Markdown), by
 
@@ -28,7 +28,7 @@ OneWayOut is built on the foundation of [ConvertOneNote2Markdown](https://github
 
 ## Introduction
 
-OneWayOut exports OneNote pages to Word using the OneNote Object Model, and uses Pandoc to convert them to your markup format of choice. [*Markup Packs*](https://github.com/alopezrivera/on2org/tree/master/src/Configuration/Markup-Packs) are then used to customize the result. These are **functions** returning sets of search and replace routines, which act on the text output by Pandoc to tailor it to our desires. Markup Packs allow fine-grained customization of all elements in your notes, such as:
+OneWayOut exports OneNote pages to Word using the OneNote Object Model, and uses Pandoc to convert them to your markup format of choice. [**Markup Packs**](https://github.com/alopezrivera/owo/tree/master/src/Conversion/Markup-Packs) are then used to customize the result. Markup Packs are *markup-format-specific* **functions** containing search and replace queries executed at runtime against the text output by Pandoc to tailor it to our desires. Markup Packs allow fine-grained customization of all elements in your notes, such as:
 
 * Headers
 * Metadata
