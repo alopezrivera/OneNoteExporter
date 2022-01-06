@@ -2,7 +2,7 @@
 
 Transform all your OneNote notes into Emacs Org Mode, or any other [Pandoc-supported markup](https://pandoc.org/), using the OneNote Object Model and Pandoc. Say farewell to OneNote or back up your notes, in plain text [tailored for you](#introduction).
 
-**owo** is built on the foundation of [ConvertOneNote2Markdown](https://github.com/theohbrothers/ConvertOneNote2Markdown), by
+OneWayOut is built on the foundation of [ConvertOneNote2Markdown](https://github.com/theohbrothers/ConvertOneNote2Markdown), by
 
 * [SjoerdV](https://github.com/SjoerdV)
 * [nixsee](https://github.com/nixsee/)
@@ -28,17 +28,17 @@ Transform all your OneNote notes into Emacs Org Mode, or any other [Pandoc-suppo
 
 ## Introduction
 
-**owo** exports OneNote pages to Word using the OneNote Object Model, and uses Pandoc to convert them to your markup format of choice. [*Markup Packs*](https://github.com/alopezrivera/on2org/tree/master/src/Configuration/Markup-Packs) are then used to customize the result. These are **functions** returning sets of search and replace routines, which act on the text output by Pandoc to tailor it to our desires. Markup Packs allow fine-grained customization of all elements in your notes, such as:
+OneWayOut exports OneNote pages to Word using the OneNote Object Model, and uses Pandoc to convert them to your markup format of choice. [*Markup Packs*](https://github.com/alopezrivera/on2org/tree/master/src/Configuration/Markup-Packs) are then used to customize the result. These are **functions** returning sets of search and replace routines, which act on the text output by Pandoc to tailor it to our desires. Markup Packs allow fine-grained customization of all elements in your notes, such as:
 
 * Headers
 * Metadata
 * Other markup elements such as hrules, and anything else you may be able to do with the text in your notes
 
-**owo** currently ships Markup Packs for [Emacs Org Mode](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Org.psm1) (`OrgPack1`) and [Markdown](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Markdown.psm1) (`MarkDownPack1`).
+OneWayOut currently ships Markup Packs for [Emacs Org Mode](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Org.psm1) (`OrgPack1`) and [Markdown](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Markdown.psm1) (`MarkDownPack1`).
 
 ### Customizing output and adding support for further export formats
 
-As long as Pandoc supports your desired output format, all **owo** needs to shine is a Markup Pack to tailor the output to your tastes. [CONTRIBUTING.md](https://github.com/alopezrivera/owo/blob/master/CONTRIBUTING.md) has the pointers you need to write your own Markup Packs, and more.
+As long as Pandoc supports your desired output format, all OneWayOut needs to shine is a Markup Pack to tailor the output to your tastes. [CONTRIBUTING.md](https://github.com/alopezrivera/owo/blob/master/CONTRIBUTING.md) has the pointers you need to write your own Markup Packs, and more.
 
 ## Results
 
