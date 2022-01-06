@@ -47,16 +47,25 @@ $muFileNameAndFolderNameMaxLength = 255
 # 2: Separate 'media' folder for each folder in the hierarchy
 $medialocation = 1
 
-# Specify Pandoc output format and optional extensions in the format: <format><+extension><-extension>. See: https://pandoc.org/MANUAL.html#options
+# Specify Pandoc output format and optional extensions in the format
+#
+#   <format><+extension><-extension>. 
+#
+# See: https://pandoc.org/MANUAL.html#options
+#
 # Examples:
-#   org
+#
+#   org-simple_tables-multiline_tables-grid_tables+pipe_tables
 #   markdown-simple_tables-multiline_tables-grid_tables+pipe_tables
+#
 #   commonmark+pipe_tables
 #   gfm+pipe_tables
 #   markdown_mmd-simple_tables-multiline_tables-grid_tables+pipe_tables
 #   markdown_phpextra-simple_tables-multiline_tables-grid_tables+pipe_tables
 #   markdown_strict+simple_tables-multiline_tables-grid_tables+pipe_tables
-$conversion = 'org'
+# Recommended:
+#   <markup>-simple_tables-multiline_tables-grid_tables+pipe_tables
+$conversion = 'org-simple_tables-multiline_tables-grid_tables+pipe_tables'
 
 # Specify a custom Markup Pack to override default
 $markupPack = 'none'
