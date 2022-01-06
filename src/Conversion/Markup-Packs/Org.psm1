@@ -70,11 +70,11 @@ Function OrgPack1
             replacements = @(
                 @{
                     searchRegex = '(?<=\n[0-9]+. .*?)(\n)(?=\n-)'
-                    replacement = '\n\n'
+                    replacement = "`n`n"
                 }
                 @{
                     searchRegex = '(?<=\n- .*?)(\n)(?=\n[0-9]+.)'
-                    replacement = '\n\n'
+                    replacement = "`n`n"
                 }
             )
         }
