@@ -15,7 +15,7 @@ Function OrgPack1
         $pageCfg
     )
 
-    # Markup output formatting using search and replace queries against a string containing the entire markdown content.
+    # Markup output formatting using search and replace queries against a string containing the entire markup content.
 
     $markupPack = @(
         foreach ($attachmentCfg in $pageCfg['insertedAttachments']) {
