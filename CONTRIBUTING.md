@@ -68,7 +68,7 @@ Currently, any Pandoc-supported markup with `markdown` or `org` in its Pandoc na
 If your export format of choice does not fall in this category, you may easily add support for it. To do so, follow these steps:
 
 1. Edit `src/Conversion/Conversion-Markup.psm1`
-   1. Add the new Markup format to the Markup extension hashtable in `Get-MarkupExtension`
+   * Add the new Markup format to the Markup extension hashtable in `Get-MarkupExtension`
       * KEY: Pandoc name of the new Markup format (eg: `markdown` in the case of `markdown` or `markdown_phpextra`)
       * VAL: File extension of the new Markup format
 1. Optionally, write a Markup Pack for the new format
