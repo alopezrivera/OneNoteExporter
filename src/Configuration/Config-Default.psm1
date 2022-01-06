@@ -109,6 +109,13 @@ Default:
             default = 'markdown-simple_tables-multiline_tables-grid_tables+pipe_tables'
             value = 'markdown-simple_tables-multiline_tables-grid_tables+pipe_tables'
         }
+        markupPack = @{
+            description = @'
+Specify a custom Markup Pack to override default
+'@
+            default = 'none'
+            value = 'none'
+        }
         headerTimestampEnabled = @{
             description = @'
 Whether to include page timestamp and separator at top of document
@@ -163,4 +170,5 @@ Whether to include a PDF export alongside the markdown file
     }
 
     $config
+    
 }
