@@ -75,6 +75,15 @@ Function MarkdownPack1
                         searchRegex = [regex]::Escape([char]0x00A0)
                         replacement = ''
                     }
+                    # Replace multiple spaces after list items
+                    @{
+                        searchRegex = '\n- \s*'
+                        replacement = "`n- "
+                    }
+                    @{
+                        searchRegex = '\n[0-9]+. \s*'
+                        replacement = "`n1. "             # Take chance to replace numbered list indices for '1.'
+                    }
                     # Remove double newlines before unnumbered list items
                     @{
                         searchRegex = '(?<=\n- .*?)(\n)(?=\n-)'
