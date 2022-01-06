@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0
 
-Import-Module -DisableNameChecking .\src\Conversion\Markup-Packs\Markdown.psm1
+# Import Markup Pack utilities
+Import-Module .\src\Conversion\Conversion-Markup.psm1
 
 Function Set-ContentNoBom {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true,Position = 0,ValueFromPipeline = $true,ValueFromPipelineByPropertyName = $true)]
+        [Parameter(Mandatory = $true,Position = 0, ValueFromPipeline = $true,ValueFromPipelineByPropertyName = $true)]
         [AllowEmptyString()]
         [string]
         $LiteralPath
@@ -19,7 +20,7 @@ Function Set-ContentNoBom {
         if ($PSVersionTable.PSVersion.Major -le 5) {
             try {
                 $content = $Value -join ''
-                [IO.File]::WriteAllLines($LiteralPath, $content)
+                [IO.File]::WriteAllText($LiteralPath, $content)
             }catch {
                 if ($ErrorActionPreference -eq 'Stop') {
                     throw
@@ -41,7 +42,7 @@ Function Convert-OneNotePage {
         [object]
         $OneNoteConnection
     ,
-        # ConvertOneNote2MarkDown configuration object
+        # OneUp configuration object
         [Parameter(Mandatory)]
         [object]
         $Config
@@ -137,7 +138,7 @@ Function Convert-OneNotePage {
                 # Start-Process has no way of capturing stderr / stdterr to variables, so we need to use temp files.
                 "Converting docx file to markup file: $( $pageCfg['filePath'] )" | Write-Verbose
                 if ($config['dryRun']['value'] -eq 1) {
-                    $argumentList = @( '-f', 'docx', 
+                    $argumentList = @( '-f', 'docx',
                                        '-t', $pageCfg['conversion'], 
                                        '-i', $pageCfg['docxExportFilePath'], 
                                        '-o', $pageCfg['filePathNormal'], 
@@ -218,7 +219,7 @@ Function Convert-OneNotePage {
                 }
             }
 
-            # Mutate markup content
+            # Format markup content
             try {
                 # If not in a dryrun
                 if ($config['dryRun']['value'] -eq 1) {
@@ -254,6 +255,10 @@ Function Convert-OneNotePage {
                         }
                     }
                 }
+                
+                # Remove trailing newlines
+                $content = $content.Trim()
+                
                 if ($config['dryRun']['value'] -eq 1) {
                     Set-ContentNoBom -LiteralPath $pageCfg['filePath'] -Value $content -ErrorAction Stop # Use -LiteralPath so that characters like '(', ')', '[', ']', '`', "'", '"' are supported. Or else we will get an error "Cannot find path 'xxx' because it does not exist"
                 }
@@ -267,5 +272,6 @@ Function Convert-OneNotePage {
             Write-Host "Failed to convert page: $( $pageCfg['pathFromRoot'] ). Reason: $( $_.Exception.Message )" -ForegroundColor Red
             Write-Error "Failed to convert page: $( $pageCfg['pathFromRoot'] ). Reason: $( $_.Exception.Message )"
         }
+
     }
 }
