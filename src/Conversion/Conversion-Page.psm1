@@ -113,21 +113,21 @@ Function Convert-OneNotePage {
                 "Existing docx file: $( $pageCfg['docxExportFilePath'] )" | Write-Verbose
             }
 
-            # Publish OneNote page to pdf, don't proceed if it fails
+            # Publish OneNote page to PDF, don't proceed if it fails
             if ($config['exportPdf']['value'] -eq 2) {
                 if (! (Test-Path -LiteralPath $pageCfg['pdfExportFilePath']) ) {
                     try {
-                        "Publishing new pdf file: $( $pageCfg['pdfExportFilePath'] )" | Write-Verbose
+                        "Publishing new PDF file: $( $pageCfg['pdfExportFilePath'] )" | Write-Verbose
                         if ($config['dryRun']['value'] -eq 1) {
                             Publish-OneNotePage -OneNoteConnection $OneNoteConnection -PageId $pageCfg['object'].ID -Destination $pageCfg['pdfExportFilePathTmp'] -PublishFormat 'pfPdf'
                             Move-Item $pageCfg['pdfExportFilePathTmp'] $pageCfg['pdfExportFilePath']
                         }
-                        "pdf file ready: $( $pageCfg['pdfExportFilePath'] )" | Write-Host -ForegroundColor Green
+                        "PDF file ready: $( $pageCfg['pdfExportFilePath'].Substring(4) )" | Write-Host -ForegroundColor Green
                     }catch {
-                        throw "Error while publishing page to pdf file $( $pageCfg['pdfExportFilePath'] ): $( $_.Exception.Message )"
+                        throw "Error while publishing page to PDF file $( $pageCfg['pdfExportFilePath'] ): $( $_.Exception.Message )"
                     }
                 }else {
-                    "Existing pdf file: $( $pageCfg['pdfExportFilePath'].Substring(4) )" | Write-Host -ForegroundColor Green
+                    "Existing PDF file: $( $pageCfg['pdfExportFilePath'].Substring(4) )" | Write-Host -ForegroundColor Green
                 }
             }
 
