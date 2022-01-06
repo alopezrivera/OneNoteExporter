@@ -10,10 +10,10 @@ Function Get-Markup
         $pageCfg
     )
 
-    $keys = @("markdown", "org", "gfm", "commonmark")
+    $keys = @('markdown', 'org', 'gfm', 'commonmark')
 
     # Get markup format from Pandoc call
-    $markup = "none"
+    $markup = 'none'
     foreach ($key in $keys) {
         if ($pageCfg['conversion'] -Match $key) {
             $markup = $key
@@ -36,10 +36,10 @@ Function Get-MarkupExtension
 
     # Markup formats hashtable
     $markupTable = @{
-        markdown   = "md";
-        gfm        = "md";
-        commonmark = "md";
-        org        = "org";
+        markdown   = 'md';
+        gfm        = 'md';
+        commonmark = 'md';
+        org        = 'org';
     }
 
     # Get markup format from Pandoc call
@@ -55,16 +55,37 @@ Function Get-MarkupPack
 {
     [CmdletBinding()]
     param (
+        # OneUp configuration object
+        [Parameter(Mandatory)]
+        [object]
+        $config
+        ,
         # Converted page configuration object
         [Parameter(Mandatory)]
         [object]
         $pageCfg
     )
 
-    # Get markup format from Pandoc call
-    $markup = Get-Markup $pageCfg
+    # If no specific Markup Pack has been specified in config.ps1
+    if ($config['markupPack']['value'] -eq 'none') {
+        # Markup packs hastable
+        $markupPacks = @{
+            org = 'OrgPack1';
+            md  = 'MarkdownPack1';
+        }
 
-    Write-Host "------------------------"
-    Write-Host "------------------------"
+        # Get markup format from Pandoc call
+        $extension = Get-MarkupExtension $pageCfg
+
+        $markupPack = $markupPacks[$extension]
+
+    }
+    # Otherwise, return Markup Pack specified in config.ps1
+    else
+    {
+        $markupPack = $config['markupPack']['value']
+    }
+
+    $markupPack
 
 }
