@@ -44,6 +44,13 @@ As long as Pandoc supports your desired output format, all OneWayOut needs to sh
 
 ![OneNote test note along Org Mode and Markdown exports](results.png)
 
+As you can see from the example above, the Markup Packs shipping for Org Mode and Markdown will provide you with
+
+* Creation date metadata (in the case of Org Mode, in its standard date format)
+* Numbered and unnumbered lists and nested lists
+* Indented paragraphs
+* All while cleaning the output, removing excess whitespace, newlines, etc
+
 Some notes:
 
 * As expected, elaborate formatting doesn't survive export
