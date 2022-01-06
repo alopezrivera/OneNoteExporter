@@ -44,6 +44,11 @@ As long as Pandoc supports your desired output format, all **owo** needs to shin
 
 ![OneNote test note along Org Mode and Markdown exports](results.png)
 
+Some notes:
+
+* As expected, elaborate formatting doesn't survive export
+* Underscored text is mostly unsupported
+
 ## Requirements
 
 * Windows >= 10
