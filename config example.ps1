@@ -20,12 +20,12 @@ $targetNotebook = ''
 # Whether to create new word .docx or reuse existing ones
 # 1: Always create new .docx files - Default
 # 2: Use existing .docx files (90% faster)
-$usedocx = 1
+$usedocx = 2
 
 # Whether to discard word .docx after conversion
 # 1: Discard intermediate .docx files - Default
 # 2: Keep .docx files
-$keepdocx = 1
+$keepdocx = 2
 
 # Whether to use name .docx files using page ID with last modified date epoch, or hierarchy
 # 1: Use page ID with last modified date epoch (recommended if you chose to use existing .docx files) - Default
@@ -40,7 +40,7 @@ $prefixFolders = 1
 # Specify a value between 32 and 255 as the maximum length of markdown file names, and their folder names (only when using subfolders for subpages (e.g. Page\Subpage.<ext>)). File and folder names with length exceeding this value will be truncated accordingly.
 # NOTE: If you are using prefixes for subpages (e.g. Page_Subpage.<ext>), it is recommended to set this to at 100 or more.
 # Default: 32
-$muFileNameAndFolderNameMaxLength = 32
+$muFileNameAndFolderNameMaxLength = 255
 
 # Whether to store media in single or multiple folders
 # 1: Images stored in single 'media' folder at Notebook-level - Default
@@ -49,15 +49,17 @@ $medialocation = 1
 
 # Specify Pandoc output format and optional extensions in the format: <format><+extension><-extension>. See: https://pandoc.org/MANUAL.html#options
 # Examples:
+#   org
 #   markdown-simple_tables-multiline_tables-grid_tables+pipe_tables
 #   commonmark+pipe_tables
 #   gfm+pipe_tables
 #   markdown_mmd-simple_tables-multiline_tables-grid_tables+pipe_tables
 #   markdown_phpextra-simple_tables-multiline_tables-grid_tables+pipe_tables
 #   markdown_strict+simple_tables-multiline_tables-grid_tables+pipe_tables
-# Default:
-#   markdown-simple_tables-multiline_tables-grid_tables+pipe_tables
-$conversion = 'markdown-simple_tables-multiline_tables-grid_tables+pipe_tables'
+$conversion = 'org'
+
+# Specify a custom Markup Pack to override default
+$markupPack = 'none'
 
 # Whether to include page timestamp and separator at top of document
 # 1: Include - Default
