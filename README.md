@@ -1,6 +1,6 @@
 # OneWayOut (`owo`)
 
-Transform all your OneNote notes into Emacs Org Mode, or any other [Pandoc-supported Markdown](https://pandoc.org/), using the OneNote Object Model and Pandoc. Say farewell to OneNote or back up your notes, in plain text [tailored for you](#introduction).
+Transform all your OneNote notes into Emacs Org Mode, or any other [Pandoc-supported Markdown](https://pandoc.org/), using the OneNote Object Model and Pandoc. Say farewell to OneNote or back up your notes, in plain text [tailored to you](#introduction).
 
 OneWayOut is built on the foundation of [ConvertOneNote2Markdown](https://github.com/theohbrothers/ConvertOneNote2Markdown), by
 
