@@ -38,7 +38,7 @@ OneWayOut currently ships Markup Packs for [Emacs Org Mode](https://github.com/a
 
 ### Customizing output and adding support for further export formats
 
-As long as Pandoc supports your desired output format, all OneWayOut needs to shine is a Markup Pack to tailor the output to your tastes. [CONTRIBUTING.md](https://github.com/alopezrivera/owo/blob/master/CONTRIBUTING.md) has the pointers you need to write your own Markup Packs, and more.
+As long as Pandoc supports your desired output format, all OneWayOut needs to shine is a Markup Pack to tailor the output to your tastes. [CONTRIBUTING.md](https://github.com/alopezrivera/owo/blob/master/CONTRIBUTING.md) has the pointers you need to write your own Markup Packs, add support for other Markup formats, and more.
 
 ## Results
 
