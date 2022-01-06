@@ -73,7 +73,7 @@ Some notes:
 1. Start the OneNote desktop application
 1. Rename `config.example.ps1` to `config.ps1` and configure options in `config.ps1` to your liking.
 1. Open a PowerShell terminal at the directory containing the script and run it.
-    > `.\owo.ps1`
+  * `.\owo.ps1`
 1. Sit back and wait until the process completes. To stop the process at any time, press Ctrl+C.
 
 ### Options
