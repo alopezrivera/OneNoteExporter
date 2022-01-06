@@ -1,8 +1,8 @@
-# OneUp
+# OneWayOut (`owo`)
 
-Transform all your OneNote notes into Emacs Org Mode, or any other [Pandoc-supported markup](https://pandoc.org/), using the OneNote Object Model and Pandoc. Say farewell to OneNote or backup your note collection in plain text, [tailored to you](#introduction).
+Transform all your OneNote notes into Emacs Org Mode, or any other [Pandoc-supported markup](https://pandoc.org/), using the OneNote Object Model and Pandoc. Say farewell to OneNote or back up your notes, in plain text [tailored for you](#introduction).
 
-**OneUp** is built on the foundation of [ConvertOneNote2Markdown](https://github.com/theohbrothers/ConvertOneNote2Markdown).
+**owo** is built on the foundation of [ConvertOneNote2Markdown](https://github.com/theohbrothers/ConvertOneNote2Markdown), by
 
 * [SjoerdV](https://github.com/SjoerdV)
 * [nixsee](https://github.com/nixsee/)
@@ -28,23 +28,21 @@ Transform all your OneNote notes into Emacs Org Mode, or any other [Pandoc-suppo
 
 ## Introduction
 
-**OneUp** exports OneNote pages to Word using the OneNote Object Model, and uses Pandoc to convert them to your markup format of choice. [*Markup Packs*](https://github.com/alopezrivera/on2org/tree/master/src/Configuration/Markup-Packs) are then used to customize the result. They are sets of simple routines which tailor the text output by Pandoc to our desires. This allows fine-grained customization of all elements of your notes, such as:
+**owo** exports OneNote pages to Word using the OneNote Object Model, and uses Pandoc to convert them to your markup format of choice. [*Markup Packs*](https://github.com/alopezrivera/on2org/tree/master/src/Configuration/Markup-Packs) are then used to customize the result. These are **functions** returning sets of search and replace routines, which act on the text output by Pandoc to tailor it to our desires. Markup Packs allow fine-grained customization of all elements in your notes, such as:
 
 * Headers
-* Creation and modification metadata
-* Other markup elements such as hrules, and any other sort of processing you may think of
+* Metadata
+* Other markup elements such as hrules, and anything else you may be able to do with the text in your notes
 
-OneUp currently ships Markup Packs for [Emacs Org Mode](https://github.com/alopezrivera/OneUp/blob/master/src/Conversion/Markup-Packs/Org.psm1) and [Markdown](https://github.com/alopezrivera/OneUp/blob/master/src/Conversion/Markup-Packs/Markdown.psm1).
+**owo** currently ships Markup Packs for [Emacs Org Mode](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Org.psm1) (`OrgPack1`) and [Markdown](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Markdown.psm1) (`MarkDownPack1`).
 
 ### Customizing output and adding support for further export formats
 
-As long as Pandoc supports your desired output format, all OneUp needs to shine is a Markup Pack to tailor the output to your tastes. [CONTRIBUTING.md](https://github.com/alopezrivera/OneUp/blob/master/CONTRIBUTING.md) has the pointers you need to write your own Markup Packs, and more.
+As long as Pandoc supports your desired output format, all **owo** needs to shine is a Markup Pack to tailor the output to your tastes. [CONTRIBUTING.md](https://github.com/alopezrivera/owo/blob/master/CONTRIBUTING.md) has the pointers you need to write your own Markup Packs, and more.
 
 ## Results
 
-### Org Mode
-
-### Markdown
+![OneNote test note along Org Mode and Markdown exports](results.png)
 
 ## Requirements
 
@@ -88,7 +86,8 @@ All of the following are configured from `config.ps1` (assuming you have renamed
 * Choose between **discarding or keeping intermediate Word files**. Intermediate Word files are stored in a central notebook folder.
 * Choose between converting from existing `.docx` (90% faster) and creating new ones - useful if just want to test differences in the various processing options without generating new `.docx` each time
 * Choose between naming `.docx` files using page ID and last modified epoch date e.g. `{somelongid}-1234567890.docx` or hierarchy e.g. `<sectiongroup>-<section>-<page>.docx`
-* **specify Pandoc output format and any optional extensions**, defaulting to Pandoc Markdown format which strips most HTML from tables and using pipe tables. See more details on these options here: https://pandoc.org/MANUAL.html#options
+* **specify Pandoc output format and any optional extensions**, defaulting to Pandoc Markdown format which strips most HTML from tables and using pipe tables. [See more details on these options here](https://pandoc.org/MANUAL.html#options). Default configurations are provided in `config example.ps1`. The following formats are accepted, among others:
+  * org (Emacs Org Mode)
   * markdown (Pandoc’s Markdown)
   * commonmark (CommonMark Markdown)
   * gfm (GitHub-Flavored Markdown), or the deprecated and less accurate markdown_github; use markdown_github only if you need extensions not supported in gfm.
@@ -126,4 +125,4 @@ As reported in [ConvertOneNote2Markdown](https://github.com/theohbrothers/Conver
 
 ---
 
-[Back to top](#oneup)
+[Back to top](#onewayout-owo)
