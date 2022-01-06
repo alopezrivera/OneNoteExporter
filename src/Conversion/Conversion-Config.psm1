@@ -254,10 +254,10 @@ Function New-SectionGroupConversionConfig {
                         $pageCfg['fileExtension'] = if ($pageCfg['filePathNormal'] -match '(\.[^.]+)$') { $matches[1] } else { '' }
                         $pageCfg['fileBaseName'] = $pageCfg['fileName'] -replace "$( [regex]::Escape($pageCfg['fileExtension']) )$", ''
                         $pageCfg['pdfExportFilePathTmp'] = [io.path]::combine( (Split-Path $pageCfg['filePath'] -Parent ), "$( $pageCfg['id'] )-$( $pageCfg['lastModifiedTimeEpoch'] ).pdf" ) # Publishing a .pdf seems to be limited to 204 characters. So we will export the .pdf to a unique file name, then rename it to the actual name
-                        $pageCfg['pdfExportFilePath'] = if ( ($pageCfg['fileName'].Length + ('.pdf'.Length - '.$($extension)'.Length)) -le $config['muFileNameAndFolderNameMaxLength']['value']) {
-                            $pageCfg['filePath'] -replace '\.$($extension)$', '.pdf'
+                        $pageCfg['pdfExportFilePath'] = if ( ($pageCfg['fileName'].Length + ('.pdf'.Length - ".$($extension)".Length)) -le $config['muFileNameAndFolderNameMaxLength']['value']) {
+                            $pageCfg['filePath'] -replace "\.$($extension)$", '.pdf'
                         }else {
-                            $pageCfg['filePath'] -replace '.\.$($extension)$', '.pdf' # Trim 1 character in the basename when replacing the extension
+                            $pageCfg['filePath'] -replace ".\.$($extension)$", '.pdf' # Trim 1 character in the basename when replacing the extension
                         }
                         $pageCfg['levelsPrefix'] = if ($config['medialocation']['value'] -eq 2) {
                             ''

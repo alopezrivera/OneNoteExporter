@@ -127,7 +127,7 @@ Function Convert-OneNotePage {
                         throw "Error while publishing page to pdf file $( $pageCfg['pdfExportFilePath'] ): $( $_.Exception.Message )"
                     }
                 }else {
-                    "Existing pdf file: $( $pageCfg['pdfExportFilePath'] )" | Write-Host -ForegroundColor Green
+                    "Existing pdf file: $( $pageCfg['pdfExportFilePath'].Substring(4) )" | Write-Host -ForegroundColor Green
                 }
             }
 
