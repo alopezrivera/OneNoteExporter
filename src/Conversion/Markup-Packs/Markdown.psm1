@@ -46,7 +46,7 @@ Function MarkdownPack1
                     searchRegex = '^[^\r\n]*'
                     replacement = & {
                         $heading       = "# $( $pageCfg['object'].name )"
-                        $creationDate  = $pageCfg['lastModifiedTime']
+                        $creationDate  = $pageCfg['dateTime']
                         $creationDay   = $creationDate.DayOfWeek.ToString()
                         $creationMonth = (Get-Culture).DateTimeFormat.GetMonthName([int]$pageCfg['lastModifiedTime'].ToString('MM'))
                         if ($config['headerTimestampEnabled']['value'] -eq 1) {
