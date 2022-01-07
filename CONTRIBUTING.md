@@ -62,7 +62,7 @@ To add a Markup Pack, follow these steps:
 1. Write your Markup Pack in the file containing the Markup Packs of your markup format of choice (`Org.psm1` or `Markdown.psm1` in `src/Conversion/Markup-Packs`). 
    * **If you intend to export to a markup format that is neither Emacs Org Mode nor a variety of Markdown, [read the section below and come back.](#adding-support-for-new-markup-formats)**
 1. Edit `src/Conversion/Conversion-Markup.psm1` to set your Markup Pack as the default for the markup format of your choice.
-   * Edit the Markup Pack hashtable in `Get-MarkupPack`, replacing the **string** `"Format-Org"` or `"Format-Markdown"` for a **string** with the name of your method.
+   * Edit the Markup Pack hashtable in `DefaultMarkupPacks`, replacing the **string** `"Format-Org"` or `"Format-Markdown"` for a **string** with the name of your method.
       ```
       $markupPacks = @{
          org = "Format-Org";      -> "<Your Markup Pack function>"
@@ -87,8 +87,8 @@ Currently, any Pandoc-supported markup with `markdown` or `org` in its Pandoc na
 If your export format of choice does not fall in this category, you may easily add support for it. To do so, follow these steps:
 
 1. Edit `src/Conversion/Conversion-Markup.psm1`
-   * Add the new Markup format to the Markup extension hashtable in `Get-MarkupExtension`
-      * KEY: Pandoc name of the new Markup format (eg: `markdown` in the case of `markdown` or `markdown_phpextra`)
+   * Add the new Markup format to the Markup extension hashtable in `SupportedMarkupFormats`
+      * KEY: Pandoc name of the new Markup format (eg: `markdown` in the case of `markdown` and `markdown_phpextra`, `whatever` in the case of `whatever_etc`)
       * VAL: File extension of the new Markup format
 1. Optionally, write a Markup Pack for the new format
    1. Create a new PowerShell module for the new markup format 
