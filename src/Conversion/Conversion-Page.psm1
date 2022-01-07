@@ -266,10 +266,6 @@ Function Convert-OneNotePage {
                 
                 # Remove trailing newlines
                 $content = $content.Trim()
-
-                Import-Module .\debugging\String.psm1
-
-                $content | Write-StringRaw
                 
                 if ($config['dryRun']['value'] -eq 1) {
                     Set-ContentNoBom -LiteralPath $pageCfg['filePath'] -Value $content -ErrorAction Stop # Use -LiteralPath so that characters like '(', ')', '[', ']', '`', "'", '"' are supported. Or else we will get an error "Cannot find path 'xxx' because it does not exist"
