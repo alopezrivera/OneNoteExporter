@@ -129,14 +129,15 @@ Function MarkdownPack1
                         postprocessing = {
 
                             $content = $args[0]
+                            $lines = $content.Split("`n")
                             
                             # Create new content string
-                            $new = $content.Split("`n")[0]
+                            $new = $lines[0]
                             # For each line in the output
                             $prevline = $new
 
                             # For each line in the content string
-                            foreach ($line in $content.Split("`n")) {
+                            foreach ($line in $lines[1..($lines.Length-1)]) {
                                 
                                 # First, match list item indents
                                 $m = $line -match "^\s{2,}(?=[-0-9\.]{1,})"
@@ -151,7 +152,6 @@ Function MarkdownPack1
                                     }else{
                                         2       # For unnumbered list items
                                     }
-                                    Write-Host $baseIndent
                                     $replacement = " " * $baseIndent * ($match.length/4)
                                     # Replace the indent string with our new one
                                     $line = $line -replace "\s{2,}(?=[-0-9\.]{1,})", $replacement
