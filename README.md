@@ -44,17 +44,17 @@ As long as Pandoc supports your desired output format, all OneWayOut needs to sh
 
 ![OneNote test note along Org Mode and Markdown exports](results.png)
 
-As you can see from the example above, the Markup Packs shipping for Org Mode and Markdown will provide you with
+As you can see above, the Markup Packs shipping for Org Mode and Markdown will provide you with
 
-* Creation date metadata (in the case of Org Mode, in its standard date format)
-* Numbered and unnumbered lists and nested lists
-* Indented paragraphs
-* All while cleaning the output, removing excess whitespace, newlines, etc
+* Note creation metadata (in the case of Org Mode, in its standard date format)
+* Correctly rendered lists and nested lists, numbered and unnumbered
+* Correctly rendered indented paragraphs
+* All while cleaning the output of artifacts, excess newlines, etc
 
 Some notes:
 
 * As expected, elaborate formatting doesn't survive export
-* Underscored text is mostly unsupported
+* Underscored text is annotated as such in Markdown, but does not render correctly at least in VSCode
 
 ## Requirements
 
