@@ -46,7 +46,7 @@ Function OrgPack1
                     searchRegex = '^[^\r\n]*'
                     replacement = & {
                         $heading = "#+title:$( $pageCfg['object'].name )"
-                        $creationDate = $pageCfg['lastModifiedTime']
+                        $creationDate = $pageCfg['dateTime']
                         $creationDay = $creationDate.DayOfWeek.ToString()
                         if ($config['headerTimestampEnabled']['value'] -eq 1) {
                             $heading += "`n#+CREATED: $( $creationDate.ToString('<yyyy-MM-dd') ) $( $creationDay.Substring(0, 3) ) $( $creationDate.ToString('HH:mm>') )"
