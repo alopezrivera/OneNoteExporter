@@ -105,7 +105,7 @@ All of the following are configured from `config.ps1` (assuming you have renamed
 * Choose between **discarding or keeping intermediate Word files**. Intermediate Word files are stored in a central notebook folder.
 * Choose between converting from existing `.docx` (90% faster) and creating new ones - useful if just want to test differences in the various processing options without generating new `.docx` each time
 * Choose between naming `.docx` files using page ID and last modified epoch date e.g. `{somelongid}-1234567890.docx` or hierarchy e.g. `<sectiongroup>-<section>-<page>.docx`
-* **specify Pandoc output format and any optional extensions**, defaulting to Pandoc Markdown format which strips most HTML from tables and using pipe tables. [See more details on these options here](https://pandoc.org/MANUAL.html#options). Default configurations are provided in `config example.ps1`. The following formats are accepted, among others:
+* **Pandoc call, including conversion format and any extensions**, defaulting to Pandoc Markdown format which strips most HTML from tables and using pipe tables. [See more details on these options here](https://pandoc.org/MANUAL.html#options). Default configurations are provided in `config example.ps1`. The following formats are accepted, among others:
   * org (Emacs Org Mode)
   * markdown (Pandoc’s Markdown)
   * commonmark (CommonMark Markdown)
@@ -113,7 +113,7 @@ All of the following are configured from `config.ps1` (assuming you have renamed
   * markdown_mmd (MultiMarkdown)
   * markdown_phpextra (PHP Markdown Extra)
   * markdown_strict (original unextended Markdown)
-* Choose whether to use a default Markup Pack, a specific one, or none if you want to remove all post-processing (useful for debugging purposes).
+* Choose whether to use a **default Markup Pack, a specific one, or none** if you want to remove all post-processing (useful for debugging purposes).
 * Choose whether to include a page timestamp and separator at top of the page.
 * Choose whether to remove double spaces between numbered and unnumbered lists, excess whitespace after list markers, non-breaking spaces from blank lines, and `>` after bullet lists, created by Pandoc
 * Choose whether to remove `\` escape symbol that are created when converting with Pandoc
