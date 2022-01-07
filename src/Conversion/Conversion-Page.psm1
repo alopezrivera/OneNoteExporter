@@ -232,12 +232,14 @@ Function Convert-OneNotePage {
                         # If the page is not empty
                         if ($content.Count -gt 6) {
                             # If a Markup Pack is available for the chosen markup format
-                            if (1) {
+                            $markupPackAvailable = MarkupPackAvailable $config $pageCfg
+
+                            if ($markupPackAvailable) {
                                 # The header and creation timestamp are removed to be rewritten later according to our preferences, as laid down in the appropriate Markup Pack
                                 $content[6..($content.Count - 1)]
                             }else{
                                 $content
-                            }                            
+                            }
                         }else {
                             # Empty page
                             ''
