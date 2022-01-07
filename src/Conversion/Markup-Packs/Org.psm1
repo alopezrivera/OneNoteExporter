@@ -156,20 +156,7 @@ Function OrgPack1
                 }
             }
         }
-        # Remove encoding error artifacts
-        @{
-            description = 'Remove encoding error artifacts'
-            replacements = @(
-                @{
-                    searchRegex = "(?<=\n[-]*)\s*[$( [char]0x00C3 )$( [char]0x201A )$( [char]0x00C2 )]{1,}"
-                    replacement = ''
-                }
-                @{
-                    searchRegex = "\n#\+BEGIN_QUOTE\n([$( [char]0x00C3 )$( [char]0x201A )$( [char]0x00C2 ) \s\t]{1,})\n#\+END_QUOTE"
-                    replacement = ''
-                }
-            )
-        }
+        
     )
 
     $markupPack

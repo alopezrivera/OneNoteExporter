@@ -238,16 +238,6 @@ Function MarkdownPack1
                 }
             }
         }
-        # Remove encoding error artifacts
-        @{
-            description = 'Remove encoding error artifacts'
-            replacements = @(
-                @{
-                    searchRegex = "(?<=\n[-]*)\s*[$( [char]0x00C3 )$( [char]0x201A )$( [char]0x00C2 )]{1,}"
-                    replacement = ''
-                }
-            )
-        }
     )
 
     $markupPack
