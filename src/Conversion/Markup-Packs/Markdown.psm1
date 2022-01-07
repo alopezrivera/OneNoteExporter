@@ -59,17 +59,17 @@ Function MarkdownPack1
             )
         }
         @{
-            description = 'Remove OneNote export artifacts'
+            description = 'Refactor numbered list bullet points'
             replacements = @(
                 @{
-                    searchRegex = "\n\n$( [char]0x00C2 )"
-                    replacement = ""
+                    searchRegex = '(?<=\n\s*)([a-zA-Z0-9]{1,})(?=[.]\s*)'
+                    replacement = '1'
                 }
             )
         }
         if ($config['keepspaces']['value'] -eq 1 ) {
             @{
-                description = 'Clear double spaces from bullets and non-breaking spaces spaces from blank lines'
+                description = 'Remove unwated whitespace, newlines, over-indentation and more'
                 replacements = @(
                     @{
                         searchRegex = [regex]::Escape([char]0x00A0)
@@ -77,27 +77,118 @@ Function MarkdownPack1
                     }
                     # Replace multiple spaces after list items
                     @{
-                        searchRegex = '\n- \s*'
-                        replacement = "`n- "
+                        searchRegex = '(?<=\n\s*- )([ \s\t]{1,})(?=.*?\n)'
+                        replacement = ''
                     }
                     @{
-                        searchRegex = '\n[0-9]+. \s*'
-                        replacement = "`n1. "             # Take chance to replace numbered list indices for '1.'
+                        searchRegex = '(?<=\n\s*)([0-9]+. [ \s\t]{1,})(?=.*?\n)'
+                        replacement = '1. '             # Take chance to replace numbered list indices for '1.'
                     }
-                    # Remove double newlines before unnumbered list items
+                    # Remove extra whitespace after list item markers
                     @{
-                        searchRegex = '(?<=\n- .*?)(\n)(?=\n-)'
-                        replacement = ""
+                        searchRegex = '(?<=\n\s*- )([ \s\t]{1,})(?=.*?\n)'
+                        replacement = ''
                     }
-                    # Remove double newlines before numbered list items
                     @{
-                        searchRegex = '(?<=\n[0-9]+. .*?)(\n)(?=\n[0-9]+.)'
-                        replacement = ""
+                        searchRegex = '(?<=\n\s*- )([ \s\t]{1,})(?=.*?\n)'
+                        replacement = ''
+                    }
+                    # Remove double newlines after unnumbered list items
+                    @{
+                        searchRegex = '(?<=\n\s*- .*?)(\n)(?=\n\s*-)'
+                        replacement = ''
+                    }
+                    # Remove double newlines after numbered list items
+                    @{
+                        searchRegex = '(?<=\n\s*[0-9]+. .*?)(\n)(?=\n\s*[0-9]+.)'
+                        replacement = ''
+                    }
+                    # Remove double newlines after indented paragraphs
+                    @{
+                        searchRegex = '(?<=\n\s{1,}[^-0-9\.]*?)(\n)(?=\n)'
+                        replacement = ''
                     }
                     # Remove all '>' occurrences immediately following bullet lists
                     @{
                         searchRegex = '\n>[ ]*'
                         replacement = "`n"
+                    }
+                    # Remove extra newline before inline pictures
+                    @{
+                        searchRegex = '\n(?=\n!\[.*?\]\(.*?\))'
+                        replacement = ''
+                    }
+                    # Remove extra newline before inline tables
+                    @{
+                        searchRegex = '\n(?=\n\|.*?\|)'
+                        replacement = ''
+                    }
+                    # Remove over-indentation of list items
+                    @{
+                        # When regex doesn't cut it
+                        postprocessing = {
+
+                            $content = $args[0]
+                            
+                            # Create new content string
+                            $new = $content.Split("`n")[0]
+                            # For each line in the output
+                            $prevline = $new
+
+                            # For each line in the content string
+                            foreach ($line in $content.Split("`n")) {
+                                
+                                # First, match list item indents
+                                $m = $line -match "^\s{2,}(?=[-0-9\.]{1,})"
+                                
+                                # If there's an indented list item in the line
+                                if ($m) {
+                                    # Retrieve the list item indent string
+                                    $match = $Matches[0]
+                                    # Replace it with a new indent string with a base indent of 2 for unnumbered and 3 for numbered lists
+                                    $baseIndent = if ($line -match "^\s{2,}(?=[0-9\.]{1,})") {
+                                        3       # For numbered list items
+                                    }else{
+                                        2       # For unnumbered list items
+                                    }
+                                    Write-Host $baseIndent
+                                    $replacement = " " * $baseIndent * ($match.length/4)
+                                    # Replace the indent string with our new one
+                                    $line = $line -replace "\s{2,}(?=[-0-9\.]{1,})", $replacement
+                                }else{
+
+                                    # Else, there may still be an indented paragraph in the line
+
+                                    # Match list indented paragraph indents
+                                    $pm = $line -match "^\s{2,}"
+                                    
+                                    if ($pm) {
+                                        # Retrieve the indent string
+                                        $match = $Matches[0]
+                                        # Replace it with a new indent string, its base indent determined by the previous line (where we expect to find the paragraph's parent list item)
+                                        #   The beginning of the string may or *may not* be indented, as the paragraph could be indented under a non-indented list item
+                                        #       ^\s{2,} -> ^\s*
+                                        $baseIndent = if ($prevline -match "^\s*(?=[0-9\.]{1,})") {
+                                            3       # For numbered list items
+                                        }else{
+                                            2       # For unnumbered list items
+                                        }
+                                        $replacement = " " * $baseIndent * ($match.length/4)
+                                        # Replace the indent string with our new one
+                                        $line = $line -replace "\s{2,}", $replacement
+                                    }
+
+                                }
+
+                                # Append line to new content string
+                                $new = $new + "`n" + $line
+                                # Save previous line
+                                $prevline = $line
+                            }
+
+                            $new
+
+                        }
                     }
                 )
             }
@@ -146,6 +237,15 @@ Function MarkdownPack1
                     )
                 }
             }
+        }
+        @{
+            description = 'Remove OneNote export artifacts'
+            replacements = @(
+                @{
+                    searchRegex = "\n[$( [char]0x00C3 )$( [char]0x201A )$( [char]0x00C2 )]{1,}"
+                    replacement = ''
+                }
+            )
         }
     )
 
