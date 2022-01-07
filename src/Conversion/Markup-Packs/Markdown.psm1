@@ -75,6 +75,11 @@ Function MarkdownPack1
                         searchRegex = [regex]::Escape([char]0x00A0)
                         replacement = ''
                     }
+                    # Remove triple spaces
+                    @{
+                        searchRegex = '(?<=\n)(\n)(?=\n)'
+                        replacement = ''
+                    }
                     # Replace multiple spaces after list items
                     @{
                         searchRegex = '(?<=\n\s*- )([ \s\t]{1,})(?=.*?\n)'
@@ -105,7 +110,7 @@ Function MarkdownPack1
                     }
                     # Remove double newlines after indented paragraphs
                     @{
-                        searchRegex = '(?<=\n\s{1,}[^-0-9\.]*?)(\n)(?=\n)'
+                        searchRegex = '(?<=\n\s{2,}[^-0-9\.]*?)(\n)(?=\n)'
                         replacement = ''
                     }
                     # Remove all '>' occurrences immediately following bullet lists
