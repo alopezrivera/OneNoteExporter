@@ -66,24 +66,15 @@ Function MyMarkupPack
             )
         }
         @{
-            description = 'Remove export artifacts'
-            replacements = @(
-                @{
-                    searchRegex = "\n\n$( [char]0x00C2 )"
-                    replacement = ""
-                }
-            )
-        }
-        @{
             description = 'Separate numbered and unnumbered lists'
             replacements = @(
                 @{
                     searchRegex = '(?<=\n[0-9]+. .*?)(\n)(?=\n-)'
-                    replacement = '\n\n'
+                    replacement = "`n`n"
                 }
                 @{
                     searchRegex = '(?<=\n- .*?)(\n)(?=\n[0-9]+.)'
-                    replacement = '\n\n'
+                    replacement = "`n`n"
                 }
             )
         }
@@ -95,20 +86,35 @@ Function MyMarkupPack
                         searchRegex = [regex]::Escape([char]0x00A0)
                         replacement = ''
                     }
-                    # Remove double newlines before numbered list items
+                    # Remove double newlines after unnumbered list items
                     @{
-                        searchRegex = '(?<=\n- .*?)(\n)(?=\n-)'
-                        replacement = ""
+                        searchRegex = '(?<=\n\s*- .*?)(\n)(?=\n\s*-)'
+                        replacement = ''
                     }
-                    # Remove double newlines before numbered list items
+                    # Remove double newlines after numbered list items
                     @{
-                        searchRegex = '(?<=\n[0-9]+. .*?)(\n)(?=\n[0-9]+.)'
-                        replacement = ""
+                        searchRegex = '(?<=\n\s*[0-9]+. .*?)(\n)(?=\n\s*[0-9]+.)'
+                        replacement = ''
+                    }
+                    # Remove double newlines after indented paragraphs
+                    @{
+                        searchRegex = '(?<=\n\s{1,}[^-0-9\.]*?)(\n)(?=\n)'
+                        replacement = ''
                     }
                     # Remove all '>' occurrences immediately following bullet lists
                     @{
                         searchRegex = '\n>[ ]*'
                         replacement = "`n"
+                    }
+                    # Remove extra newline before inline pictures
+                    @{
+                        searchRegex = '\n(?=\n\[\[.*?\]\])'
+                        replacement = ''
+                    }
+                    # Remove extra newline before inline tables
+                    @{
+                        searchRegex = '\n(?=\n\|.*?\|)'
+                        replacement = ''
                     }
                 )
             }
@@ -158,6 +164,20 @@ Function MyMarkupPack
                     )
                 }
             }
+        }
+        # Remove encoding error artifacts
+        @{
+            description = 'Remove encoding error artifacts'
+            replacements = @(
+                @{
+                    searchRegex = "\n[$( [char]0x00C3 )$( [char]0x201A )$( [char]0x00C2 )]{1,}"
+                    replacement = ''
+                }
+                @{
+                    searchRegex = "\n#\+BEGIN_QUOTE\n([$( [char]0x00C3 )$( [char]0x201A )$( [char]0x00C2 ) \s\t]{1,})\n#\+END_QUOTE"
+                    replacement = ''
+                }
+            )
         }
     )
 
