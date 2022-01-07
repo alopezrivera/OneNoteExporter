@@ -53,7 +53,7 @@ Flushing memory after, say, a notebook export is completed, or any other way to 
 
 ## Adding Markup Packs
 
-Markup Packs are *markup-format-specific* **functions** containing search and replace queries executed at runtime against a string containing the entire markup content.
+Markup Packs are *markup-format-specific* **functions** containing search and replace queries executed at runtime against a string containing the entire markup content. If search and replace doesn't cut it, you can add a `postprocessing` scriptblock to increase your freedom (check the scriptblock to "Remove over-indentation of list items" in [Markdown MarkdownPack1](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Markdown.psm1)).
 
 A Markup Pack template is available in the [`templates` directory](https://github.com/alopezrivera/owo/tree/master/templates). It's an annotated version of the [Emacs Org Mode **OrgPack1**](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Org.psm1) Markup Pack. If you're interested in exporting to a Markdown format, check the [Markdown MarkdownPack1](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Markdown.psm1) Markup Pack for inspiration.
 
