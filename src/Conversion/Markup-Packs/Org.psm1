@@ -77,6 +77,11 @@ Function OrgPack1
                         searchRegex = [regex]::Escape([char]0x00A0)
                         replacement = ''
                     }
+                    # Remove triple spaces
+                    @{
+                        searchRegex = '(?<=\n)(\n)(?=\n)'
+                        replacement = ''
+                    }
                     # Remove double newlines after unnumbered list items
                     @{
                         searchRegex = '(?<=\n\s*- .*?)(\n)(?=\n\s*-)'
@@ -89,7 +94,7 @@ Function OrgPack1
                     }
                     # Remove double newlines after indented paragraphs
                     @{
-                        searchRegex = '(?<=\n\s{1,}[^-0-9\.]*?)(\n)(?=\n)'
+                        searchRegex = '(?<=\n\s{2,}[^-0-9\.]*?)(\n)(?=\n)'
                         replacement = ''
                     }
                     # Remove all '>' occurrences immediately following bullet lists
@@ -154,6 +159,16 @@ Function OrgPack1
                         }
                     )
                 }
+            }
+            # Remove any empty QUOTEs
+            @{
+                description = 'Remove empty QUOTES'
+                replacements = @(
+                    @{
+                        searchRegex = '\n#\+BEGIN_QUOTE\n\s*\n#\+END_QUOTE'
+                        replacement = ''
+                    }
+                )
             }
         }
         
