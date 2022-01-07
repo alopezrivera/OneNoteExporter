@@ -58,7 +58,8 @@ As you can see above, the Markup Packs shipping for Org Mode and Markdown will p
 Some notes:
 
 * As expected, elaborate formatting doesn't survive export
-* Underscored text is annotated as such in Markdown, but does not render correctly at least in VSCode
+* Underscored text is annotated as such in Markdown, but does not render correctly (at least in VSCode)
+* Images resized within OneNote are rendered with an annotation to that effect. This may cause them not to render correctly (tested on VSCode)
 
 ## Requirements
 
@@ -130,7 +131,7 @@ All of the following are configured from `config.ps1` (assuming you have renamed
 ## Known Issues
 
 1. Inline image paths are relative. In some editors, this can cause the images to not render, even if the links are clickable (tested on VSCode).
-1. If you collection is rather large, your computer may **run out of memory** before finishing the process. It is very highly recommended that you save the Word files produced so you can start back up with minimal loss of time. In case this becomes a serious problem and you cannot easily continue, consider exporting your collection **notebook by notebook** (check your `config.ps1`).
+2. If you collection is rather large, your computer may **run out of memory** before finishing the process. It is very highly recommended that you save the Word files produced so you can start back up with minimal loss of time. In case this becomes a serious problem and you cannot easily continue, consider exporting your collection **notebook by notebook** (check your `config.ps1`).
 
 Furthermore, as reported in [ConvertOneNote2Markdown](https://github.com/theohbrothers/ConvertOneNote2Markdown):
 
