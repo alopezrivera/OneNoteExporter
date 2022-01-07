@@ -20,7 +20,8 @@ Function Set-ContentNoBom {
         if ($PSVersionTable.PSVersion.Major -le 5) {
             try {
                 $content = $Value -join ''
-                [IO.File]::WriteAllText($LiteralPath, $content)
+                $UTF8 = New-Object System.Text.UTF8Encoding
+                [IO.File]::WriteAllText($LiteralPath, $content, $UTF8)
             }catch {
                 if ($ErrorActionPreference -eq 'Stop') {
                     throw
@@ -147,6 +148,7 @@ Function Convert-OneNotePage {
                                        "--extract-media=$( $pageCfg['mediaParentPathPandoc'] )" )
                     "Command line: pandoc.exe $argumentList" | Write-Verbose
                     $process = Start-Process -ErrorAction Stop -RedirectStandardError $stderrFile -PassThru -NoNewWindow -Wait -FilePath pandoc.exe -ArgumentList $argumentList # extracts into ./media of the supplied folder
+
                     if ($process.ExitCode -ne 0) {
                         $stderr = Get-Content $stderrFile -Raw
                         throw "pandoc failed to convert: $stderr"
@@ -209,7 +211,7 @@ Function Convert-OneNotePage {
                     try {
                         "Mutation of markup: Rename image references to unique name. Find '$( $image.Name )', Replacement: '$( $newimageName )'" | Write-Verbose
                         if ($config['dryRun']['value'] -eq 1) {
-                            $content = Get-Content -LiteralPath $pageCfg['filePath'] -Raw -ErrorAction Stop # Use -LiteralPath so that characters like '(', ')', '[', ']', '`', "'", '"' are supported. Or else we will get an error "Cannot find path 'xxx' because it does not exist"
+                            $content = Get-Content -LiteralPath $pageCfg['filePath'] -Raw -ErrorAction Stop -Encoding UTF8 # Use -LiteralPath so that characters like '(', ')', '[', ']', '`', "'", '"' are supported. Or else we will get an error "Cannot find path 'xxx' because it does not exist"
                             $content = $content.Replace("$($image.Name)", "$($newimageName)")
                             Set-ContentNoBom -LiteralPath $pageCfg['filePath'] -Value $content -ErrorAction Stop # Use -LiteralPath so that characters like '(', ')', '[', ']', '`', "'", '"' are supported. Or else we will get an error "Cannot find path 'xxx' because it does not exist"
                         }
@@ -224,7 +226,8 @@ Function Convert-OneNotePage {
                 # If not in a dryrun
                 if ($config['dryRun']['value'] -eq 1) {
                     # Get markup content
-                    $content = @( Get-Content -LiteralPath $pageCfg['filePath'] -ErrorAction Stop ) # Use -LiteralPath so that characters like '(', ')', '[', ']', '`', "'", '"' are supported. Or else we will get an error "Cannot find path 'xxx' because it does not exist"
+                    $content = @( Get-Content -LiteralPath $pageCfg['filePath'] -ErrorAction Stop -Encoding UTF8 ) # Use -LiteralPath so that characters like '(', ')', '[', ']', '`', "'", '"' are supported. Or else we will get an error "Cannot find path 'xxx' because it does not exist"
+                    
                     $content = @(
                         # If the page is not empty
                         if ($content.Count -gt 6) {

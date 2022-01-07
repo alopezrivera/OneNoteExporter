@@ -12,7 +12,7 @@ Function owo {
         Set-StrictMode -Version Latest
 
         # Fix encoding problems for languages other than English
-        $PSDefaultParameterValues['*:Encoding'] = 'utf8'
+        $PSDefaultParameterValues['*:Encoding'] = 'UTF-8'
 
         $totalerr = @()
 
