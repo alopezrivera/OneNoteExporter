@@ -34,6 +34,21 @@ As mentioned in the README,
 
 A way to automate this process would be good to have.
 
+### Encoding issue
+
+It would seem that at some point in the process, either the conversion from OneNote to Word, or from Word to whatever markup, content is being read with the wrong enconding. This generates unwanted characters in the final result such as
+
+* Â
+* Ã
+
+which are then removed in post-processing. Finding the source of this and removing the issue would be convenient to ensure OneWayOut works properly with any character set.
+
+### Running out of memory
+
+In the case of rather large collections, the system may run out of memory before finishing the process. Currently the best workaround for this is to save the generated Word files and start back up hoping for the best, or export the collection notebook by notebook.
+
+Flushing memory after, say, a notebook export is completed, or any other way to solve this problem would be very welcome.
+
 ---
 
 ## Adding Markup Packs
