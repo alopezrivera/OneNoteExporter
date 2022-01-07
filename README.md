@@ -82,6 +82,7 @@ Some notes:
 1. Open a PowerShell terminal at the directory containing the script and run it.
       * `.\owo.ps1`
 1. Sit back and wait until the process completes. To stop the process at any time, press Ctrl+C.
+1. **While running the conversion OneNote will be unusable**, as the Object Model might be interrupted if OneNote is used through the conversion process.
 
 ### Options
 
@@ -107,34 +108,30 @@ All of the following are configured from `config.ps1` (assuming you have renamed
   * markdown_mmd (MultiMarkdown)
   * markdown_phpextra (PHP Markdown Extra)
   * markdown_strict (original unextended Markdown)
-* Choose whether to include page timestamp and a separator at top of page
-  * Improved headers, with title now as a # heading, standardized DateTime format for created and modified dates, and horizontal line to separate from rest of document
-* Choose whether to remove double spaces between bullet points, non-breaking spaces from blank lines, and `>` after bullet lists, which are created when converting with Pandoc
+* Choose whether to use a default Markup Pack, a specific one, or none if you want to remove all post-processing (useful for debugging purposes).
+* Choose whether to include a page timestamp and separator at top of the page.
+* Choose whether to remove double spaces between numbered and unnumbered lists, excess whitespace after list markers, non-breaking spaces from blank lines, and `>` after bullet lists, created by Pandoc
 * Choose whether to remove `\` escape symbol that are created when converting with Pandoc
 * Choose whether to use Line Feed (LF) or Carriage Return + Line Feed (CRLF) for new lines
 * Choose whether to include a `.pdf` export alongside the `.md` file. `.md` does not preserve `InkDrawing` (i.e. overlayed drawings, highlights, pen marks) absolute positions within a page, but a `.pdf` export is a complete page snapshot that preserves `InkDrawing` absolute positions within a page.
-* Detailed logs. Run the script with `-Verbose` to see detailed logs of each page's conversion.
 
 ## Recommendations
 
-1. If you happen to collapse paragraphs in OneNote, consider installing Onetastic and the [attached macro](https://github.com/alopezrivera/owo/blob/master/Expand%20All%20Paragraphs%20in%20Notebook.xml), which will automatically expand any collapsed paragraphs in the notebook. They won't be exported otherwise.
+1. You may want to consider using VS Code and its embedded Powershell terminal, as this allows you to edit and run your configuration and check conversion results. To make things easier, consider setting `$notesdestpath` in `config.ps1` to a `notes` directory in the project while adjusting the settings to your preference.
+1. If you aren't actively editing your pages in OneNote, it is highly recommended that you don't delete the intermediate Word docs, as their generation takes a large part of runtime. They are stored in their own folder, out of the way. You can then quickly re-run the script with different parameters until you find what you like.
+1. If you happen to collapse paragraphs in OneNote, consider installing [Onetastic](https://getonetastic.com/download) and the [attached macro](https://github.com/alopezrivera/owo/blob/master/Expand%20All%20Paragraphs%20in%20Notebook.xml), which will automatically expand any collapsed paragraphs in the notebook. They won't be exported otherwise.
    * To install the macro, click the New Macro Button within the Onetastic Toolbar and then select File -> Import and select the .xml macro included in the release.
    * Run the macro for each Notebook that is open
-1. It is highly recommended that you use VS Code and its embedded Powershell terminal, as this allows you to edit and run your configuration and check conversion results. To make things easier, consider setting `$notesdestpath` in `config.ps1` to a `notes` directory in the project while adjusting the settings to your preference.
-1. If you aren't actively editing your pages in OneNote, it is HIGHLY recommended that you don't delete the intermediate Word docs, as they take 80+% of the time to generate. They are stored in their own folder, out of the way. You can then quickly re-run the script with different parameters until you find what you like.
 
 ## Known Issues
 
-As reported in [ConvertOneNote2Markdown](https://github.com/theohbrothers/ConvertOneNote2Markdown):
+1. If you collection is rather large, your computer may **run out of memory** before finishing the process. It is very highly recommended that you save the Word files produced so you can start back up with minimal loss of time. In case this becomes a serious problem and you cannot easily continue, consider exporting your collection **notebook by notebook** (check your `config.ps1`).
 
-1. **While running the conversion OneNote will be unusable**. It is recommended to 'walk away' and have some coffee as the Object Model might be interrupted if you do anything else.
-1. If there are any collapsed paragraphs in your pages, the collapsed/hidden paragraphs will not be exported
-    * You can use the included Onetastic Macro script to automatically expand all paragraphs in each Notebook
-    * [Download Onetastic here](https://getonetastic.com/download) and, once installed, use New Macro-> File-> Import to install the attached .xml macro file within Onetastic
+Furthermore, as reported in [ConvertOneNote2Markdown](https://github.com/theohbrothers/ConvertOneNote2Markdown):
+
 1. Password protected sections should be unlocked before continuing, the Object Model does not have access to them if you don't
 1. You should start by 'flattening' all `InkDrawing` (i.e. pen/hand written elements) in your onennote pages. Because OneNote does not have this function you will have to take screenshots of your pages with pen/hand written notes and paste the resulting image and then remove the scriblings. If you are a heavy 'pen' user this is a very cumbersome.
    * Alternatively, if you are converting a notebook only for reading sake, and want to preserve all of your notes' layout, instead of flattening all `InkDrawing` manually you may prefer to export a  `.pdf` which preserves the full apperance and layout of the original note (including `InkDrawing`). Simply use the config option `$exportPdf = 2` to export a `.pdf` alongisde the markup file.
-1. Linked file objects in markup files are clickable in VSCode, but do not open in their associated program, you will have to open the files directly from the file system.
 
 ---
 
