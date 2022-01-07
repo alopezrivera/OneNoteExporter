@@ -21,6 +21,10 @@ Contributions of any kind are than welcome. Below you can find urgently needed f
 
 ## Features
 
+### Better picture export
+
+Currently, pictures in your notes are exported at fairly low resolution. Retrieving the pictures at their original resolution would be ideal.
+
 ### Better `InkDrawing` export
 
 As mentioned in the README,
