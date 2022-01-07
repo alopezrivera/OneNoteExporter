@@ -156,9 +156,9 @@ Function OrgPack1
                 }
             }
         }
-        # Remove enconding error artifacts
+        # Remove encoding error artifacts
         @{
-            description = 'Remove OneNote export artifacts'
+            description = 'Remove encoding error artifacts'
             replacements = @(
                 @{
                     searchRegex = "\n[$( [char]0x00C3 )$( [char]0x201A )$( [char]0x00C2 )]{1,}"
