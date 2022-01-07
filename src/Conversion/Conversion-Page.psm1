@@ -242,13 +242,21 @@ Function Convert-OneNotePage {
                     ) -join "`n"
                 }
 
-                # Mutate
+                # For each of the post-processing routines
                 foreach ($m in $pageCfg['mutations']) {
                     foreach ($r in $m['replacements']) {
                         try {
-                            "Mutation of markup: $( $m['description'] ). Regex: '$( $r['searchRegex'] )', Replacement: '$( $r['replacement'].Replace("`r", '\r').Replace("`n", '\n') )'" | Write-Verbose
                             if ($config['dryRun']['value'] -eq 1) {
-                                $content = $content -replace $r['searchRegex'], $r['replacement']
+                                # Search and replace if provided
+                                if ($r.ContainsKey('searchRegex') -And $r.ContainsKey('replacement')) {
+                                    "Post-processing routine: $( $m['description'] ). Regex: '$( $r['searchRegex'] )', Replacement: '$( $r['replacement'].Replace("`r", '\r').Replace("`n", '\n') )'" | Write-Verbose
+                                    $content = $content -replace $r['searchRegex'], $r['replacement']
+                                }
+                                # Execute `postprocessing` scriptblock if provided
+                                if ($r.ContainsKey('postprocessing')) {
+                                    "Post-processing routine: $( $m['description'] ). Executing `postprocessing` scriptblock." | Write-Verbose
+                                    $content = &$r['postprocessing'] $content
+                                }
                             }
                         }catch {
                             Write-Error "Failed to mutating markup content with mutation '$( $m['description'] )': $( $_.Exception.Message )"
@@ -258,6 +266,10 @@ Function Convert-OneNotePage {
                 
                 # Remove trailing newlines
                 $content = $content.Trim()
+
+                Import-Module .\debugging\String.psm1
+
+                $content | Write-StringRaw
                 
                 if ($config['dryRun']['value'] -eq 1) {
                     Set-ContentNoBom -LiteralPath $pageCfg['filePath'] -Value $content -ErrorAction Stop # Use -LiteralPath so that characters like '(', ')', '[', ']', '`', "'", '"' are supported. Or else we will get an error "Cannot find path 'xxx' because it does not exist"
