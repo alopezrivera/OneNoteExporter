@@ -68,7 +68,12 @@ $medialocation = 1
 $conversion = 'org-simple_tables-multiline_tables-grid_tables+pipe_tables'
 
 # Specify a custom Markup Pack to override default
-$markupPack = 'none'
+# Options:
+#   <empty string>      - Process with default Markup Pack
+#   none                - Don't apply any post-processing (for debugging purposes)
+#   OrgPack1            - Org Mode pack shipping with OneWayOut
+#   MarkdownPack1       - Markdown pack shipping with OneWayOut
+$markupPack = ''
 
 # Whether to include page timestamp and separator at top of document
 # 1: Include - Default

@@ -67,7 +67,7 @@ Function Get-MarkupPack
     )
 
     # If no specific Markup Pack has been specified in config.ps1
-    if ($config['markupPack']['value'] -eq 'none') {
+    if ($config['markupPack']['value'] -eq '') {
         # Markup packs hastable
         $markupPacks = @{
             org = 'OrgPack1';
@@ -80,7 +80,10 @@ Function Get-MarkupPack
         $markupPack = $markupPacks[$extension]
 
     }
-    # Otherwise, return Markup Pack specified in config.ps1
+    # If no post-processing is desired, return 'none'
+    elseif ($config['markupPack']['value'] -eq 'none') {
+        $markupPack = 'none'
+    }
     else
     {
         $markupPack = $config['markupPack']['value']

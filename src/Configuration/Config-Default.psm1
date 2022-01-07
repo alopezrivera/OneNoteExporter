@@ -111,10 +111,15 @@ Default:
         }
         markupPack = @{
             description = @'
-Specify a custom Markup Pack to override default
+# Specify a custom Markup Pack to override default
+# Options:
+#   <empty string>      - Process with default Markup Pack
+#   none                - Don't apply any post-processing (for debugging purposes)
+#   OrgPack1            - Org Mode pack shipping with OneWayOut
+#   MarkdownPack1       - Markdown pack shipping with OneWayOut
 '@
-            default = 'none'
-            value = 'none'
+            default = ''
+            value = ''
         }
         headerTimestampEnabled = @{
             description = @'

@@ -314,7 +314,13 @@ Function New-SectionGroupConversionConfig {
 
                         # Choose the default Markup Pack for the format being converted to, or any other manually specified in config.sp1 if that is the case
                         $markupPack = Get-MarkupPack $config $pageCfg
-                        $pageCfg['mutations'] = &$markupPack $config $pageCfg
+
+                        if ($markupPack -ne 'none') {
+                            $pageCfg['mutations'] = &$markupPack $config $pageCfg
+                        }else{
+                            # If no post-processing is desired, return an empty array
+                            $pageCfg['mutations'] = @()
+                        }
 
                         # The directories to be created. These directories should never hit the absolute path, file name, or directory name limits on Windows
                         $pageCfg['directoriesToCreate'] = @(
