@@ -11,11 +11,23 @@ Contributions of any kind are than welcome. Below you can find urgently needed f
 
 ### Table of Contents
 
+[**Issues**](#issues)
+
 [**Features**](#improvements)
 
 [**Adding Markup Packs**](#adding-markup-packs)
 
 [**Adding support for new markup formats**](#adding-support-for-new-markup-formats)
+
+---
+
+## Issues
+
+### Running out of memory
+
+In the case of rather large collections, the system may run out of memory before finishing the process. Currently the best workaround for this is to save the generated Word files and start back up hoping for the best, or export the collection notebook by notebook.
+
+Flushing memory after, say, a notebook export is completed, or any other way to solve this problem would be very welcome.
 
 ---
 
@@ -33,21 +45,6 @@ As mentioned in the README,
   * Alternatively, if you are converting a notebook only for reading sake, and want to preserve all of your notes' layout, instead of flattening all `InkDrawing` manually you may prefer to export a  `.pdf` which preserves the full apperance and layout of the original note (including `InkDrawing`). Simply use the config option `$exportPdf = 2` to export a `.pdf` alongisde the markup file.
 
 A way to automate this process would be good to have.
-
-### Encoding issue
-
-It would seem that at some point in the process, either the conversion from OneNote to Word, or from Word to whatever markup, content is being read with the wrong enconding. This generates unwanted characters in the final result such as
-
-* Â
-* Ã
-
-which are then removed in post-processing. Finding the source of this and removing the issue would be convenient to ensure OneWayOut works properly with any character set.
-
-### Running out of memory
-
-In the case of rather large collections, the system may run out of memory before finishing the process. Currently the best workaround for this is to save the generated Word files and start back up hoping for the best, or export the collection notebook by notebook.
-
-Flushing memory after, say, a notebook export is completed, or any other way to solve this problem would be very welcome.
 
 ---
 
