@@ -39,8 +39,8 @@ Whether to create new word .docx or reuse existing ones
 1: Always create new .docx files - Default
 2: Use existing .docx files (90% faster)
 '@
-            default = 1
-            value = 1
+            default = 2
+            value = 2
             validateRange = 1,2
         }
         keepdocx = @{
@@ -49,8 +49,8 @@ Whether to discard word .docx after conversion
 1: Discard intermediate .docx files - Default
 2: Keep .docx files
 '@
-            default = 1
-            value = 1
+            default = 2
+            value = 2
             validateRange = 1,2
         }
         docxNamingConvention = @{
@@ -79,8 +79,8 @@ Specify a value between 32 and 255 as the maximum length of markdown file names,
 NOTE: If you are using prefixes for subpages (e.g. Page_Subpage.md), it is recommended to set this to at 100 or more.
 Default: 32
 '@
-            default = 32
-            value = 32
+            default = 255
+            value = 255
             validateRange = 32,255
         }
         medialocation = @{
@@ -106,8 +106,8 @@ Examples:
 Default:
   markdown-simple_tables-multiline_tables-grid_tables+pipe_tables
 '@
-            default = 'markdown-simple_tables-multiline_tables-grid_tables+pipe_tables'
-            value = 'markdown-simple_tables-multiline_tables-grid_tables+pipe_tables'
+            default = 'org-simple_tables-multiline_tables-grid_tables+pipe_tables'
+            value = 'org-simple_tables-multiline_tables-grid_tables+pipe_tables'
         }
         markupPack = @{
             description = @'
