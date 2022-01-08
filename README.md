@@ -87,7 +87,7 @@ Some notes:
 1. Open a PowerShell terminal at the directory containing the script and run it.
       * `.\owo.ps1`
 1. Sit back and wait until the process completes. To stop the process at any time, press Ctrl+C.
-1. **While running the conversion OneNote will be unusable**, as the Object Model might be interrupted if OneNote is used through the conversion process.
+* **While running the conversion OneNote will be unusable**, as the Object Model might be interrupted if OneNote is used through the conversion process.
 
 ### Options
 
