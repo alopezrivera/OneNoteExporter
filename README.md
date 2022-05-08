@@ -1,4 +1,4 @@
-# owo
+# `o`(ne)`w`(ay)`o`(out)
 
 `owo` allows you to transform all your OneNote notes into Emacs Org Mode, or any other [Pandoc-supported Markdown](https://pandoc.org/), using the OneNote Object Model and Pandoc. Say farewell to OneNote or back up your notes, in plain text [tailored for you](#introduction)!
 
