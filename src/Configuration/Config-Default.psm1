@@ -121,7 +121,7 @@ Default:
             default = ''
             value = ''
         }
-        headerTimestampEnabled = @{
+        headerTimestamp = @{
             description = @'
 Whether to include page timestamp and separator at top of document
 1: Include - Default
@@ -131,22 +131,22 @@ Whether to include page timestamp and separator at top of document
             value = 1
             validateRange = 1,2
         }
-        keepspaces = @{
+        keepEscape = @{
             description = @'
-Whether to clear double spaces between bullets, non-breaking spaces from blank lines, and '>` after bullet lists
-1: Clear double spaces in bullets - Default
-2: Keep double spaces
+Whether to remove escape symbols from markup files. See: https://pandoc.org/MANUAL.html#backslash-escapes
+1: Remove all '\' characters  - Default
+2: Remove all '\' characters except those preceding alphanumeric characters
+3: Keep '\' symbol escape
 '@
             default = 1
             value = 1
-            validateRange = 1,2
+            validateRange = 1,3
         }
-        keepescape = @{
+        keepEmptyListItems = @{
             description = @'
-Whether to clear escape symbols from md files. See: https://pandoc.org/MANUAL.html#backslash-escapes
-1: Clear all '\' characters  - Default
-2: Clear all '\' characters except those preceding alphanumeric characters
-3: Keep '\' symbol escape
+Whether to delete empty list items in your notes.
+1: Remove empty list items  - Default
+2: Keep empty list items
 '@
             default = 1
             value = 1
@@ -162,7 +162,7 @@ Whether to use Line Feed (LF) or Carriage Return + Line Feed (CRLF) for new line
             value = 1
             validateRange = 1,2
         }
-        exportPdf = @{
+        exportPDF = @{
             description = @'
 Whether to include a PDF export alongside the markdown file
 1: Don't include PDF - Default
