@@ -1,6 +1,6 @@
 # `owo`
 
-`owo` (as in `o`ne`w`ay`o`ut) is a PowerShell program to transform all your OneNote notes to Emacs Org Mode and any other [Pandoc-supported markup](https://pandoc.org/) using the OneNote Object Model and Pandoc.
+`owo` (as in the `o`ne`w`ay`o`ut of here) is a PowerShell program to transform all your OneNote notes to Emacs Org Mode and any other [Pandoc-supported markup](https://pandoc.org/) using the OneNote Object Model and Pandoc.
 
 ---
 
@@ -24,7 +24,7 @@
 
 ## Introduction
 
-`owo` exports OneNote pages to Word using the OneNote Object Model, and uses Pandoc to convert them to your markup format of choice. [**Markup Packs**](https://github.com/alopezrivera/owo/tree/master/src/Conversion/Markup-Packs) are then used to customize the result. Markup Packs are *markup-format-specific* **functions** containing search and replace queries executed at runtime against the text output by Pandoc to tailor it to our desires. If search and replace doesn't cut it, you can add a `postprocessing` scriptblock to increase your freedom. Markup Packs give you fine-grained control over of all elements of your notes, including
+`owo` exports OneNote pages to Word using the OneNote Object Model, and then Pandoc to convert them to your markup format of choice. [**Markup Packs**](https://github.com/alopezrivera/owo/tree/master/src/Conversion/Markup-Packs) are then used to customize the result. Markup Packs are *markup-format-specific* **functions** containing search and replace queries executed at runtime against the text output by Pandoc to tailor it to our desires. If search and replace doesn't cut it, you can add a `postprocessing` scriptblock to increase your freedom. Markup Packs give you fine-grained control over of all elements of your notes, including
 
 * Headers
 * Metadata (eg: note creation date)
@@ -44,7 +44,7 @@ As long as Pandoc supports your desired output format, all `owo` needs to shine 
 
 ![OneNote test note along Org Mode and markdown exports](test/test.png)
 
-You can see the actual test results in the `test` directory (Word file to which the test note was exported, and Org Mode and markdown conversion). I have attempted to identify all unsupported syntax, you can see it as it you would in OneNote in the Word file, and the export (failures) in the Org Mode and markdown files.
+You can see the actual test results in the [`test` directory](https://github.com/alopezrivera/owo/tree/master/test) (as well as the Word file to which the test note was exported). I have attempted to identify all unsupported syntax, which can see it as it you would in OneNote at the bottom of the [test Word file](https://github.com/alopezrivera/owo/blob/master/test/test.docx), and the respective export (failure) in the [Org Mode](https://github.com/alopezrivera/owo/blob/master/test/owo-test.org) and [markdown](https://github.com/alopezrivera/owo/blob/master/test/owo-test.md) conversions.
 
 As you can see in the image above, the Markup Packs shipping for Org Mode and markdown (`OrgPack1` and `MarkdownPack1` respectively) will give your notes:
 
