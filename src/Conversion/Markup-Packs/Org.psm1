@@ -59,71 +59,38 @@ Function OrgPack1
                 }
             )
         }
-        @{
-            description = 'Separate numbered and unnumbered lists'
-            replacements = @(
-                @{
-                    searchRegex = '(?<=\n[0-9]+. .*?)(\n)(?=\n-)'
-                    replacement = "`n`n"
-                }
-                @{
-                    searchRegex = '(?<=\n- .*?)(\n)(?=\n[0-9]+.)'
-                    replacement = "`n`n"
-                }
-            )
-        }
-        if ($config['keepspaces']['value'] -eq 1 ) {
         ###############################################################
         #                          OPTIONAL                           #
         ###############################################################
+        if ($config['keepEmptyListItems']['value'] -eq 1) {
             @{
-                description = 'Clear double spaces from bullets and non-breaking spaces spaces from blank lines'
+                description = 'Remove empty list items'
                 replacements = @(
                     @{
-                        searchRegex = [regex]::Escape([char]0x00A0)
+                        searchRegex = "\n[ ]*- $([char]0x00A0)\n"
                         replacement = ''
                     }
-                    # Remove triple spaces
                     @{
-                        searchRegex = '(?<=\n)(\n)(?=\n)'
-                        replacement = ''
-                    }
-                    # Remove double newlines after unnumbered list items
-                    @{
-                        searchRegex = '(?<=\n\s*- .*?)(\n)(?=\n\s*-)'
-                        replacement = ''
-                    }
-                    # Remove double newlines after numbered list items
-                    @{
-                        searchRegex = '(?<=\n\s*[0-9]+. .*?)(\n)(?=\n\s*[0-9]+.)'
-                        replacement = ''
-                    }
-                    # Remove double newlines after indented paragraphs
-                    @{
-                        searchRegex = '(?<=\n\s{2,}[^-0-9\.]*?)(\n)(?=\n)'
-                        replacement = ''
-                    }
-                    # Remove all '>' occurrences immediately following bullet lists
-                    @{
-                        searchRegex = '\n>[ ]*'
-                        replacement = "`n"
-                    }
-                    # Remove extra newline before inline pictures
-                    @{
-                        searchRegex = '\n(?=\n\[\[.*?\]\])'
-                        replacement = ''
-                    }
-                    # Remove extra newline before inline tables
-                    @{
-                        searchRegex = '\n(?=\n\|.*?\|)'
+                        searchRegex = "\n[ ]*[0-9]+. $([char]0x00A0)\n"
                         replacement = ''
                     }
                 )
             }
         }
-        if ($config['keepescape']['value'] -eq 1) {
+        if ($config['newlineCharacter']['value'] -eq 1) {
             @{
-                description = "Clear all '\' characters"
+                description = "Use LF for newlines"
+                replacements = @(
+                    @{
+                        searchRegex = '\r*\n'
+                        replacement = "`n"
+                    }
+                )
+            }
+        }
+        if ($config['keepEscape']['value'] -eq 1) {
+            @{
+                description = "Remove all '\' characters"
                 replacements = @(
                     @{
                         searchRegex = [regex]::Escape('\')
@@ -132,9 +99,9 @@ Function OrgPack1
                 )
             }
         }
-        elseif ($config['keepescape']['value'] -eq 2) {
+        elseif ($config['keepEscape']['value'] -eq 2) {
             @{
-                description = "Clear all '\' characters except those preceding alphanumeric characters"
+                description = "Remove all '\' characters except those preceding alphanumeric characters"
                 replacements = @(
                     @{
                         searchRegex = '\\([^A-Za-z0-9])'
@@ -143,44 +110,47 @@ Function OrgPack1
                 )
             }
         }
-        & {
-            if ($config['newlineCharacter']['value'] -eq 1) {
         ###############################################################
         #                     CONVERSION ARTIFACTS                    #
         ###############################################################
+        @{
+            description = 'Remove extra newline after list items and indented paragraphs'
+            replacements = @(
+                # Remove double newlines within unordered lists
                 @{
-                    description = "Use LF for newlines"
-                    replacements = @(
-                        @{
-                            searchRegex = '\r*\n'
-                            replacement = "`n"
-                        }
-                    )
+                    searchRegex = '(?<=\n[ ]*- .*?)(\n)(?=\n[ ]*-)'
+                    replacement = ''
                 }
-            }
-            else {
+                # Remove double newlines within ordered lists
                 @{
-                    description = "Use CRLF for newlines"
-                    replacements = @(
-                        @{
-                            searchRegex = '\r*\n'
-                            replacement = "`r`n"
-                        }
-                    )
+                    searchRegex = '(?<=\n[ ]*[0-9]+. .*?)(\n)(?=\n[ ]*[0-9]+.)'
+                    replacement = ''
                 }
-            }
-            # Remove any empty QUOTEs
-            @{
-                description = 'Remove empty QUOTES'
-                replacements = @(
-                    @{
-                        searchRegex = '\n#\+BEGIN_QUOTE\n\s*\n#\+END_QUOTE'
-                        replacement = ''
-                    }
-                )
-            }
+                # Remove double newlines after indented paragraphs
+                @{
+                    searchRegex = '(?<=[ ]{2,}([^- 0-9.\n]{2}).*\n)(\n)(\n*)'
+                    replacement = '$3'
+                }
+            )
         }
-        
+        @{
+           description = 'Remove non-breaking spaces from blank lines'
+           replacements = @(
+                @{
+                    searchRegex = "(?<=\n)($([char]0x00A0)\n\n)"
+                    replacement = ''
+                }
+            )
+        }
+        @{
+            description = 'Remove empty QUOTES'
+            replacements = @(
+                @{
+                    searchRegex = '\n#\+BEGIN_QUOTE\n\s*\n#\+END_QUOTE'
+                    replacement = ''
+                }
+            )
+        }
     )
 
     $markupPack
