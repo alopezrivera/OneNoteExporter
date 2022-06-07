@@ -115,7 +115,7 @@ Function Convert-OneNotePage {
             }
 
             # Publish OneNote page to PDF, don't proceed if it fails
-            if ($config['exportPdf']['value'] -eq 2) {
+            if ($config['exportPDF']['value'] -eq 2) {
                 if (! (Test-Path -LiteralPath $pageCfg['pdfExportFilePath']) ) {
                     try {
                         "Publishing new PDF file: $( $pageCfg['pdfExportFilePath'] )" | Write-Verbose
@@ -279,7 +279,7 @@ Function Convert-OneNotePage {
                 Write-Error "Error while mutating markup content: $( $_.Exception.Message )"
             }
 
-            "Markdown file ready: $( $pageCfg['filePathNormal'] )" | Write-Host -ForegroundColor Green
+            "Markup file ready: $( $pageCfg['filePathNormal'] )" | Write-Host -ForegroundColor Green
 
         }catch {
             Write-Host "Failed to convert page: $( $pageCfg['pathFromRoot'] ). Reason: $( $_.Exception.Message )" -ForegroundColor Red
