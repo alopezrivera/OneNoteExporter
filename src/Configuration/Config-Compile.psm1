@@ -50,7 +50,7 @@ Function Compile-Configuration {
         `n================================================================================
         `nNo configuration file found. Please rename 'config example.ps1' to 'config.ps1'. 
         `nConsider reading through the available configuration options as well.
-        `nFor more information, visit: https://github.com/alopezrivera/OneUp#usage
+        `nFor more information, visit: https://github.com/alopezrivera/owo#usage
         `n================================================================================
         `n"
     }
