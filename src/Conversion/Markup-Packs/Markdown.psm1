@@ -18,6 +18,9 @@ Function MarkdownPack1
     # Markup output formatting using search and replace queries against a string containing the entire markup content.
 
     $markupPack = @(
+        ###############################################################
+        #                           CONTENT                           #
+        ###############################################################
         foreach ($attachmentCfg in $pageCfg['insertedAttachments']) {
             @{
                 description = 'Change inserted attachment(s) filename references'
@@ -132,6 +135,9 @@ Function MarkdownPack1
                     @{
                         # When regex doesn't cut it
                         postprocessing = {
+        ###############################################################
+        #                     CONVERSION ARTIFACTS                    #
+        ###############################################################
 
                             $content = $args[0]
                             $lines = $content.Split("`n")

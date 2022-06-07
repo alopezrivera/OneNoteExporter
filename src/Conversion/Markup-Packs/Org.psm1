@@ -18,6 +18,9 @@ Function OrgPack1
     # Markup output formatting using search and replace queries against a string containing the entire markup content.
 
     $markupPack = @(
+        ###############################################################
+        #                           CONTENT                           #
+        ###############################################################
         foreach ($attachmentCfg in $pageCfg['insertedAttachments']) {
             @{
                 description = 'Change inserted attachment(s) filename references'
@@ -70,6 +73,9 @@ Function OrgPack1
             )
         }
         if ($config['keepspaces']['value'] -eq 1 ) {
+        ###############################################################
+        #                          OPTIONAL                           #
+        ###############################################################
             @{
                 description = 'Clear double spaces from bullets and non-breaking spaces spaces from blank lines'
                 replacements = @(
@@ -139,6 +145,9 @@ Function OrgPack1
         }
         & {
             if ($config['newlineCharacter']['value'] -eq 1) {
+        ###############################################################
+        #                     CONVERSION ARTIFACTS                    #
+        ###############################################################
                 @{
                     description = "Use LF for newlines"
                     replacements = @(
