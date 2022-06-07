@@ -51,8 +51,8 @@ Function OrgPack1
                         $heading = "#+title:$( $pageCfg['object'].name )"
                         $creationDate = $pageCfg['dateTime']
                         $creationDay = $creationDate.DayOfWeek.ToString()
-                        if ($config['headerTimestampEnabled']['value'] -eq 1) {
-                            $heading += "`n#+CREATED: $( $creationDate.ToString('<yyyy-MM-dd') ) $( $creationDay.Substring(0, 3) ) $( $creationDate.ToString('HH:mm>') )"
+                        if ($config['headerTimestamp']['value'] -eq 1) {
+                            $heading += "`n#+CREATED: $( $creationDate.ToString('<yyyy-MM-dd') ) $( $creationDay.Substring(0, 3) ) $( $creationDate.ToString('HH:mm>') )`n`n"
                         }
                         $heading
                     }
