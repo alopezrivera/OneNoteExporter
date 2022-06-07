@@ -1,12 +1,6 @@
-# `o`ne`w`ay`o`ut
+# `owo`
 
-`owo` allows you to transform all your OneNote notes into Emacs Org Mode, or any other [Pandoc-supported Markdown](https://pandoc.org/), using the OneNote Object Model and Pandoc. Say farewell to OneNote or back up your notes, in plain text [tailored for you](#introduction)!
-
-`owo` is built on the foundation of [ConvertOneNote2Markdown](https://github.com/theohbrothers/ConvertOneNote2Markdown), by
-
-* [SjoerdV](https://github.com/SjoerdV)
-* [nixsee](https://github.com/nixsee/)
-* [theohbrothers](https://github.com/theohbrothers)
+`owo` (as in `o`ne`w`ay`o`ut) is a PowerShell program to transform all your OneNote notes to Emacs Org Mode and any other [Pandoc-supported markup](https://pandoc.org/) using the OneNote Object Model and Pandoc.
 
 ---
 
@@ -24,6 +18,8 @@
 
 [**Known Issues**](#known-issues)
 
+[**Attribution**](#attribution)
+
 ---
 
 ## Introduction
@@ -34,7 +30,7 @@
 * Metadata (eg: note creation date)
 * Other markup elements such as horizontal lines, custom indentations and formatting, and whatever else you might be able to conjure up with the text in your notes
 
-`owo` currently ships Markup Packs for [Emacs Org Mode](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Org.psm1) (`OrgPack1`) and [Markdown](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Markdown.psm1) (`MarkDownPack1`).
+`owo` currently ships Markup Packs for [Emacs Org Mode](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Org.psm1) (`OrgPack1`) and [markdown](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/markdown.psm1) (`MarkDownPack1`).
 
 ### What is being exported?
 
@@ -42,24 +38,26 @@
 
 ### Customizing output and adding support for further export formats
 
-As long as Pandoc supports your desired output format, all `owo` needs to shine is a Markup Pack to tailor the output to your tastes. [CONTRIBUTING.md](https://github.com/alopezrivera/owo/blob/master/CONTRIBUTING.md) has the pointers you need to write your own Markup Packs, add support for other Markup formats, and more.
+As long as Pandoc supports your desired output format, all `owo` needs to shine is a Markup Pack to tailor the output to your tastes. [CONTRIBUTING.md](https://github.com/alopezrivera/owo/blob/master/CONTRIBUTING.md) has the pointers you need to write your own Markup Packs, add support for other Markup formats and more.
 
 ## Results
 
-![OneNote test note along Org Mode and Markdown exports](results.png)
+![OneNote test note along Org Mode and markdown exports](test/test.png)
 
-As you can see above, the Markup Packs shipping for Org Mode and Markdown will provide you with
+You can see the actual test results in the `test` directory (Word file to which the test note was exported, and Org Mode and markdown conversion). I have attempted to identify all unsupported syntax, you can see it as it you would in OneNote in the Word file, and the export (failures) in the Org Mode and markdown files.
 
-* Note creation metadata (in the case of Org Mode, in its standard date format)
-* Correctly rendered lists and nested lists, numbered and unnumbered
-* Correctly rendered indented paragraphs
-* All while cleaning the output of artifacts, excess newlines, etc
+As you can see in the image above, the Markup Packs shipping for Org Mode and markdown (`OrgPack1` and `MarkdownPack1` respectively) will give your notes:
+
+* Note creation data (in the case of Org Mode in its timestamp format)
+* Correctly rendered lists, numbered and unnumbered, as well as indented paragraphs
+* And finally clean the output of export artifacts, excess newlines, etc
 
 Some notes:
 
 * As expected, elaborate formatting doesn't survive export
-* Underscored text is annotated as such in Markdown, but does not render correctly (at least in VSCode)
+* Underscored text is annotated as such in markdown, but does not render correctly (at least in VSCode)
 * Images resized within OneNote are rendered with an annotation to that effect. This may cause them not to render correctly (tested on VSCode)
+* Unfortunately support for markdown lags behind that for Org Mode (eg: removal of empty list items). I haven't got the time to polish it, and neither the need. If you do please feel free to contribute!
 
 ## Requirements
 
@@ -83,7 +81,7 @@ Some notes:
 
 1. Clone this repository
 1. Start the OneNote desktop application
-1. Rename `config.example.ps1` to `config.ps1` and configure options in `config.ps1` to your liking.
+1. Rename `config_example.ps1` to `config.ps1` and configure the available options to your liking.
 1. Open a PowerShell terminal at the directory containing the script and run it.
       * `.\owo.ps1`
 1. Sit back and wait until the process completes. To stop the process at any time, press Ctrl+C.
@@ -105,14 +103,14 @@ All of the following are configured from `config.ps1` (assuming you have renamed
 * Choose between **discarding or keeping intermediate Word files**. Intermediate Word files are stored in a central notebook folder.
 * Choose between converting from existing `.docx` (90% faster) and creating new ones - useful if just want to test differences in the various processing options without generating new `.docx` each time
 * Choose between naming `.docx` files using page ID and last modified epoch date e.g. `{somelongid}-1234567890.docx` or hierarchy e.g. `<sectiongroup>-<section>-<page>.docx`
-* **Input the Pandoc call, including conversion format and any extensions**, defaulting to Pandoc Markdown format which strips most HTML from tables and using pipe tables. [See more details on these options here](https://pandoc.org/MANUAL.html#options). Default configurations are provided in `config example.ps1`. The following formats are accepted, among others:
+* **Input the Pandoc call, including conversion format and any extensions**, defaulting to Pandoc markdown format which strips most HTML from tables and using pipe tables. [See more details on these options here](https://pandoc.org/MANUAL.html#options). Default configurations are provided in `config example.ps1`. The following formats are accepted, among others:
   * org (Emacs Org Mode)
-  * markdown (Pandoc’s Markdown)
-  * commonmark (CommonMark Markdown)
-  * gfm (GitHub-Flavored Markdown), or the deprecated and less accurate markdown_github; use markdown_github only if you need extensions not supported in gfm.
-  * markdown_mmd (MultiMarkdown)
-  * markdown_phpextra (PHP Markdown Extra)
-  * markdown_strict (original unextended Markdown)
+  * markdown (Pandoc’s markdown)
+  * commonmark (CommonMark markdown)
+  * gfm (GitHub-Flavored markdown), or the deprecated and less accurate markdown_github; use markdown_github only if you need extensions not supported in gfm.
+  * markdown_mmd (Multimarkdown)
+  * markdown_phpextra (PHP markdown Extra)
+  * markdown_strict (original unextended markdown)
 * Choose whether to use a **default Markup Pack, a specific one, or none** if you want to remove all post-processing (useful for debugging purposes).
 * Choose whether to include a page timestamp and separator at top of the page.
 * Choose whether to remove double spaces between numbered and unnumbered lists, excess whitespace after list markers, non-breaking spaces from blank lines, and `>` after bullet lists, created by Pandoc
@@ -134,10 +132,18 @@ All of the following are configured from `config.ps1` (assuming you have renamed
 1. Inline image paths are relative. In some editors, this can cause the images to not render, even if the links are clickable (tested on VSCode).
 1. If you collection is rather large, your computer may **run out of memory** before finishing the process. It is very highly recommended that you save the Word files produced so you can start back up with minimal loss of time. In case this becomes a serious problem and you cannot easily continue, consider exporting your collection **notebook by notebook** (check your `config.ps1`).
 
-Furthermore, as reported in [ConvertOneNote2Markdown](https://github.com/theohbrothers/ConvertOneNote2Markdown):
+Furthermore, as reported in [ConvertOneNote2markdown](https://github.com/theohbrothers/ConvertOneNote2markdown):
 
 3. You should start by 'flattening' all `InkDrawing` (i.e. pen/hand written elements) in your onennote pages. Because OneNote does not have this function you will have to take screenshots of your pages with pen/hand written notes and paste the resulting image and then remove the scriblings. If you are a heavy 'pen' user this is a very cumbersome.
    * Alternatively, if you are converting a notebook only for reading sake, and want to preserve all of your notes' layout, instead of flattening all `InkDrawing` manually you may prefer to export a  `.pdf` which preserves the full apperance and layout of the original note (including `InkDrawing`). Simply use the config option `$exportPdf = 2` to export a `.pdf` alongisde the markup file.
+
+## Attribution
+
+`no` is built on the base of [ConvertOneNote2markdown](https://github.com/theohbrothers/ConvertOneNote2markdown), by
+
+* [SjoerdV](https://github.com/SjoerdV)
+* [nixsee](https://github.com/nixsee/)
+* [theohbrothers](https://github.com/theohbrothers)
 
 ---
 
