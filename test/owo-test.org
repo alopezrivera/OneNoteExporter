@@ -1,0 +1,95 @@
+#+title:owo test
+#+CREATED: <2022-01-04 Tue 23:05>
+
+
+
+*Bold,* /italic/ and underscored text.
+
+Formatted text.
+
+_LISTS_
+
+*Unordered:*
+
+- Bulleted list item
+  Paragraph below list item
+  Second paragraph below list item
+
+- Second bullet
+  - Child bullet
+    Paragraph at deeper indent level
+  - Child bullet separated by line break
+    - Third
+    - Fourth
+  - Deindented bullet
+
+*Ordered:*
+
+1. Numbered list item
+2. Second numbered item
+   Indented paragraph under numbered list item
+   1. Child numbered item
+   2. Second child numbered item
+      1. ...
+         1. ...
+            1. ...
+
+Empty list items are deleted, such as the ones (not) seen below.
+
+_TABLES_
+
+| a   | b   | c   |
+|-----+-----+-----|
+| 1   | 4   | 7   |
+| 2   | 5   | 8   |
+| 3   | 6   | 9   |
+
+_FIGURES_
+
+[[../media/General-owo-test-image1.jpeg]]
+
+_UNSUPPORTED_
+
+*Indented paragraph separated by line break*
+
+Issues:
+
+*+* Blank lines afterwards not conserved
+
+- _
+  
+  *<HERE>*
+< --- >
+
+*Deindented bullet after blank line*
+
+Issues:
+
+*+* Indentation not conserved
+
+- _
+  - _
+    - _
+
+
+- *<HERE>*
+
+< --- >
+
+*Deindented bullet after indented paragraph*
+
+Issues:
+
+*+* Paragraph content wrapped in #+QUOTE
+
+*+* Indentation not conserved
+
+- _
+  - _
+    - _
+
+#+BEGIN_QUOTE
+  _
+#+END_QUOTE
+
+- *<HERE>*
