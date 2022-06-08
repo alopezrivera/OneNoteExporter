@@ -27,6 +27,9 @@ Function MyMarkupPack
     # Markup output formatting using search and replace queries against a string containing the entire markup content.
 
     $markupPack = @(
+        ###############################################################
+        #                           CONTENT                           #
+        ###############################################################
         foreach ($attachmentCfg in $pageCfg['insertedAttachments']) {
             @{
                 description = 'Change inserted attachment(s) filename references'
@@ -65,120 +68,27 @@ Function MyMarkupPack
                 }
             )
         }
-        @{
-            description = 'Separate numbered and unnumbered lists'
-            replacements = @(
-                @{
-                    searchRegex = '(?<=\n[0-9]+. .*?)(\n)(?=\n-)'
-                    replacement = "`n`n"
-                }
-                @{
-                    searchRegex = '(?<=\n- .*?)(\n)(?=\n[0-9]+.)'
-                    replacement = "`n`n"
-                }
-            )
-        }
-        if ($config['keepspaces']['value'] -eq 1 ) {
-            @{
-                description = 'Clear double spaces from bullets and non-breaking spaces spaces from blank lines'
-                replacements = @(
-                    @{
-                        searchRegex = [regex]::Escape([char]0x00A0)
-                        replacement = ''
-                    }
-                    # Remove double newlines after unnumbered list items
-                    @{
-                        searchRegex = '(?<=\n\s*- .*?)(\n)(?=\n\s*-)'
-                        replacement = ''
-                    }
-                    # Remove double newlines after numbered list items
-                    @{
-                        searchRegex = '(?<=\n\s*[0-9]+. .*?)(\n)(?=\n\s*[0-9]+.)'
-                        replacement = ''
-                    }
-                    # Remove double newlines after indented paragraphs
-                    @{
-                        searchRegex = '(?<=\n\s{1,}[^-0-9\.]*?)(\n)(?=\n)'
-                        replacement = ''
-                    }
-                    # Remove all '>' occurrences immediately following bullet lists
-                    @{
-                        searchRegex = '\n>[ ]*'
-                        replacement = "`n"
-                    }
-                    # Remove extra newline before inline pictures
-                    @{
-                        searchRegex = '\n(?=\n\[\[.*?\]\])'
-                        replacement = ''
-                    }
-                    # Remove extra newline before inline tables
-                    @{
-                        searchRegex = '\n(?=\n\|.*?\|)'
-                        replacement = ''
-                    }
-                )
-            }
-        }
-        if ($config['keepescape']['value'] -eq 1) {
-            @{
-                description = "Clear all '\' characters"
-                replacements = @(
-                    @{
-                        searchRegex = [regex]::Escape('\')
-                        replacement = ''
-                    }
-                )
-            }
-        }
-        elseif ($config['keepescape']['value'] -eq 2) {
-            @{
-                description = "Clear all '\' characters except those preceding alphanumeric characters"
-                replacements = @(
-                    @{
-                        searchRegex = '\\([^A-Za-z0-9])'
-                        replacement = '$1'
-                    }
-                )
-            }
-        }
-        & {
-            if ($config['newlineCharacter']['value'] -eq 1) {
-                @{
-                    description = "Use LF for newlines"
-                    replacements = @(
-                        @{
-                            searchRegex = '\r*\n'
-                            replacement = "`n"
-                        }
-                    )
-                }
-            }
-            else {
-                @{
-                    description = "Use CRLF for newlines"
-                    replacements = @(
-                        @{
-                            searchRegex = '\r*\n'
-                            replacement = "`r`n"
-                        }
-                    )
-                }
-            }
-        }
-        # Remove encoding error artifacts
-        @{
-            description = 'Remove encoding error artifacts'
-            replacements = @(
-                @{
-                    searchRegex = "\n[$( [char]0x00C3 )$( [char]0x201A )$( [char]0x00C2 )]{1,}"
-                    replacement = ''
-                }
-                @{
-                    searchRegex = "\n#\+BEGIN_QUOTE\n([$( [char]0x00C3 )$( [char]0x201A )$( [char]0x00C2 ) \s\t]{1,})\n#\+END_QUOTE"
-                    replacement = ''
-                }
-            )
-        }
+
+        # Check OrgPack1 and MarkdownPack1 for further examples
+
+        ###############################################################
+        #                          OPTIONAL                           #
+        #       Optional substitutions based on config values         #
+        ###############################################################
+
+        # Check OrgPack1 and MarkdownPack1 for examples
+        
+        @{}
+
+        ###############################################################
+        #                    CONVERSION ARTIFACTS                     #
+        #               Removal of conversion artifacts               #
+        ###############################################################
+
+        # Check OrgPack1 and MarkdownPack1 for examples
+
+        @{}
+
     )
 
     $markupPack
