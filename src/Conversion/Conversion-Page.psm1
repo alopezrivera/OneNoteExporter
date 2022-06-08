@@ -86,7 +86,7 @@ Function Convert-OneNotePage {
                 }
             }
 
-            if ($config['usedocx']['value'] -eq 1) {
+            if ($config['docxReuse']['value'] -eq 2) {
                 # Remove any existing docx files, don't proceed if it fails
                 try {
                     "Removing existing docx file: $( $pageCfg['docxExportFilePath'] )" | Write-Verbose
@@ -163,7 +163,7 @@ Function Convert-OneNotePage {
             }
 
             # Cleanup Word files
-            if ($config['keepdocx']['value'] -eq 1) {
+            if ($config['docxKeep']['value'] -eq 2) {
                 try {
                     "Removing existing docx file: $( $pageCfg['docxExportFilePath'] )" | Write-Verbose
                     if ($config['dryRun']['value'] -eq 1) {
@@ -194,7 +194,7 @@ Function Convert-OneNotePage {
                 foreach ($image in $images) {
                     # Rename Image
                     try {
-                        $newimageName = if ($config['medialocation']['value'] -eq 2) {
+                        $newimageName = if ($config['mediaLocation']['value'] -eq 1) {
                             "$( $pageCfg['filePathRelUnderscore'] )-$($image.BaseName)$($image.Extension)"
                         }else {
                             "$( $pageCfg['pathFromRootCompat'] )-$($image.BaseName)$($image.Extension)"

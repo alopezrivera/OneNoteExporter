@@ -195,6 +195,7 @@ Function New-SectionGroupConversionConfig {
                                 }
                             }
                         }
+
                         # Win32 path limits. E.g. 'C:\path\to\file' or 'C:\path\to\folder'
                         #   Absolute path:
                         #   - Win32: Max 259 characters for files, Max 247 characters for directories.
@@ -259,7 +260,7 @@ Function New-SectionGroupConversionConfig {
                         }else {
                             $pageCfg['filePath'] -replace ".\.$($extension)$", '.pdf' # Trim 1 character in the basename when replacing the extension
                         }
-                        $pageCfg['levelsPrefix'] = if ($config['medialocation']['value'] -eq 2) {
+                        $pageCfg['levelsPrefix'] = if ($config['mediaLocation']['value'] -eq 1) {
                             ''
                         }else {
                             if ($config['prefixFolders']['value'] -eq 2) {
@@ -276,7 +277,7 @@ Function New-SectionGroupConversionConfig {
                                 [io.path]::combine('/tmp', $cfg['notebookName'], $dateNs)
                             }
                         }
-                        $pageCfg['mediaParentPath'] = if ($config['medialocation']['value'] -eq 2) {
+                        $pageCfg['mediaParentPath'] = if ($config['mediaLocation']['value'] -eq 1) {
                             $pageCfg['fileDirectory']
                         }else {
                             $cfg['notesBaseDirectory']

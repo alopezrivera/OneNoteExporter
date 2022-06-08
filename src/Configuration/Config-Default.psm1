@@ -16,7 +16,7 @@ Whether to do a dry run
             value = 1
             validateRange = 1,2
         }
-        notesdestpath = @{
+        notesDestPath = @{
             description = @'
 Specify folder path that will contain your resulting Notes structure - Default: c:\temp\notes
 '@
@@ -33,17 +33,17 @@ Specify a notebook name to convert
             default = ''
             value = ''
         }
-        usedocx = @{
+        docxReuse = @{
             description = @'
 Whether to create new word .docx or reuse existing ones
-1: Always create new .docx files - Default
-2: Use existing .docx files (90% faster)
+1: Use existing .docx files (90% faster)
+2: Always create new .docx files - Default
 '@
-            default = 2
-            value = 2
+            default = 1
+            value = 1
             validateRange = 1,2
         }
-        keepdocx = @{
+        docxKeep = @{
             description = @'
 Whether to discard word .docx after conversion
 1: Discard intermediate .docx files - Default
@@ -66,8 +66,8 @@ Whether to use name .docx files using page ID with last modified date epoch, or 
         prefixFolders = @{
             description = @'
 Whether to use prefix vs subfolders
-1: Create folders for subpages (e.g. Page\Subpage.md) - Default
-2: Add prefixes for subpages (e.g. Page_Subpage.md)
+1: Create folders for subpages (e.g. Page\Subpage.<ext>) - Default
+2: Add prefixes for subpages (e.g. Page_Subpage.<ext>)
 '@
             default = 1
             value = 1
@@ -83,11 +83,11 @@ Default: 32
             value = 255
             validateRange = 32,255
         }
-        medialocation = @{
+        mediaLocation = @{
             description = @'
 Whether to store media in single or multiple folders
-1: Images stored in single 'media' folder at Notebook-level - Default
-2: Separate 'media' folder for each folder in the hierarchy
+1: Separate 'media' folder for each folder in the hierarchy - Default
+2: Images stored in single 'media' folder at Notebook-level
 '@
             default = 1
             value = 1
