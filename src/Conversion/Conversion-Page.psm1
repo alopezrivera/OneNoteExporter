@@ -140,9 +140,9 @@ Function Convert-OneNotePage {
                 "Converting docx file to markup file: $( $pageCfg['filePath'] )" | Write-Verbose
                 if ($config['dryRun']['value'] -eq 1) {
                     $argumentList = @( '-f', 'docx',
-                                       '-t', $pageCfg['conversion'], 
-                                       '-i', $pageCfg['docxExportFilePath'], 
-                                       '-o', $pageCfg['filePathNormal'], 
+                                       '-t', $($pageCfg['conversion']), 
+                                       '-i', "`"$($pageCfg['docxExportFilePath'])`"", 
+                                       '-o', "`"$($pageCfg['filePathNormal'])`"", 
                                        '--wrap=none',
                                        # '--markup-headings=atx',         # Option apparently unavailable as of Pandoc 2.2.2.3.2
                                        "--extract-media=$( $pageCfg['mediaParentPathPandoc'] )" )

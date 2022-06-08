@@ -49,7 +49,7 @@ Function Remove-InvalidFileNameChars {
         [AllowEmptyString()]
         [string]$Name
     ,
-        [switch]$KeepPathSpaces
+        [switch]$RemovePathSpaces
     )
 
     # Remove boundary whitespaces. So we don't get trailing dashes
@@ -58,10 +58,10 @@ Function Remove-InvalidFileNameChars {
     $newName = $Name.Split([IO.Path]::GetInvalidFileNameChars()) -join '-'
     $newName = $newName -replace "\[", "("
     $newName = $newName -replace "\]", ")"
-    $newName =  if ($KeepPathSpaces) {
-                    $newName -replace "\s", " "
-                } else {
+    $newName =  if ($RemovePathSpaces) {
                     $newName -replace "\s", "-"
+                } else {
+                    $newName -replace "\s", " "
                 }
     return $newName
 }
@@ -77,7 +77,7 @@ Function Remove-InvalidFileNameCharsInsertedFiles {
     ,
         [string]$SpecialChars = "#$%^*[]'<>!@{};"
     ,
-        [switch]$KeepPathSpaces
+        [switch]$RemovePathSpaces
     )
 
     # Remove boundary whitespaces. So we don't get trailing dashes
@@ -87,10 +87,10 @@ Function Remove-InvalidFileNameCharsInsertedFiles {
 
     $newName = $Name.Split([IO.Path]::GetInvalidFileNameChars()) -join '-'
     $newName = $newName -replace $rePattern, ""
-    $newName =  if ($KeepPathSpaces) {
-                    $newName -replace "\s", " "
-                } else {
+    $newName =  if ($RemovePathSpaces) {
                     $newName -replace "\s", "-"
+                } else {
+                    $newName -replace "\s", " "
                 }
     return $newName
 }
