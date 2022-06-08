@@ -56,7 +56,8 @@ Some notes:
 
 * As expected, elaborate formatting doesn't survive export
 * Underscored text is annotated as such in markdown, but does not render correctly (at least in VSCode)
-* Images resized within OneNote are rendered with an annotation to that effect. This may cause them not to render correctly (tested on VSCode)
+* Images resized within OneNote are rendered with image size attributes in Pandoc markdown (plain `markdown` in the [Pandoc call](https://github.com/alopezrivera/owo/blob/19c170f8c32a434fb97aa612fe38145e0fa02357/config_example.ps1#L68)), which may not be supported by your reader/editor/host of choice.
+  * *If you want markdown output compatible with VSCode and GitHub*, specify `markdown_github` in the [Pandoc call](https://github.com/alopezrivera/owo/blob/19c170f8c32a434fb97aa612fe38145e0fa02357/config_example.ps1#L68) in you `config.ps1`
 * Unfortunately support for markdown lags behind that for Org Mode (eg: removal of empty list items). I haven't got the time to polish it, and neither the need. If you do please feel free to contribute!
 
 ## Requirements
