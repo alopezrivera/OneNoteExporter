@@ -4,16 +4,9 @@ Function New-ConfigurationFile {
     [CmdletBinding()]
     param ()
 
-    # Generate a configuration file config.example.ps1
     @'
-#
-# Note: This config file is for those who are lazy to type in configuration everytime you run ./ConvertOneNote2MarkDown-v2.ps1
-#
-# Steps:
-#   1) Rename this file to config.ps1. Ensure it is in the same folder as the ConvertOneNote2MarkDown-v2.ps1 script
-#   2) Configure the options below to your liking
-#   3) Run the main script: ./ConvertOneNote2MarkDown-v2.ps1. Sit back while the script starts converting immediately.
-'@ | Out-File "$PSScriptRoot/config.example.ps1" -Encoding utf8
+Generate a new configuration template named "config_example.ps1"
+'@ | Out-File "$PSScriptRoot/config_example.ps1" -Encoding utf8
 
     $defaultConfig = Get-DefaultConfiguration
     foreach ($key in $defaultConfig.Keys) {
