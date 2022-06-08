@@ -49,22 +49,20 @@ $mediaLocation = 1
 
 # Specify Pandoc output format and optional extensions in the format
 #
-#   <format><+extension><-extension>. 
+#   <format><+extension><-extension>
 #
-# See: https://pandoc.org/MANUAL.html#options
+# See:
+#   https://pandoc.org/MANUAL.html#options
 #
-# Examples:
-#
-#   org-simple_tables-multiline_tables-grid_tables+pipe_tables
-#   markdown-simple_tables-multiline_tables-grid_tables+pipe_tables
-#
-#   commonmark+pipe_tables
-#   gfm+pipe_tables
-#   markdown_mmd-simple_tables-multiline_tables-grid_tables+pipe_tables
-#   markdown_phpextra-simple_tables-multiline_tables-grid_tables+pipe_tables
-#   markdown_strict+simple_tables-multiline_tables-grid_tables+pipe_tables
 # Recommended:
 #   <markup>-simple_tables-multiline_tables-grid_tables+pipe_tables
+#
+# Important:
+#   - "markdown" will produce Pandoc markdown, which includes syntax which
+#      may not be universally supported (eg: image width and height attributes
+#      https://pandoc.org/MANUAL.html#extension-link_attributes)
+#   - "markdown_github" will produce GitHub-flavored markdown, fully compatible
+#      with GitHub and VSCode
 $conversion = 'org-simple_tables-multiline_tables-grid_tables+pipe_tables'
 
 # Specify a custom Markup Pack to override default
