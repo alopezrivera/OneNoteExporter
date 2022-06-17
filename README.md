@@ -1,6 +1,6 @@
 # `owo`
 
-`owo` (as in the `o`ne`w`ay`o`ut of here) is a PowerShell program to transform all your OneNote notes to Emacs Org Mode and any other [Pandoc-supported markup](https://pandoc.org/) using the OneNote Object Model and Pandoc.
+`owo` (as in `o`ne`w`ay`o`ut of here) is a PowerShell program to transform all your OneNote notes to Emacs Org Mode and any other [Pandoc-supported markup](https://pandoc.org/) using the OneNote Object Model and Pandoc.
 
 ---
 
@@ -44,7 +44,7 @@ As long as Pandoc supports your desired output format, all `owo` needs to shine 
 
 ![OneNote test note along Org Mode and markdown exports](test/test.png)
 
-You can see the actual test results in the [`test` directory](https://github.com/alopezrivera/owo/tree/master/test) (as well as the Word file to which the test note was exported). I have attempted to identify all unsupported syntax, which can see it as it you would in OneNote at the bottom of the [test Word file](https://github.com/alopezrivera/owo/blob/master/test/test.docx), and the respective export (failure) in the [Org Mode](https://github.com/alopezrivera/owo/blob/master/test/owo-test.org) and [markdown](https://github.com/alopezrivera/owo/blob/master/test/owo-test.md) conversions.
+You can see the actual test results in the [`test` directory](https://github.com/alopezrivera/owo/tree/master/test) (as well as the Word file to which the test note was exported). I have attempted to identify all unsupported syntax, which you can see as you would in OneNote at the bottom of the [test Word file](https://github.com/alopezrivera/owo/blob/master/test/test.docx), and the respective export (failure) in the [Org Mode](https://github.com/alopezrivera/owo/blob/master/test/owo-test.org) and [markdown](https://github.com/alopezrivera/owo/blob/master/test/owo-test.md) conversions.
 
 As you can see in the image above, the Markup Packs shipping for Org Mode and markdown (`OrgPack1` and `MarkdownPack1` respectively) will give your notes:
 
