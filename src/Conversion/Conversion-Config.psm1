@@ -72,7 +72,8 @@ Function New-SectionGroupConversionConfig {
 
     $sectionGroupConversionConfig = [System.Collections.ArrayList]@()
 
-    # Build an object representing the conversion of a Section Group (treat a Notebook as a Section Group, it is no different)
+    # Build an object representing the conversion of a Section Group
+    # (treat a Notebook as a Section Group, it is no different)
     foreach ($sectionGroup in $SectionGroups) {
         # Skip over Section Groups in recycle bin
         if ((Get-Member -InputObject $sectionGroup -Name 'isRecycleBin') -and $sectionGroup.isRecycleBin -eq 'true') {
@@ -89,20 +90,25 @@ Function New-SectionGroupConversionConfig {
 
         # Build this Section Group
         $cfg = [ordered]@{}
-        $cfg['object'] = $sectionGroup # Keep a reference to the SectionGroup object
+        # Keep a reference to the SectionGroup object
+        $cfg['object'] = $sectionGroup
         $cfg['kind'] = 'SectionGroup'
-        $cfg['id'] = $sectionGroup.ID # E.g. {9570CCF6-17C2-4DCE-83A0-F58AE8914E29}{1}{B0}
+        # 'id' - eg: {9570CCF6-17C2-4DCE-83A0-F58AE8914E29}{1}{B0}
+        $cfg['id'] = $sectionGroup.ID
         $cfg['nameCompat'] = $sectionGroup.name | Remove-InvalidFileNameChars
         $cfg['levelsFromRoot'] = $LevelsFromRoot
-        $cfg['uri'] = $sectionGroup.path # E.g. https://d.docs.live.net/0123456789abcdef/Skydrive Notebooks/mynotebook/mysectiongroup
-        $cfg['notesDirectory'] = [io.path]::combine( $NotesDestination.TrimEnd('/').TrimEnd('\').Replace('\', [io.path]::DirectorySeparatorChar), $cfg['nameCompat'] ) # No need to truncate. Section Group and Section names have a max length of 50, so we should never hit the absolute path, file name, or directory name limits on Windows
+        # 'uri' - eg: https://d.docs.live.net/0123456789abcdef/Skydrive Notebooks/mynotebook/mysectiongroup
+        $cfg['uri'] = $sectionGroup.path
+        # 'notesDirectory' - no need to truncate. Section Group and Section names have a max length of 50,
+        # so we should never hit the absolute path, file name, or directory name limits on Windows
+        $cfg['notesDirectory'] = [io.path]::combine( $NotesDestination.TrimEnd('/').TrimEnd('\').Replace('\', [io.path]::DirectorySeparatorChar), $cfg['nameCompat'] )
         $cfg['notesBaseDirectory'] = & {
-            # E.g. 'c:\temp\notes\mynotebook\mysectiongroup'
-            # E.g. levelsFromRoot: 1
+            # eg: 'c:\temp\notes\mynotebook\mysectiongroup'
+            # eg: levelsFromRoot: 1
             $split = $cfg['notesDirectory'].Split( [io.path]::DirectorySeparatorChar )
-            # E.g. 5
+            # eg: 5
             $totalLevels = $split.Count
-            # E.g. 0..(5-1-1) -> 'c:\temp\notes\mynotebook'
+            # eg: 0..(5-1-1) -> 'c:\temp\notes\mynotebook'
             $split[0..($totalLevels - $cfg['levelsFromRoot'] - 1)] -join [io.path]::DirectorySeparatorChar
         }
         $cfg['notebookName'] = Split-Path $cfg['notesBaseDirectory'] -Leaf
@@ -126,16 +132,20 @@ Function New-SectionGroupConversionConfig {
                 $sectionCfg['notebookName'] = $cfg['notebookName']
                 $sectionCfg['notesBaseDirectory'] = $cfg['notesBaseDirectory']
                 $sectionCfg['notesDirectory'] = $cfg['notesDirectory']
-                $sectionCfg['sectionGroupUri'] = $cfg['uri'] # Keep a reference to my Section Group Configuration object's uri
+                # Keep a reference to my Section Group Configuration object's uri
+                $sectionCfg['sectionGroupUri'] = $cfg['uri']
                 $sectionCfg['sectionGroupName'] = $cfg['object'].name
-                $sectionCfg['object'] = $section # Keep a reference to the Section object
+                # Keep a reference to the Section object
+                $sectionCfg['object'] = $section
                 $sectionCfg['kind'] = 'Section'
-                $sectionCfg['id'] = $section.ID # E.g {BE566C4F-73DC-43BD-AE7A-1954F8B22C2A}{1}{B0}
+                # 'id' - eg: {BE566C4F-73DC-43BD-AE7A-1954F8B22C2A}{1}{B0}
+                $sectionCfg['id'] = $section.ID
                 $sectionCfg['nameCompat'] = $section.name | Remove-InvalidFileNameChars
                 $sectionCfg['levelsFromRoot'] = $cfg['levelsFromRoot'] + 1
                 $sectionCfg['pathFromRoot'] = "$( $cfg['pathFromRoot'] )$( [io.path]::DirectorySeparatorChar )$( $sectionCfg['nameCompat'] )".Trim([io.path]::DirectorySeparatorChar) # No need to truncate. Section Group and Section names have a max length of 50, so we should never hit the absolute path, file name, or directory name limits on Windows
                 $sectionCfg['pathFromRootCompat'] = $sectionCfg['pathFromRoot'] | Remove-InvalidFileNameChars
-                $sectionCfg['uri'] = $section.path # E.g. https://d.docs.live.net/0123456789abcdef/Skydrive Notebooks/mynotebook/mysectiongroup/mysection
+                # 'uri' - eg: https://d.docs.live.net/0123456789abcdef/Skydrive Notebooks/mynotebook/mysectiongroup/mysection
+                $sectionCfg['uri'] = $section.path
                 $sectionCfg['lastModifiedTime'] = [Datetime]::ParseExact($section.lastModifiedTime, 'yyyy-MM-ddTHH:mm:ss.fffZ', $null)
                 $sectionCfg['lastModifiedTimeEpoch'] = [int][double]::Parse((Get-Date ((Get-Date $sectionCfg['lastModifiedTime']).ToUniversalTime()) -UFormat %s)) # Epoch
 
@@ -151,18 +161,23 @@ Function New-SectionGroupConversionConfig {
                         $pageCfg['notebookName'] = $cfg['notebookName']
                         $pageCfg['notesBaseDirectory'] = $cfg['notesBaseDirectory']
                         $pageCfg['notesDirectory'] = $cfg['notesDirectory']
-                        $pageCfg['sectionGroupUri'] = $cfg['uri'] # Keep a reference to mt Section Group Configuration object's uri
+                        # Keep a reference to mt Section Group Configuration object's uri
+                        $pageCfg['sectionGroupUri'] = $cfg['uri']
                         $pageCfg['sectionGroupName'] = $cfg['object'].name
-                        $pageCfg['sectionUri'] = $sectionCfg['uri'] # Keep a reference to my Section Configuration object's uri
+                        # Keep a reference to my Section Configuration object's uri
+                        $pageCfg['sectionUri'] = $sectionCfg['uri']
                         $pageCfg['sectionName'] = $sectionCfg['object'].name
-                        $pageCfg['object'] = $page # Keep a reference to my Page object
+                        # Keep a reference to my Page object
+                        $pageCfg['object'] = $page
                         $pageCfg['kind'] = 'Page'
-                        $pageCfg['id'] = $page.ID # E.g. {3D017C7D-F890-4AC8-A094-DEC1163E7B85}{1}{E19461971475288592555920101886406896686096991}
+                        # 'id' - eg: {3D017C7D-F890-4AC8-A094-DEC1163E7B85}{1}{E19461971475288592555920101886406896686096991}
+                        $pageCfg['id'] = $page.ID
                         $pageCfg['nameCompat'] = $page.name | Remove-InvalidFileNameChars
                         $pageCfg['levelsFromRoot'] = $sectionCfg['levelsFromRoot']
                         $pageCfg['pathFromRoot'] = "$( $sectionCfg['pathFromRoot'] )$( [io.path]::DirectorySeparatorChar )$( $pageCfg['nameCompat'] )"
                         $pageCfg['pathFromRootCompat'] = $pageCfg['pathFromRoot'] | Remove-InvalidFileNameChars
-                        $pageCfg['uri'] = "$( $sectionCfg['object'].path )/$( $page.name )" # There's no $page.path property, so we generate one. E.g. https://d.docs.live.net/0123456789abcdef/Skydrive Notebooks/mynotebook/mysectiongroup/mysection/mypage
+                        # There's no $page.path property, so we generate one (eg: https://d.docs.live.net/0123456789abcdef/Skydrive Notebooks/mynotebook/mysectiongroup/mysection/mypage)
+                        $pageCfg['uri'] = "$( $sectionCfg['object'].path )/$( $page.name )"
                         $pageCfg['dateTime'] = [Datetime]::ParseExact($page.dateTime, 'yyyy-MM-ddTHH:mm:ss.fffZ', $null)
                         $pageCfg['lastModifiedTime'] = [Datetime]::ParseExact($page.lastModifiedTime, 'yyyy-MM-ddTHH:mm:ss.fffZ', $null)
                         $pageCfg['lastModifiedTimeEpoch'] = [int][double]::Parse((Get-Date ((Get-Date $pageCfg['lastModifiedTime']).ToUniversalTime()) -UFormat %s)) # Epoch
@@ -196,26 +211,32 @@ Function New-SectionGroupConversionConfig {
                             }
                         }
 
+                        # ----------------------------------------------------------------------------
                         # Win32 path limits. E.g. 'C:\path\to\file' or 'C:\path\to\folder'
                         #   Absolute path:
                         #   - Win32: Max 259 characters for files, Max 247 characters for directories.
                         #   File or directory name:
                         #   - Max 255 characters long for file or folder names
-                        # Non-Win32 path limits. E.g. '\\?\C:\path\to\file' or '\\?\C:\path\to\folder'. Prefixing with '\\?\' allows Windows Powershell <= 5 (based on Win32) to support long absolute paths.
+                        # Non-Win32 path limits. E.g. '\\?\C:\path\to\file' or '\\?\C:\path\to\folder'.
+                        # Prefixing with '\\?\' allows Windows Powershell <= 5 (based on Win32) to support
+                        # long absolute paths.
                         #   Absolute path:
                         #   - N.A.
                         #   File or directory name:
                         #   - Max 255 characters long for file or folder names
                         # See: https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file?redirectedfrom=MSDN#maxpath
+                        # ----------------------------------------------------------------------------
                         
                         # Get markup file extension
                         $extension = Get-MarkupExtension $pageCfg
 
-                        # Normalize the final markup file path. Page names can be very long, and can exceed the max absolute path length, or max file or folder name on a Windows system.
+                        # Normalize the final markup file path. Page names can be very long, and
+                        # can exceed the max absolute path length, or max file or folder name on
+                        # a Windows system.
                         $pageCfg['filePathRel'] = & {
                             $filePathRel = "$( $pageCfg['pagePrefix'] )$( $pageCfg['nameCompat'] )"
 
-                            # in case multiple pages with the same name exist in a section, postfix the filename
+                            # In case multiple pages with the same name exist in a section, postfix the filename
                             $recurrence = 0
                             foreach ($p in $sectionCfg['pages']) {
                                 if ($p['pagePrefix'] -eq $pageCfg['pagePrefix'] -and $p['pathFromRoot'] -eq $pageCfg['pathFromRoot']) {
@@ -242,23 +263,32 @@ Function New-SectionGroupConversionConfig {
                                 [io.path]::combine( $cfg['notesDirectory'], $sectionCfg['nameCompat'], "$( $pageCfg['filePathRel'] )" )
                             }
 
-                            "$( $pathWithoutExtension | Truncate-PathFileName -Length ($config['muFileNameAndFolderNameMaxLength']['value'] - 3) ).$($extension)" # Truncate to no more than 255 characters so we don't hit the file name limit on Windows / Linux
+                            # Truncate to no more than 255 characters so we don't hit the
+                            # file name limit on Windows / Linux
+                            "$( $pathWithoutExtension | Truncate-PathFileName -Length ($config['muFileNameAndFolderNameMaxLength']['value'] - 3) ).$($extension)"
                         }
-                        $pageCfg['filePathLong'] = "\\?\$( $pageCfg['filePathNormal'] )" # A non-Win32 path. Prefixing with '\\?\' allows Windows Powershell <= 5 (based on Win32) to support long absolute paths.
+                        # A non-Win32 path. Prefixing with '\\?\' allows Windows Powershell <= 5
+                        # (based on Win32) to support long absolute paths.
+                        $pageCfg['filePathLong'] = "\\?\$( $pageCfg['filePathNormal'] )"
                         $pageCfg['filePath'] = if ($PSVersionTable.PSVersion.Major -le 5) {
-                            $pageCfg['filePathLong'] # Add support for long paths on Powershell 5
+                            # Add support for long paths on Powershell 5
+                            $pageCfg['filePathLong'] 
                         }else {
-                            $pageCfg['filePathNormal'] # Powershell Core supports long file paths
+                            # Powershell Core supports long file paths
+                            $pageCfg['filePathNormal']
                         }
                         $pageCfg['fileDirectory'] = Split-Path $pageCfg['filePathNormal'] -Parent
                         $pageCfg['fileName'] = Split-Path $pageCfg['filePathNormal'] -Leaf
                         $pageCfg['fileExtension'] = if ($pageCfg['filePathNormal'] -match '(\.[^.]+)$') { $matches[1] } else { '' }
                         $pageCfg['fileBaseName'] = $pageCfg['fileName'] -replace "$( [regex]::Escape($pageCfg['fileExtension']) )$", ''
-                        $pageCfg['pdfExportFilePathTmp'] = [io.path]::combine( (Split-Path $pageCfg['filePath'] -Parent ), "$( $pageCfg['id'] )-$( $pageCfg['lastModifiedTimeEpoch'] ).pdf" ) # Publishing a .pdf seems to be limited to 204 characters. So we will export the .pdf to a unique file name, then rename it to the actual name
+                        # Publishing a PDF seems to be limited to 204 characters. Solution:
+                        # Export the PDF to a unique file name, then rename it to the actual name
+                        $pageCfg['pdfExportFilePathTmp'] = [io.path]::combine( (Split-Path $pageCfg['filePath'] -Parent ), "$( $pageCfg['id'] )-$( $pageCfg['lastModifiedTimeEpoch'] ).pdf" )
                         $pageCfg['pdfExportFilePath'] = if ( ($pageCfg['fileName'].Length + ('.pdf'.Length - ".$($extension)".Length)) -le $config['muFileNameAndFolderNameMaxLength']['value']) {
                             $pageCfg['filePath'] -replace "\.$($extension)$", '.pdf'
                         }else {
-                            $pageCfg['filePath'] -replace ".\.$($extension)$", '.pdf' # Trim 1 character in the basename when replacing the extension
+                            # Trim 1 character in the basename when replacing the extension
+                            $pageCfg['filePath'] -replace ".\.$($extension)$", '.pdf'
                         }
                         $pageCfg['levelsPrefix'] = if ($config['mediaLocation']['value'] -eq 1) {
                             ''
@@ -283,8 +313,12 @@ Function New-SectionGroupConversionConfig {
                             $cfg['notesBaseDirectory']
                         }
                         $pageCfg['mediaPath'] = [io.path]::combine( $pageCfg['mediaParentPath'], 'media' )
-                        $pageCfg['mediaParentPathPandoc'] = [io.path]::combine( $pageCfg['tmpPath'] ).Replace( [io.path]::DirectorySeparatorChar, '/' ) # Pandoc outputs paths in markdown with with front slahes after the supplied <mediaPath>, e.g. '<mediaPath>/media/image.png'. So let's use a front-slashed supplied mediaPath
-                        $pageCfg['mediaPathPandoc'] = [io.path]::combine( $pageCfg['tmpPath'], 'media').Replace( [io.path]::DirectorySeparatorChar, '/' ) # Pandoc outputs paths in markdown with with front slahes after the supplied <mediaPath>, e.g. '<mediaPath>/media/image.png'. So let's use a front-slashed supplied mediaPath
+                        # Pandoc outputs paths in markdown with with front slahes after the supplied <mediaPath>
+                        # (eg: '<mediaPath>/media/image.png'. So let's use a front-slashed supplied mediaPath)
+                        $pageCfg['mediaParentPathPandoc'] = [io.path]::combine( $pageCfg['tmpPath'] ).Replace( [io.path]::DirectorySeparatorChar, '/' )
+                        # Pandoc outputs paths in markdown with with front slahes after the supplied <mediaPath>,
+                        # (eg: '<mediaPath>/media/image.png'. So let's use a front-slashed supplied mediaPath)
+                        $pageCfg['mediaPathPandoc'] = [io.path]::combine( $pageCfg['tmpPath'], 'media').Replace( [io.path]::DirectorySeparatorChar, '/' )
                         $pageCfg['docxExportFilePath'] = if ($config['docxNamingConvention']['value'] -eq 1) {
                             [io.path]::combine( $cfg['notesDocxDirectory'], "$( $pageCfg['id'] )-$( $pageCfg['lastModifiedTimeEpoch'] )-$( $pageCfg['fileBaseName'] ).docx" )
                         }else {
@@ -313,7 +347,8 @@ Function New-SectionGroupConversionConfig {
                             }
                         )
 
-                        # Choose the default Markup Pack for the format being converted to, or any other manually specified in config.sp1 if that is the case
+                        # Choose the default Markup Pack for the format being converted to, or any other
+                        # manually specified in config.sp1 if that is the case
                         $markupPack = Get-MarkupPack $config $pageCfg
 
                         if ($markupPack -ne 'none') {
@@ -323,7 +358,8 @@ Function New-SectionGroupConversionConfig {
                             $pageCfg['mutations'] = @()
                         }
 
-                        # The directories to be created. These directories should never hit the absolute path, file name, or directory name limits on Windows
+                        # The directories to be created. These directories should never hit the absolute path,
+                        # file name, or directory name limits on Windows
                         $pageCfg['directoriesToCreate'] = @(
                             @(
                                 $cfg['notesDocxDirectory']
@@ -340,7 +376,8 @@ Function New-SectionGroupConversionConfig {
                         # Directory separation character
                         $pageCfg['directorySeparatorChar'] = [io.path]::DirectorySeparatorChar
 
-                        # Populate the pages array (needed even when -AsArray switch is not on, because we need this section's pages' state to know whether there are duplicate page names)
+                        # Populate the pages array (needed even when -AsArray switch is not on, because we need
+                        # this section's pages' state to know whether there are duplicate page names)
                         $sectionCfg['pages'].Add( $pageCfg ) > $null
 
                         if (!$AsArray) {
@@ -379,6 +416,8 @@ Function New-SectionGroupConversionConfig {
 
     # Return the final conversion config
     if ($AsArray) {
-        ,$sectionGroupConversionConfig # This syntax is needed to send an array down the pipeline without it being unwrapped. (It works by wrapping it in an array with a null sibling)
+        # This syntax is needed to send an array down the pipeline without it being
+        # unwrapped (it works by wrapping it in an array with a null sibling)
+        ,$sectionGroupConversionConfig
     }
 }

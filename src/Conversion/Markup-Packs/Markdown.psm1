@@ -23,7 +23,7 @@ Function MarkdownPack1
         ###############################################################
         foreach ($attachmentCfg in $pageCfg['insertedAttachments']) {
             @{
-                description = 'Change inserted attachment(s) filename references'
+                description = 'Generate media (eg: images, attachments) paths, wrapped in <> to allow paths with spaces. Reference: https://github.com/alopezrivera/owo/issues/3'
                 replacements = @(
                     @{
                         searchRegex = [regex]::Escape( $attachmentCfg['object'].preferredName )
@@ -33,15 +33,20 @@ Function MarkdownPack1
             }
         }
         @{
-            description = 'Replace media (e.g. images, attachments) absolute paths with relative paths'
+            description = 'Wrap media (eg: images, attachments) paths in <> to allow media paths with spaces. Reference: https://github.com/alopezrivera/owo/issues/3'
             replacements = @(
                 @{
-                    # E.g. 'C:/temp/notes/mynotebook/media/somepage-image1-timestamp.jpg' -> '../media/somepage-image1-timestamp.jpg'
+                    #  '![](ABSOLUTE_PATH/media/a page with spaces in its name-image1-timestamp.jpg)'
+                    #                                    to:
+                    # '![](<ABSOLUTE_PATH/media/a page with spaces in its name-image1-timestamp.jpg>)'
                     searchRegex = [regex]::Escape("$( $pageCfg['mediaParentPathPandoc'] )/") # Add a trailing front slash
                     replacement = $pageCfg['levelsPrefix']
                 }
             )
         }
+                    # '![](<ABSOLUTE_PATH/media/a page with spaces in its name-image1-timestamp.jpg>)'
+                    #                                    to:
+                    #    '![](<../media/a page with spaces in its name-image1-timestamp.jpg>)'
         @{
             description = 'Add heading'
             replacements = @(

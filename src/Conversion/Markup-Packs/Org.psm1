@@ -33,10 +33,10 @@ Function OrgPack1
             }
         }
         @{
-            description = 'Replace media (e.g. images, attachments) absolute paths with relative paths'
+            description = 'Replace media (eg: images, attachments) absolute paths with relative paths'
             replacements = @(
                 @{
-                    # E.g. 'C:/temp/notes/mynotebook/media/somepage-image1-timestamp.jpg' -> '../media/somepage-image1-timestamp.jpg'
+                    # eg: 'C:/temp/notes/mynotebook/media/somepage-image1-timestamp.jpg' -> '../media/somepage-image1-timestamp.jpg'
                     searchRegex = [regex]::Escape("$( $pageCfg['mediaParentPathPandoc'] )/") # Add a trailing front slash
                     replacement = $pageCfg['levelsPrefix']
                 }
