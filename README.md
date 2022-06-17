@@ -56,7 +56,7 @@ Some notes:
 
 * As expected, elaborate formatting doesn't survive export
 * Underscored text is annotated as such in markdown, but does not render correctly (at least in VSCode)
-* Images resized within OneNote are rendered with size information when exporting to markdown. Be mindful of the markdown flavour you are using. Pandoc markdown (`markdown` in the [Pandoc call in your config.ps1](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66)) image size notation will not render properly in GitHub or other GitHub-flavoured markdown renderers such as the VSCode markdown preview window.
+* Images resized within OneNote are rendered with size information when exporting to markdown. Be mindful of the markdown flavour you are using. Plain markdown (`markdown` in the [Pandoc call in your config.ps1](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66)) image size notation will not render properly in GitHub or other GitHub-flavoured markdown renderers such as the VSCode markdown preview window.
   * *If you want markdown output compatible with VSCode and GitHub*, specify `markdown_github` in the [line 66](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66) of your `config.ps1`
 
     ```
