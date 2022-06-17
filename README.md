@@ -56,8 +56,13 @@ Some notes:
 
 * As expected, elaborate formatting doesn't survive export
 * Underscored text is annotated as such in markdown, but does not render correctly (at least in VSCode)
-* Images resized within OneNote are rendered with image size attributes in Pandoc markdown (plain `markdown` in the [Pandoc call](https://github.com/alopezrivera/owo/blob/19c170f8c32a434fb97aa612fe38145e0fa02357/config_example.ps1#L68)), which may not be supported by your reader/editor/host of choice.
-  * *If you want markdown output compatible with VSCode and GitHub*, specify `markdown_github` in the [Pandoc call](https://github.com/alopezrivera/owo/blob/19c170f8c32a434fb97aa612fe38145e0fa02357/config_example.ps1#L68) in you `config.ps1`
+* Images resized within OneNote are rendered with size information when exporting to markdown. Be mindful of the markdown flavour you are using. Pandoc markdown (`markdown` in the [Pandoc call in your config.ps1](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66)) image size notation will not render properly in GitHub or other GitHub-flavoured markdown renderers such as the VSCode markdown preview window.
+  * *If you want markdown output compatible with VSCode and GitHub*, specify `markdown_github` in the [line 66](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66) of your `config.ps1`
+
+    ```
+    $conversion = 'markdown_github-simple_tables-multiline_tables-grid_tables+pipe_tables'
+    ```
+
 * Unfortunately support for markdown lags behind that for Org Mode (eg: removal of empty list items). I haven't got the time to polish it, and neither the need. If you do please feel free to contribute!
 
 ## Requirements
@@ -92,7 +97,6 @@ Some notes:
 
 All of the following are configured from `config.ps1` (assuming you have renamed `config example.ps1` to that).
 
-* Choose to do a dry run or run the actual conversion.
 * Create a **folder structure** for your Notebooks and Sections
   * Process pages that are in sections at the **Notebook, Section Group and all Nested Section Group levels**
 * Choose between converting a **specific notebook** or **all notebooks**
