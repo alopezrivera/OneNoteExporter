@@ -27,7 +27,7 @@ Function MarkdownPack1
                 replacements = @(
                     @{
                         searchRegex = [regex]::Escape( $attachmentCfg['object'].preferredName )
-                        replacement = "[$( $attachmentCfg['markdownFileName'] )]($( $pageCfg['mediaPathPandoc'] )/$( $attachmentCfg['markdownFileName'] ))"
+                        replacement = "[$( $attachmentCfg['markdownFileName'] )](<$( $pageCfg['mediaPathPandoc'] )/$( $attachmentCfg['markdownFileName'] )>)"
                     }
                 )
             }
