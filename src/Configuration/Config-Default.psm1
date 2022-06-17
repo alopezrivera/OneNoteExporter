@@ -6,16 +6,6 @@ Function Get-DefaultConfiguration {
 
     # The default configuration
     $config = [ordered]@{
-        dryRun = @{
-            description = @'
-Whether to do a dry run
-1: Convert - Default
-2: Convert (dry run)
-'@
-            default = 1
-            value = 1
-            validateRange = 1,2
-        }
         notesDestPath = @{
             description = @'
 Specify folder path that will contain your resulting Notes structure - Default: c:\temp\notes
