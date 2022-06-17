@@ -46,7 +46,7 @@ _TABLES_
 
 _FIGURES_
 
-[[../media/General-owo-test-image1.jpeg]]
+[[media/owo test-image1.jpeg]]
 
 _UNSUPPORTED_
 
