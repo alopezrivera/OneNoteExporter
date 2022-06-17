@@ -140,7 +140,7 @@ Furthermore, as reported in [ConvertOneNote2markdown](https://github.com/theohbr
 
 ## Attribution
 
-`no` is built on the base of [ConvertOneNote2markdown](https://github.com/theohbrothers/ConvertOneNote2markdown), by
+`owo` is built on the base of [ConvertOneNote2markdown](https://github.com/theohbrothers/ConvertOneNote2markdown), by
 
 * [SjoerdV](https://github.com/SjoerdV)
 * [nixsee](https://github.com/nixsee/)
