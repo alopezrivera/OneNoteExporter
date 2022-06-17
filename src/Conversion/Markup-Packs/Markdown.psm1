@@ -44,9 +44,18 @@ Function MarkdownPack1
                 }
             )
         }
+        @{
+            description = 'Replace media (eg: images, attachments) absolute paths with relative paths'
+            replacements = @(
+                @{
                     # '![](<ABSOLUTE_PATH/media/a page with spaces in its name-image1-timestamp.jpg>)'
                     #                                    to:
                     #    '![](<../media/a page with spaces in its name-image1-timestamp.jpg>)'
+                    searchRegex = [regex]::Escape("$( $pageCfg['mediaParentPathPandoc'] )/") # Add a trailing front slash
+                    replacement = $pageCfg['levelsPrefix']
+                }
+            )
+        }
         @{
             description = 'Add heading'
             replacements = @(
