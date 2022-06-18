@@ -16,41 +16,28 @@ Function MarkdownPack1
     )
 
     # Markup output formatting using search and replace queries against a string containing the entire markup content.
-
     $markupPack = @(
         ###############################################################
         #                           CONTENT                           #
         ###############################################################
         foreach ($attachmentCfg in $pageCfg['insertedAttachments']) {
             @{
-                description = 'Generate media (eg: images, attachments) paths, wrapped in <> to allow paths with spaces. Reference: https://github.com/alopezrivera/owo/issues/3'
+                description = 'Generate attachment paths'
                 replacements = @(
                     @{
                         searchRegex = [regex]::Escape( $attachmentCfg['object'].preferredName )
-                        replacement = "[$( $attachmentCfg['markdownFileName'] )](<$( $pageCfg['mediaPathPandoc'] )/$( $attachmentCfg['markdownFileName'] )>)"
+                        replacement = "[$( $attachmentCfg['markdownFileName'] )]($( $pageCfg['mediaPathPandoc'] )/$( $attachmentCfg['markdownFileName'] ))"
                     }
                 )
             }
         }
         @{
-            description = 'Wrap media (eg: images, attachments) paths in <> to allow media paths with spaces. Reference: https://github.com/alopezrivera/owo/issues/3'
-            replacements = @(
-                @{
-                    #  '![](ABSOLUTE_PATH/media/a page with spaces in its name-image1-timestamp.jpg)'
-                    #                                    to:
-                    # '![](<ABSOLUTE_PATH/media/a page with spaces in its name-image1-timestamp.jpg>)'
-                    searchRegex = [regex]::Escape("$( $pageCfg['mediaParentPathPandoc'] )/") # Add a trailing front slash
-                    replacement = $pageCfg['levelsPrefix']
-                }
-            )
-        }
-        @{
             description = 'Replace media (eg: images, attachments) absolute paths with relative paths'
             replacements = @(
                 @{
-                    # '![](<ABSOLUTE_PATH/media/a page with spaces in its name-image1-timestamp.jpg>)'
+                    # ![](<ABSOLUTE_PATH/media/a page with spaces in its name-image1-timestamp.jpg>)
                     #                                    to:
-                    #    '![](<../media/a page with spaces in its name-image1-timestamp.jpg>)'
+                    #      ![](<**/media/a page with spaces in its name-image1-timestamp.jpg>)
                     searchRegex = [regex]::Escape("$( $pageCfg['mediaParentPathPandoc'] )/") # Add a trailing front slash
                     replacement = $pageCfg['levelsPrefix']
                 }
