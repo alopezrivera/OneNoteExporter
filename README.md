@@ -1,6 +1,6 @@
 # `owo`
 
-`owo` (as in `o`ne`w`ay`o`ut of here) is a PowerShell program to transform all your OneNote notes to Emacs Org Mode and any other [Pandoc-supported markup](https://pandoc.org/) using the OneNote Object Model and Pandoc.
+`owo` (as in `o`ne`w`ay`o`ut of here) is a PowerShell program to export all your OneNote notes to Emacs Org Mode or any other [Pandoc-supported markup](https://pandoc.org/) using the OneNote Object Model and Pandoc.
 
 ---
 
