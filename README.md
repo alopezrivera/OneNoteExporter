@@ -10,6 +10,10 @@
 
 [**Results**](#results)
 
+[**Supported Markups**](#supported-markups)
+
+[**Markup Packs**](#markup-packs)
+
 [**Requirements**](#requirements)
 
 [**Usage**](#usage)
@@ -38,7 +42,7 @@
 
 ### Customizing output and adding support for further export formats
 
-As long as Pandoc supports your desired output format, all `owo` needs to shine is a Markup Pack to tailor the output to your tastes. [CONTRIBUTING.md](https://github.com/alopezrivera/owo/blob/master/CONTRIBUTING.md) has the pointers you need to write your own Markup Packs, add support for other Markup formats and more.
+As long as Pandoc supports your desired markup format, all `owo` needs to shine is a Markup Pack to tailor the output to your taste. [CONTRIBUTING.md](https://github.com/alopezrivera/owo/blob/master/CONTRIBUTING.md) contains a step by step guide to write and use your own Markup Packs.
 
 ## Results
 
@@ -56,7 +60,7 @@ Some notes:
 
 * As expected, elaborate formatting doesn't survive export
 * Underscored text is annotated as such in markdown, but does not render correctly (at least in VSCode)
-* Images resized within OneNote are rendered with size information when exporting to markdown. Be mindful of the markdown flavour you are using. Plain markdown (`markdown` in the [Pandoc call in your config.ps1](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66)) image size notation will not render properly in GitHub or other GitHub-flavoured markdown renderers such as the VSCode markdown preview window.
+* Images resized within OneNote are rendered with size information when exporting to markdown. Be mindful of the markdown flavour you are using. Pandoc markdown (`markdown` in the [Pandoc call in your config.ps1](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66)) image size notation will not render properly in GitHub or other GitHub-flavoured markdown renderers such as the VSCode markdown preview window.
   * *If you want markdown output compatible with VSCode and GitHub*, specify `markdown_github` in the [line 66](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66) of your `config.ps1`
 
     ```
@@ -64,6 +68,51 @@ Some notes:
     ```
 
 * Unfortunately support for markdown lags behind that for Org Mode (eg: removal of empty list items). I haven't got the time to polish it, and neither the need. If you do please feel free to contribute!
+
+## Supported Markups
+
+With support is meant that `owo` understands which file type you are trying to export your notes to: it will use this knowledge to appropriately name files and apply [default Markup Packs](#markup-packs) if `markupPack` is set to `''` in [line 74 of your config.ps1](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L74).
+
+`owo` supports all (as of June 2022) Pandoc supported markups, as follows (from the [Pandoc manual](https://pandoc.org/MANUAL.html)),
+
+- Emacs Org Mode
+  - `org`
+
+- Markdown
+  - `markdown_strict`
+
+- CommonMark
+  - `commonmark`
+  - `commonmark_x`
+
+- GitHub-Flavored Markdown
+  - `gfm`
+  - `markdown_github`
+
+- Pandoc Markdown
+  - `markdown`
+
+- MultiMarkdown
+  - `markdown_mmd`
+        
+- PHP Markdown Extra
+  - `markdown_phpextra`
+
+## Markup Packs
+
+You can specify your Markup Pack of choice [line 74 of your config.ps1](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L74). `markupPack` may have three values, as follows:
+
+### `'<markup pack>'`
+
+You Markup Pack of choice.
+
+### `''`
+
+The default Markup Pack for your export format. `owo` determines which Markup Pack to use by first [identifying the extension](https://github.com/alopezrivera/owo/blob/7a6e7f9769eb8a05ca9e8f169699cd21fff55761/src/Conversion/Conversion-Markup.psm1#L3) of the file format you have specified in your [Pandoc call(https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66) (currently `.org` and `.md`), and then choosing the [default Markup Pack](https://github.com/alopezrivera/owo/blob/7a6e7f9769eb8a05ca9e8f169699cd21fff55761/src/Conversion/Conversion-Markup.psm1#L94) for that format.
+
+### `'none'`
+
+No post-processing will be applied.
 
 ## Requirements
 
