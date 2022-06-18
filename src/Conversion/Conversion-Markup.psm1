@@ -1,18 +1,34 @@
 # SPDX-License-Identifier: GPL-3.0
 
 Function SupportedMarkupFormats {
-    @{
-        markdown   = 'md';
-        gfm        = 'md';
-        commonmark = 'md';
-        org        = 'org';
-    }
-}
 
-Function DefaultMarkupPacks {
+    # As specified in the Pandoc manual (https://pandoc.org/MANUAL.html)
+
     @{
-        org = 'OrgPack1';
-        md  = 'MarkdownPack1';
+
+        # Emacs Org Mode
+        org               = 'org';
+
+        # Markdown
+        markdown_strict   = 'md';
+
+        # CommonMark
+        commonmark        = 'md';
+        commonmark_x      = 'md';
+
+        # GitHub-Flavored Markdown
+        gfm               = 'md';
+        markdown_github   = 'md';
+
+        # Pandoc Markdown
+        markdown          = 'md';
+
+        # MultiMarkdown
+        markdown_mmd      = 'md';
+        
+        # PHP Markdown Extra
+        markdown_phpextra = 'md';
+
     }
 }
 
@@ -26,17 +42,9 @@ Function Get-Markup
         $pageCfg
     )
 
-    $markupTable = SupportedMarkupFormats
-
-    $keys = $markupTable.Keys
-
-    # Get markup format from Pandoc call
-    $markup = 'none'
-    foreach ($key in $keys) {
-        if ($pageCfg['conversion'] -Match $key) {
-            $markup = $key
-        }
-    }
+    $pandocCall = $pageCfg['conversion']
+    
+    $markup = $pandocCall.Split('-')[0]
 
     $markup
 
@@ -52,10 +60,8 @@ Function Get-MarkupExtension
         $pageCfg
     )
 
-    # Markup formats hashtable
     $markupTable = SupportedMarkupFormats
 
-    # Get markup format from Pandoc call
     $markup = Get-Markup $pageCfg
 
     $extension = $markupTable[$markup]
@@ -68,7 +74,7 @@ Function Get-MarkupPack
 {
     [CmdletBinding()]
     param (
-        # OneUp configuration object
+        # owo configuration object
         [Parameter(Mandatory)]
         [object]
         $config
@@ -81,60 +87,22 @@ Function Get-MarkupPack
 
     # If no specific Markup Pack has been specified in config.ps1
     if ($config['markupPack']['value'] -eq '') {
-        # Markup packs hastable
-        $markupPackHastable = DefaultMarkupPacks
 
         # Get markup format from Pandoc call
         $extension = Get-MarkupExtension $pageCfg
 
-        $markupPack = $markupPackHastable[$extension]
+        $markupPack = if ($extension -eq 'org') {
+            'OrgPack1'
+        } 
+        elseif ($extension -eq 'md') {
+            'MarkdownPack1'
+        }
 
     }
-    # If no post-processing is desired, return 'none'
-    elseif ($config['markupPack']['value'] -eq 'none') {
-        $markupPack = 'none'
-    }
-    else
-    {
+    else {
         $markupPack = $config['markupPack']['value']
     }
 
     $markupPack
-
-}
-
-Function MarkupPackAvailable {
-
-    [CmdletBinding()]
-    param (
-        # OneUp configuration object
-        [Parameter(Mandatory)]
-        [object]
-        $config
-        ,
-        # Converted page configuration object
-        [Parameter(Mandatory)]
-        [object]
-        $pageCfg
-    )
-
-    # Get markup extensions with a default Markup Pack
-    $markupPackHastable = DefaultMarkupPacks
-    $supMarkupExtensions = $markupPackHastable.Keys
-
-    # Get markup format from Pandoc call
-    $extension = Get-MarkupExtension $pageCfg
-
-    # Determine whether a Markup Pack is available for the conversion
-    $markupPackAvailable = 0
-    if ($config['markupPack']['value'] -eq '') {
-        if ($supMarkupExtensions.Contains($extension)) {
-            $markupPackAvailable = 1
-        }
-    }elseif ($config['markupPack']['value'] -ne 'none') {
-        $markupPackAvailable = 1
-    }
-
-    $markupPackAvailable
 
 }
