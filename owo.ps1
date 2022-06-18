@@ -53,10 +53,13 @@ Function owo {
         # Convert the notebook(s)
         $pageConversionConfigsAll = @()
         foreach ($notebook in $notebooks) {
+            
             "`nConverting notebook '$( $notebook.name )'... (Ignoring deleted notes)" | Write-Host -ForegroundColor Cyan
             New-SectionGroupConversionConfig -OneNoteConnection $OneNote -NotesDestination $config['notesDestPath']['value'] -Config $config -SectionGroups $notebook -LevelsFromRoot 0 -ErrorVariable +totalerr | Tee-Object -Variable pageConversionConfigs | Convert-OneNotePage -OneNoteConnection $OneNote -Config $config -ErrorVariable +totalerr
+            
             "`nDone converting notebook '$( $notebook.name )' with $( ($pageConversionConfigs | Measure-object).Count ) notes." | Write-Host -ForegroundColor Cyan
             $pageConversionConfigsAll += $pageConversionConfigs
+            
         }
 
         # Export all Page Conversion Configuration objects as .json, which is useful for debugging

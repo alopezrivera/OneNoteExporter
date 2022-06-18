@@ -25,11 +25,13 @@ Function Set-ContentNoBom {
             }catch {
                 if ($ErrorActionPreference -eq 'Stop') {
                     throw
-                }else {
+                }
+                else {
                     Write-Error -ErrorRecord $_
                 }
             }
-        }else {
+        }
+        else {
             Set-Content @PSBoundParameters
         }
     }
@@ -106,7 +108,8 @@ Function Convert-OneNotePage {
                 }catch {
                     throw "Error while publishing page to docx file $( $pageCfg['docxExportFilePath'] ): $( $_.Exception.Message )"
                 }
-            }else {
+            }
+            else {
                 "Existing docx file: $( $pageCfg['docxExportFilePath'] )" | Write-Verbose
             }
 
@@ -123,7 +126,8 @@ Function Convert-OneNotePage {
                     }catch {
                         throw "Error while publishing page to PDF file $( $pageCfg['pdfExportFilePath'] ): $( $_.Exception.Message )"
                     }
-                }else {
+                }
+                else {
                     "Existing PDF file: $( $pageCfg['pdfExportFilePath'].Substring(4) )" | Write-Host -ForegroundColor Green
                 }
             }
@@ -157,7 +161,7 @@ Function Convert-OneNotePage {
                 }
             }
 
-            # Cleanup Word files
+            # Clean up Word files
             if ($config['docxKeep']['value'] -eq 2) {
                 try {
                     "Removing existing docx file: $( $pageCfg['docxExportFilePath'] )" | Write-Verbose
@@ -186,7 +190,8 @@ Function Convert-OneNotePage {
                 try {
                     $newimageName = if ($config['mediaLocation']['value'] -eq 1) {
                         "$( $pageCfg['filePathRelUnderscore'] )-$($image.BaseName)$($image.Extension)"
-                    }else {
+                    }
+                    else {
                         "$( $pageCfg['pathFromRootCompat'] )-$($image.BaseName)$($image.Extension)"
                     }
                     $newimagePath = [io.path]::combine( $pageCfg['mediaPath'], $newimageName )
@@ -227,20 +232,23 @@ Function Convert-OneNotePage {
                 # it does not exist"
                 # ---------------------------------------------------------------------------
                 $content = @( Get-Content -LiteralPath $pageCfg['filePath'] -ErrorAction Stop -Encoding UTF8 )
-                
+
                 $content = @(
                     # If the page is not empty
                     if ($content.Count -gt 6) {
-                        # If a Markup Pack is available for the chosen markup format
-                        $markupPackAvailable = MarkupPackAvailable $config $pageCfg
 
-                        if ($markupPackAvailable) {
-                            # The header and creation timestamp are removed to be rewritten later according to our preferences, as laid down in the appropriate Markup Pack
+                        if ($pageCfg['markupPack'] -ne 'none') {
+                            # If a Markup Pack is available, the header and creation timestamp are removed,
+                            # to be rewritten later according to our preferences, as laid down in the
+                            # appropriate Markup Pack
                             $content[6..($content.Count - 1)]
-                        }else{
+                        }
+                        else{~
                             $content
                         }
-                    }else {
+
+                    }
+                    else {
                         # Empty page
                         ''
                     }

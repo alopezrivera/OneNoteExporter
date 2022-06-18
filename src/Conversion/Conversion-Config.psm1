@@ -4,8 +4,7 @@
 Import-Module .\src\Conversion\Conversion-Markup.psm1
 
 # Import Markup Packs
-Import-Module .\src\Conversion\Markup-Packs\Org.psm1
-Import-Module .\src\Conversion\Markup-Packs\Markdown.psm1
+Import-Module .\src\Conversion\Markup-Packs\Import-All.psm1
 
 Function Encode-Markdown {
     [CmdletBinding()]
@@ -25,7 +24,8 @@ Function Encode-Markdown {
         foreach ($c in $markdownChars) {
             $Name = $Name.Replace("$c", "\$c")
         }
-    }else {
+    }
+    else {
         # See: https://pandoc.org/MANUAL.html#backslash-escapes
         $markdownChars = '\*_{}[]()#+-.!'.ToCharArray()
         foreach ($c in $markdownChars) {
@@ -84,7 +84,8 @@ Function New-SectionGroupConversionConfig {
 
         if ($LevelsFromRoot -eq 0) {
             "`nBuilding conversion configuration for $( $sectionGroup.name ) [Notebook]" | Write-Host -ForegroundColor DarkGreen
-        }else {
+        }
+        else {
             "`n$( '#' * ($LevelsFromRoot) ) Building conversion configuration for $( $sectionGroup.name ) [Section Group]" | Write-Host -ForegroundColor DarkGray
         }
 
@@ -188,15 +189,18 @@ Function New-SectionGroupConversionConfig {
                             if ($pageCfg['pageLevel'] -eq 1) {
                                 # 1 -> 1, 2 -> 1, or 3 -> 1
                                 ''
-                            }else {
+                            }
+                            else {
                                 if ($previousPage) {
                                     if ($previousPage['pageLevel'] -lt $pageCfg['pageLevel']) {
                                         # 1 -> 2, 1 -> 3, or 2 -> 3
                                         "$( $previousPage['filePathRel'] )$( [io.path]::DirectorySeparatorChar )"
-                                    }elseif ($previousPage['pageLevel'] -eq $pageCfg['pageLevel']) {
+                                    }
+                                    elseif ($previousPage['pageLevel'] -eq $pageCfg['pageLevel']) {
                                         # 2 -> 2, or 3 -> 3
                                         "$( Split-Path $previousPage['filePathRel'] -Parent )$( [io.path]::DirectorySeparatorChar )"
-                                    }else {
+                                    }
+                                    else {
                                         # 3 -> 2 (or 4 -> 2, but 4th level subpages don't exist, but technically this supports it)
                                         $split = $previousPage['filePathRel'].Split([io.path]::DirectorySeparatorChar)
                                         $index = $pageCfg['pageLevel'] - 1 - 1 # If page level n, the prefix should be n-1
@@ -205,7 +209,8 @@ Function New-SectionGroupConversionConfig {
                                         }
                                         "$( $split[0..$index] -join [io.path]::DirectorySeparatorChar )$( [io.path]::DirectorySeparatorChar )"
                                     }
-                                }else {
+                                }
+                                else {
                                     '' # Should never end up here
                                 }
                             }
@@ -246,7 +251,9 @@ Function New-SectionGroupConversionConfig {
                             if ($recurrence -gt 0) {
                                 $filePathRel = "$filePathRel-$recurrence"
                             }
-                            $filePathRel | Truncate-PathFileName -Length $config['muFileNameAndFolderNameMaxLength']['value'] # Truncate to no more than 255 characters so we don't hit the folder name limit on most file systems on Windows / Linux
+                            # Truncate to no more than 255 characters so we don't hit the folder name 
+                            # limit on most file systems on Windows / Linux
+                            $filePathRel | Truncate-PathFileName -Length $config['muFileNameAndFolderNameMaxLength']['value']
                         }
                         $pageCfg['filePathRelUnderscore'] = $pageCfg['filePathRel'].Replace( [io.path]::DirectorySeparatorChar, '_' )
                         $pageCfg['filePathNormal'] = & {
@@ -273,7 +280,8 @@ Function New-SectionGroupConversionConfig {
                         $pageCfg['filePath'] = if ($PSVersionTable.PSVersion.Major -le 5) {
                             # Add support for long paths on Powershell 5
                             $pageCfg['filePathLong'] 
-                        }else {
+                        }
+                        else {
                             # Powershell Core supports long file paths
                             $pageCfg['filePathNormal']
                         }
@@ -286,16 +294,19 @@ Function New-SectionGroupConversionConfig {
                         $pageCfg['pdfExportFilePathTmp'] = [io.path]::combine( (Split-Path $pageCfg['filePath'] -Parent ), "$( $pageCfg['id'] )-$( $pageCfg['lastModifiedTimeEpoch'] ).pdf" )
                         $pageCfg['pdfExportFilePath'] = if ( ($pageCfg['fileName'].Length + ('.pdf'.Length - ".$($extension)".Length)) -le $config['muFileNameAndFolderNameMaxLength']['value']) {
                             $pageCfg['filePath'] -replace "\.$($extension)$", '.pdf'
-                        }else {
+                        }
+                        else {
                             # Trim 1 character in the basename when replacing the extension
                             $pageCfg['filePath'] -replace ".\.$($extension)$", '.pdf'
                         }
                         $pageCfg['levelsPrefix'] = if ($config['mediaLocation']['value'] -eq 1) {
                             ''
-                        }else {
+                        }
+                        else {
                             if ($config['prefixFolders']['value'] -eq 2) {
                                 "$( '../' * ($pageCfg['levelsFromRoot'] + 1 - 1) )"
-                            }else {
+                            }
+                            else {
                                 "$( '../' * ($pageCfg['levelsFromRoot'] + $pageCfg['pageLevel'] - 1) )"
                             }
                         }
@@ -303,13 +314,15 @@ Function New-SectionGroupConversionConfig {
                             $dateNs = Get-Date -Format "yyyy-MM-dd-HH-mm-ss-fffffff"
                             if ($env:OS -match 'windows') {
                                 [io.path]::combine($env:TEMP, $cfg['notebookName'], $dateNs)
-                            }else {
+                            }
+                            else {
                                 [io.path]::combine('/tmp', $cfg['notebookName'], $dateNs)
                             }
                         }
                         $pageCfg['mediaParentPath'] = if ($config['mediaLocation']['value'] -eq 1) {
                             $pageCfg['fileDirectory']
-                        }else {
+                        }
+                        else {
                             $cfg['notesBaseDirectory']
                         }
                         $pageCfg['mediaPath'] = [io.path]::combine( $pageCfg['mediaParentPath'], 'media' )
@@ -321,7 +334,8 @@ Function New-SectionGroupConversionConfig {
                         $pageCfg['mediaPathPandoc'] = [io.path]::combine( $pageCfg['tmpPath'], 'media').Replace( [io.path]::DirectorySeparatorChar, '/' )
                         $pageCfg['docxExportFilePath'] = if ($config['docxNamingConvention']['value'] -eq 1) {
                             [io.path]::combine( $cfg['notesDocxDirectory'], "$( $pageCfg['id'] )-$( $pageCfg['lastModifiedTimeEpoch'] )-$( $pageCfg['fileBaseName'] ).docx" )
-                        }else {
+                        }
+                        else {
                             [io.path]::combine( $cfg['notesDocxDirectory'], "$( $pageCfg['pathFromRootCompat'] ).docx" )
                         }
                         $pageCfg['insertedAttachments'] = @(
@@ -339,8 +353,9 @@ Function New-SectionGroupConversionConfig {
                                             $attachmentCfg['markdownFileName'] =  $attachmentCfg['nameCompat'] | Encode-Markdown -Uri
                                             $attachmentCfg['source'] =  $i.pathCache
                                             $attachmentCfg['destination'] =  [io.path]::combine( $pageCfg['mediaPath'], $attachmentCfg['nameCompat'] )
-
+                                            
                                             $attachmentCfg
+                                            
                                         }
                                     }
                                 }
@@ -353,7 +368,9 @@ Function New-SectionGroupConversionConfig {
 
                         if ($markupPack -ne 'none') {
                             $pageCfg['mutations'] = &$markupPack $config $pageCfg
-                        }else{
+                        }
+                        else
+                        {
                             # If no post-processing is desired, return an empty array
                             $pageCfg['mutations'] = @()
                         }
@@ -385,7 +402,8 @@ Function New-SectionGroupConversionConfig {
                             $pageCfg
                         }
                     }
-                }else {
+                }
+                else {
                     "Ignoring empty Section: $( $sectionCfg['pathFromRoot'] )" | Write-Host -ForegroundColor DarkGray
                 }
 
@@ -402,7 +420,8 @@ Function New-SectionGroupConversionConfig {
         if ((Get-Member -InputObject $sectionGroup -Name 'SectionGroup')) {
             if ($AsArray) {
                 $cfg['sectionGroups'] = New-SectionGroupConversionConfig -OneNoteConnection $OneNoteConnection -NotesDestination $cfg['notesDirectory'] -Config $Config -SectionGroups $sectionGroup.SectionGroup -LevelsFromRoot ($LevelsFromRoot + 1) -AsArray:$AsArray
-            }else {
+            }
+            else {
                 # Send the configuration immediately down the pipeline
                 New-SectionGroupConversionConfig -OneNoteConnection $OneNoteConnection -NotesDestination $cfg['notesDirectory'] -Config $Config -SectionGroups $sectionGroup.SectionGroup -LevelsFromRoot ($LevelsFromRoot + 1)
             }

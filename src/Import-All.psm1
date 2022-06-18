@@ -19,3 +19,6 @@ Import-Module -DisableNameChecking .\src\OneNote\OneNote-Retrieve.psm1
 Import-Module -DisableNameChecking .\src\Conversion\Conversion-Config.psm1
 Import-Module -DisableNameChecking .\src\Conversion\Conversion-Page.psm1
 Import-Module -DisableNameChecking .\src\Conversion\Conversion-Log.psm1
+
+# Markup Pack methods
+Import-Module -DisableNameChecking .\src\Conversion\Conversion-Markup.psm1
