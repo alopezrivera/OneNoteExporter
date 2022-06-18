@@ -1,6 +1,6 @@
 # `owo`
 
-`owo` (as in `o`ne`w`ay`o`ut of here) is a PowerShell program to transform all your OneNote notes to Emacs Org Mode and any other [Pandoc-supported markup](https://pandoc.org/) using the OneNote Object Model and Pandoc.
+`owo` (as in `o`ne`w`ay`o`ut of here) is a PowerShell program to export all your OneNote notes to Emacs Org Mode or any other [Pandoc-supported markup](https://pandoc.org/) using the OneNote Object Model and Pandoc.
 
 ---
 
@@ -28,7 +28,7 @@
 
 ## Introduction
 
-`owo` exports OneNote pages to Word using the OneNote Object Model, and then Pandoc to convert them to your markup format of choice. [**Markup Packs**](https://github.com/alopezrivera/owo/tree/master/src/Conversion/Markup-Packs) are then used to customize the result. Markup Packs are *markup-format-specific* **functions** containing search and replace queries executed at runtime against the text output by Pandoc to tailor it to our desires. If search and replace doesn't cut it, you can add a `postprocessing` scriptblock to increase your freedom. Markup Packs give you fine-grained control over of all elements of your notes, including
+`owo` exports OneNote pages to Word using the OneNote Object Model, and then Pandoc to convert them to your markup format of choice. [**Markup Packs**](https://github.com/alopezrivera/owo/tree/master/src/Conversion/Markup-Packs) are then used to customize the result. Markup Packs are *markup-format-specific* **functions** containing search and replace queries executed at runtime against the text output by Pandoc to tailor it to your desires. If search and replace doesn't cut it, you can add a `postprocessing` scriptblock to increase your freedom. Markup Packs give you fine-grained control over of all elements of your notes, including
 
 * Headers
 * Metadata (eg: note creation date)
@@ -201,4 +201,4 @@ Furthermore, as reported in [ConvertOneNote2markdown](https://github.com/theohbr
 
 ---
 
-[Back to top](#onewayout-owo)
+[Back to top](#owo)
