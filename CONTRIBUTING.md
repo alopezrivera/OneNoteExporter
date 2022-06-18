@@ -57,43 +57,8 @@ A Markup Pack template is available in the [`templates` directory](https://githu
 To add a Markup Pack, follow these steps:
 
 1. Write your Markup Pack in the file containing the Markup Packs of your markup format of choice (`Org.psm1` or `Markdown.psm1` in `src/Conversion/Markup-Packs`). 
-   * **If you intend to export to a markup format that is neither Emacs Org Mode nor a variety of Markdown, [read the section below and come back.](#adding-support-for-new-markup-formats)**
-1. Edit `src/Conversion/Conversion-Markup.psm1` to set your Markup Pack as the default for the markup format of your choice.
-   * Edit the Markup Pack hashtable in `DefaultMarkupPacks`, replacing the **string** `"Format-Org"` or `"Format-Markdown"` for a **string** with the name of your method.
-      ```
-      $markupPacks = @{
-         org = "Format-Org";      -> "<Your Markup Pack function>"
-         md  = "Format-Markdown"; -> "<Your Markup Pack function>"
-      }
-      ```
+2. Set `markupPack` in your [config.ps1](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1) to the name of your markup pack. That is, the name of the **function** you have written.
 
----
-
-## Adding support for new markup formats
-
-Currently, any Pandoc-supported markup with `markdown` or `org` in its Pandoc name is supported by OneWayOut, or in other words, Org Mode and any Markdown variety. To clarify, Pandoc will correctly convert to any file format it supports. OneWayOut "support" means that the files will be exported with their correct extension, and that the output by Pandoc will be processed by a default Markup Pack. The following formats fall in this category:
-
-* org (Emacs Org Mode)
-* markdown (Pandoc’s Markdown)
-* commonmark (CommonMark Markdown)
-* gfm (GitHub-Flavored Markdown), or the deprecated and less accurate markdown_github; use markdown_github only if you need extensions not supported in gfm.
-* markdown_mmd (MultiMarkdown)
-* markdown_phpextra (PHP Markdown Extra)
-* markdown_strict (original unextended Markdown)
-
-If your export format of choice does not fall in this category, you may easily add support for it. To do so, follow these steps:
-
-1. Edit `src/Conversion/Conversion-Markup.psm1`
-   * Add the new Markup format to the Markup extension hashtable in `SupportedMarkupFormats`
-      * KEY: Pandoc name of the new Markup format (eg: `markdown` in the case of `markdown` and `markdown_phpextra`, `whatever` in the case of `whatever_etc`)
-      * VAL: File extension of the new Markup format
-1. Optionally, write a Markup Pack for the new format
-   1. Create a new PowerShell module for the new markup format 
-      * `src/Conversion/Markup-Packs/<Name of the new Markup format>.psm1`
-   1. Write a custom Markup Pack. Check the [previous section for reference.](#adding-markup-packs)
-   1. Import your Markup Pack PowerShell module in `src/Conversion/Conversion-Config.psm1`
-      * Under the Markup Pack imports (line 8) add `Import-Module .\src\Conversion\Markup-Packs\<Name of the new Markup format>.psm1`
-   1. [Set your Markup Pack as the default for the new format](#adding-markup-packs)
 
 ---
 
