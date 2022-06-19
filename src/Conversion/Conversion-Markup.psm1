@@ -1,5 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0
 
+Function DefaultMarkupPacks {
+    @{
+        org               = 'OrgPack1';
+        md                = 'MarkdownPack1';
+    }
+}
+
 Function SupportedMarkupFormats {
 
     # As specified in the Pandoc manual (https://pandoc.org/MANUAL.html)
@@ -88,15 +95,11 @@ Function Get-MarkupPack
     # If no specific Markup Pack has been specified in config.ps1
     if ($config['markupPack']['value'] -eq '') {
 
-        # Get markup format from Pandoc call
+        $defaultsPacks  = DefaultMarkupPacks
+
         $extension = Get-MarkupExtension $pageCfg
 
-        $markupPack = if ($extension -eq 'org') {
-            'OrgPack1'
-        } 
-        elseif ($extension -eq 'md') {
-            'MarkdownPack1'
-        }
+        $markupPack = $defaultsPacks[$extension]
 
     }
     else {
