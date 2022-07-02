@@ -15,8 +15,6 @@ Contributions of any kind are than welcome. Below you can find urgently needed f
 
 [**Adding Markup Packs**](#adding-markup-packs)
 
-[**Adding support for new markup formats**](#adding-support-for-new-markup-formats)
-
 -----
 
 ## New features
