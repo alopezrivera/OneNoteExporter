@@ -31,4 +31,5 @@ Function Remove-OneNoteConnection {
     )
 
     [System.Runtime.Interopservices.Marshal]::ReleaseComObject($OneNoteConnection) | Out-Null
+    
 }

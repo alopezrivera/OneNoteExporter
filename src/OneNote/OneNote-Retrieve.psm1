@@ -63,4 +63,5 @@ Function Publish-OneNotePage {
     )
 
     $OneNoteConnection.Publish($PageId, $Destination, $PublishFormat, "")
+    
 }
