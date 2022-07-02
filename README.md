@@ -20,8 +20,6 @@
 
 [**Recommendations**](#recommendations)
 
-[**Known Issues**](#known-issues)
-
 [**Attribution**](#attribution)
 
 ---
@@ -180,16 +178,6 @@ All of the following are configured from `config.ps1` (assuming you have renamed
    * To install the macro, click the New Macro Button within the Onetastic Toolbar and then select File -> Import and select the .xml macro included in the release.
    * Run the macro for each Notebook that is open
 1. Unlock all password-protected sections before continuing, the Object Model will not have access to them otherwise
-
-## Known Issues
-
-1. Inline image paths are relative. In some editors, this can cause the images to not render, even if the links are clickable (tested on VSCode).
-1. If you collection is rather large, your computer may **run out of memory** before finishing the process. It is very highly recommended that you save the Word files produced so you can start back up with minimal loss of time. In case this becomes a serious problem and you cannot easily continue, consider exporting your collection **notebook by notebook** (check your `config.ps1`).
-
-Furthermore, as reported in [ConvertOneNote2markdown](https://github.com/theohbrothers/ConvertOneNote2markdown):
-
-3. You should start by 'flattening' all `InkDrawing` (i.e. pen/hand written elements) in your onennote pages. Because OneNote does not have this function you will have to take screenshots of your pages with pen/hand written notes and paste the resulting image and then remove the scriblings. If you are a heavy 'pen' user this is a very cumbersome.
-   * Alternatively, if you are converting a notebook only for reading sake, and want to preserve all of your notes' layout, instead of flattening all `InkDrawing` manually you may prefer to export a  `.pdf` which preserves the full apperance and layout of the original note (including `InkDrawing`). Simply use the config option `$exportPdf = 2` to export a `.pdf` alongisde the markup file.
 
 ## Attribution
 
