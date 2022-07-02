@@ -11,31 +11,19 @@ Contributions of any kind are than welcome. Below you can find urgently needed f
 
 ### Table of Contents
 
-[**Issues**](#issues)
-
-[**Features**](#improvements)
+[**New Features**](#new-features)
 
 [**Adding Markup Packs**](#adding-markup-packs)
 
 [**Adding support for new markup formats**](#adding-support-for-new-markup-formats)
 
----
+-----
 
-## Issues
-
-### Running out of memory
-
-In the case of rather large collections, the system may run out of memory before finishing the process. Currently the best workaround for this is to save the generated Word files and start back up hoping for the best, or export the collection notebook by notebook.
-
-Flushing memory after, say, a notebook export is completed, or any other way to solve this problem would be very welcome.
-
----
-
-## Features
+## New features
 
 ### Better picture export
 
-Currently, pictures in your notes are exported at fairly low resolution. Retrieving the pictures at their original resolution would be ideal.
+Currently, pictures in your notes are exported at fairly low resolution. Retrieving the pictures at their original resolution (that which they have inside OneNote) would be ideal.
 
 ### Better `InkDrawing` export
 
