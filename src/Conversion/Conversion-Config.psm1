@@ -300,7 +300,7 @@ Function New-SectionGroupConversionConfig {
                             $pageCfg['filePath'] -replace ".\.$($extension)$", '.pdf'
                         }
                         $pageCfg['levelsPrefix'] = if ($config['mediaLocation']['value'] -eq 1) {
-                            ''
+                            './'
                         }
                         else {
                             if ($config['prefixFolders']['value'] -eq 2) {
