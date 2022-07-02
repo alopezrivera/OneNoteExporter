@@ -32,7 +32,7 @@ This is a major inconvenience for digitial pen users, but there is little `owo` 
 * Manually replace all your drawings by screenshots of them before export. If you are a heavy pen user this is impracticable. Furthermore, your drawings will lose much of their resolution, making this a bad solution.
 * Export PDFs of your notes alongside with their markup files. You can achieve this by setting `$exportPdf = 2` in your `config.ps1`. This way your drawings will keep their full resolution, albeit locked in PDF format. The export process will be slower and its output multiplied by two without clue as to which notes contained `InkDrawings`, making this too a bad solution.
 
-In an ideal world, all `InkDrawings` would be identified by `owo` before export, turned into SVGs and saved alongside other note media, and references to such SVGs would then be added in their place in your exported notes. Alas, I stopped being a heavy pen user long ago and do not have the time to look into it.
+In an ideal world, all `InkDrawing`s would be identified by `owo` before export, turned into SVGs and saved alongside other note media, and references to such SVGs would then be added in their place in your exported notes. Alas, I stopped being a heavy pen user long ago and do not have the time to look into it.
 
 ---
 
