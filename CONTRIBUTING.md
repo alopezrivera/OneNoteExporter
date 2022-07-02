@@ -19,18 +19,20 @@ Contributions of any kind are than welcome. Below you can find urgently needed f
 
 ## New features
 
-### Better picture export
+### Higher resolution picture export
 
 Currently, pictures in your notes are exported at fairly low resolution. Retrieving the pictures at their original resolution (that which they have inside OneNote) would be ideal.
 
-### Better `InkDrawing` export
+### `InkDrawing` support
 
-As mentioned in the README,
+`InkDrawing`s, that is, the format used by OneNote to store your hand-drawn notes, do not survive the OneNote to Word export process as of July 2022.
 
-* You should start by 'flattening' all `InkDrawing` (i.e. pen/hand written elements) in your onennote pages. Because OneNote does not have this function you will have to take screenshots of your pages with pen/hand written notes and paste the resulting image and then remove the scriblings. If you are a heavy 'pen' user this is a very cumbersome.
-  * Alternatively, if you are converting a notebook only for reading sake, and want to preserve all of your notes' layout, instead of flattening all `InkDrawing` manually you may prefer to export a  `.pdf` which preserves the full apperance and layout of the original note (including `InkDrawing`). Simply use the config option `$exportPdf = 2` to export a `.pdf` alongisde the markup file.
+This is a major inconvenience for digitial pen users, but there is little `owo` can do about this. Two "solutions" are currently available:
 
-A way to automate this process would be good to have.
+* Manually replace all your drawings by screenshots of them before export. If you are a heavy pen user this is impracticable. Furthermore, your drawings will lose much of their resolution, making this a bad solution.
+* Export PDFs of your notes alongside with their markup files. You can achieve this by setting `$exportPdf = 2` in your `config.ps1`. This way your drawings will keep their full resolution, albeit locked in PDF format. The export process will be slower and its output multiplied by two without clue as to which notes contained `InkDrawings`, making this too a bad solution.
+
+In an ideal world, all `InkDrawings` would be identified by `owo` before export, turned into SVGs and saved alongside other note media, and references to such SVGs would then be added in their place in your exported notes. Alas, I stopped being a heavy pen user long ago and do not have the time to look into it.
 
 ---
 
