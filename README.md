@@ -108,7 +108,7 @@ You Markup Pack of choice.
 
 ### `''`
 
-The default Markup Pack for your export format. `owo` determines which Markup Pack to use by first [identifying the extension](https://github.com/alopezrivera/owo/blob/7a6e7f9769eb8a05ca9e8f169699cd21fff55761/src/Conversion/Conversion-Markup.psm1#L3) of the file format you have specified in your [Pandoc call(https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66) (currently `.org` and `.md`), and then choosing the [default Markup Pack](https://github.com/alopezrivera/owo/blob/7a6e7f9769eb8a05ca9e8f169699cd21fff55761/src/Conversion/Conversion-Markup.psm1#L94) for that format.
+The default Markup Pack for your export format. `owo` determines which Markup Pack to use by first [identifying the extension](https://github.com/alopezrivera/owo/blob/7a6e7f9769eb8a05ca9e8f169699cd21fff55761/src/Conversion/Conversion-Markup.psm1#L3) of the file format you have specified in your [Pandoc call](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66) (currently `.org` and `.md`), and then choosing the [default Markup Pack](https://github.com/alopezrivera/owo/blob/7a6e7f9769eb8a05ca9e8f169699cd21fff55761/src/Conversion/Conversion-Markup.psm1#L94) for that format.
 
 ### `'none'`
 
