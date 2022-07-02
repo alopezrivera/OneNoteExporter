@@ -40,7 +40,7 @@
 
 ### Customizing output and adding support for further export formats
 
-As long as Pandoc supports your desired markup format, all `owo` needs to shine is a Markup Pack to tailor the output to your taste. [CONTRIBUTING.md](https://github.com/alopezrivera/owo/blob/master/CONTRIBUTING.md) contains a step by step guide to write and use your own Markup Packs.
+As long as Pandoc supports your desired markup format, all `owo` needs to shine is a Markup Pack to tailor the output to your taste. [The section on Markup Packs](https://github.com/alopezrivera/owo#adding-markup-packs) contains a step by step guide to write and use your own Markup Packs.
 
 ## Results
 
@@ -100,17 +100,30 @@ With support is meant that `owo` understands which file type you are trying to e
 
 You can specify your Markup Pack of choice [line 74 of your config.ps1](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L74). `markupPack` may have three values, as follows:
 
-### `'<markup pack>'`
+### Configuration
+
+#### `'<markup pack>'`
 
 You Markup Pack of choice.
 
-### `''`
+#### `''`
 
 The default Markup Pack for your export format. `owo` determines which Markup Pack to use by first [identifying the extension](https://github.com/alopezrivera/owo/blob/7a6e7f9769eb8a05ca9e8f169699cd21fff55761/src/Conversion/Conversion-Markup.psm1#L3) of the file format you have specified in your [Pandoc call](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66) (currently `.org` and `.md`), and then choosing the [default Markup Pack](https://github.com/alopezrivera/owo/blob/7a6e7f9769eb8a05ca9e8f169699cd21fff55761/src/Conversion/Conversion-Markup.psm1#L94) for that format.
 
-### `'none'`
+#### `'none'`
 
 No post-processing will be applied.
+
+### Adding Markup Packs
+
+Markup Packs are *markup-format-specific* **functions** containing search and replace queries executed at runtime against a string containing the entire markup content. If search and replace doesn't cut it, you can add a `postprocessing` scriptblock to increase your freedom (check the scriptblock to "Remove over-indentation of list items" in [Markdown MarkdownPack1](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Markdown.psm1)).
+
+A Markup Pack template is available in the [`templates` directory](https://github.com/alopezrivera/owo/tree/master/templates). It's an annotated version of the [Emacs Org Mode **OrgPack1**](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Org.psm1) Markup Pack. If you're interested in exporting to a Markdown format, check the [Markdown MarkdownPack1](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Markdown.psm1) Markup Pack for inspiration.
+
+To add a Markup Pack, follow these steps:
+
+1. Write your Markup Pack in the file containing the Markup Packs of your markup format of choice (`Org.psm1` or `Markdown.psm1` in `src/Conversion/Markup-Packs`). 
+2. Set `markupPack` in your [config.ps1](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1) to the name of your markup pack. That is, the name of the **function** you have written.
 
 ## Requirements
 
