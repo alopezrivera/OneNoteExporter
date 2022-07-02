@@ -140,12 +140,12 @@ Function Convert-OneNotePage {
                 "Converting docx file to markup file: $( $pageCfg['filePath'] )" | Write-Verbose
                 
                 $argumentList = @( '-f', 'docx',
-                                   '-t', $($pageCfg['conversion']), 
-                                   '-i', "`"$($pageCfg['docxExportFilePath'])`"", 
-                                   '-o', "`"$($pageCfg['filePathNormal'])`"", 
+                                   '-t', "`"$( $pageCfg['conversion'] )`"",
+                                   '-i', "`"$( $pageCfg['docxExportFilePath'] )`"", 
+                                   '-o', "`"$( $pageCfg['filePathNormal'] )`"", 
                                    '--wrap=none',
-                                   "--extract-media=$( $pageCfg['mediaParentPathPandoc'] )" )
-                    
+                                   "--extract-media=`"$( $pageCfg['mediaParentPathPandoc'] )`"" )
+
                "Command line: pandoc.exe $argumentList" | Write-Verbose
                 $process = Start-Process -ErrorAction Stop -RedirectStandardError $stderrFile -PassThru -NoNewWindow -Wait -FilePath pandoc.exe -ArgumentList $argumentList # extracts into ./media of the supplied folder
 
