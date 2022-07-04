@@ -1,6 +1,6 @@
 # `owo`
 
-`owo` (as in `o`ne`w`ay`o`ut of here, here being OneNote) is a PowerShell program to export all your OneNote notes to any other [Pandoc-supported plain text markup format](https://pandoc.org/) using the OneNote Object Model and Pandoc.
+`owo` (as in `o`ne`w`ay`o`ut of here, here being OneNote) is a PowerShell program to export all your OneNote notes to any [Pandoc-supported plain text markup format](https://pandoc.org/MANUAL.html) using the OneNote Object Model and Pandoc.
 
 ---
 
