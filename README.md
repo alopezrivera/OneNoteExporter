@@ -38,9 +38,9 @@
 
 `owo` will export all your *local* OneNote notebooks, meaning that to export a notebook of yours, you will need to download it to OneNote >= 2016[*](#requirements) with the "Add Notebook" option.
 
-### Customizing output and adding support for further export formats
+### Customizing the output
 
-As long as Pandoc supports your desired markup format, all `owo` needs to shine is a Markup Pack to tailor the output to your taste. [The section on Markup Packs](https://github.com/alopezrivera/owo#adding-markup-packs) contains a step by step guide to write and use your own Markup Packs.
+As long as Pandoc supports your desired markup format, all `owo` needs to shine is a Markup Pack to tailor the output to your tastes. [The section on Markup Packs](https://github.com/alopezrivera/owo#adding-markup-packs) contains a step by step guide to write and use your own Markup Packs.
 
 ## Results
 
