@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0
 
-# 1) Rename this file to config.ps1 -keep it in the same folder as owo.ps1
+# 1) Rename this file to config.ps1 -keep it in the same folder as one.ps1
 # 2) Configure the options below to your liking
-# 3) Run .\owo.ps1
+# 3) Run .\one.ps1
 
 # Specify folder path that will contain your resulting Notes structure - Default: c:\temp\notes
 $notesDestPath = 'c:\temp\notes'
@@ -64,8 +64,8 @@ $conversion = 'org-simple_tables-multiline_tables-grid_tables+pipe_tables'
 # Options:
 #   <empty string>      - Process with default Markup Pack
 #   none                - Don't apply any post-processing (for debugging purposes)
-#   OrgPack1            - Org Mode pack shipping with OneWayOut
-#   MarkdownPack1       - Markdown pack shipping with OneWayOut
+#   OrgPack1            - Org Mode pack shipping with OneNote Exporter
+#   MarkdownPack1       - Markdown pack shipping with OneNote Exporter
 $markupPack = ''
 
 # Whether to include page timestamp and separator at top of document

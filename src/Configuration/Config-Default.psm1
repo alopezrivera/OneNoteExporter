@@ -105,8 +105,8 @@ Default:
 # Options:
 #   <empty string>      - Process with default Markup Pack
 #   none                - Don't apply any post-processing (for debugging purposes)
-#   OrgPack1            - Org Mode pack shipping with OneWayOut
-#   MarkdownPack1       - Markdown pack shipping with OneWayOut
+#   OrgPack1            - Org Mode pack shipping with OneNote Exporter
+#   MarkdownPack1       - Markdown pack shipping with OneNote Exporter
 '@
             default = ''
             value = ''

@@ -1,6 +1,6 @@
-# `owo`
+# OneNote Exporter
 
-`owo` (as in `o`ne`w`ay`o`ut of here, here being OneNote) is a PowerShell program to export all your OneNote notes to any [Pandoc-supported plain text markup format](https://pandoc.org/MANUAL.html) using the OneNote Object Model and Pandoc.
+OneNote Exporter (in short, `one`) is a PowerShell program to export all your OneNote notes to any [Pandoc-supported plain text markup format](https://pandoc.org/MANUAL.html) using the OneNote Object Model and Pandoc.
 
 ---
 
@@ -26,27 +26,27 @@
 
 ## Introduction
 
-`owo` exports OneNote pages to Word using the OneNote Object Model, and then Pandoc to convert them to your markup format of choice. [**Markup Packs**](https://github.com/alopezrivera/owo/tree/master/src/Conversion/Markup-Packs) are then used to customize the result. Markup Packs are *markup-format-specific* **functions** containing search and replace queries executed at runtime against the text output by Pandoc to tailor it to your desires. If search and replace doesn't cut it, you can add a `postprocessing` scriptblock to increase your freedom. Markup Packs give you fine-grained control over of all elements of your notes, including
+`one` exports OneNote pages to Word using the OneNote Object Model, and then uses Pandoc to convert them to your markup format of choice. Then, `one` uses [**Markup Packs**](https://github.com/alopezrivera/one/tree/master/src/Conversion/Markup-Packs) to customize the result. Markup Packs are *functions specific to each markup format*, which contain search and replace queries executed at runtime against the text output by Pandoc to tailor it to your desires. If search and replace doesn't cut it, you can add a `postprocessing` scriptblock to increase your freedom. Markup Packs give you fine-grained control over of all elements of your notes, including
 
 * Headers
 * Metadata (eg: note creation date)
-* Other markup elements such as horizontal lines, custom indentations and formatting, and whatever else you might be able to conjure up with the text in your notes
+* Other markup elements such as horizontal lines, custom indentation and formatting, and whatever else you might be able to conjure up from the text in your notes
 
-`owo` currently ships Markup Packs for [Emacs Org Mode](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Org.psm1) (`OrgPack1`) and [markdown](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/markdown.psm1) (`MarkDownPack1`).
+`one` currently ships Markup Packs for [Emacs Org Mode](https://github.com/alopezrivera/one/blob/master/src/Conversion/Markup-Packs/Org.psm1) (`OrgPack1`) and [markdown](https://github.com/alopezrivera/one/blob/master/src/Conversion/Markup-Packs/markdown.psm1) (`MarkDownPack1`).
 
 ### What is being exported?
 
-`owo` will export all your *local* OneNote notebooks, meaning that to export a notebook of yours, you will need to download it to OneNote >= 2016[*](#requirements) with the "Add Notebook" option.
+`one` will export all your *local* OneNote notebooks, meaning that to export a notebook of yours, you will need to download it to OneNote >= 2016[*](#requirements) with the "Add Notebook" option.
 
 ### Customizing the output
 
-As long as Pandoc supports your desired markup format, all `owo` needs to shine is a Markup Pack to tailor the output to your tastes. [The section on Markup Packs](https://github.com/alopezrivera/owo#adding-markup-packs) contains a step by step guide to write and use your own Markup Packs.
+As long as Pandoc supports your desired markup format, all `one` needs to shine is a Markup Pack to tailor the output to your tastes. [The section on Markup Packs](https://github.com/alopezrivera/one#adding-markup-packs) contains a step by step guide to write and use your own Markup Packs.
 
 ## Results
 
 ![OneNote test note along Org Mode and markdown exports](test/test.png)
 
-You can see the actual test results in the [`test` directory](https://github.com/alopezrivera/owo/tree/master/test) (as well as the Word file to which the test note was exported). I have attempted to identify all unsupported syntax, which you can see as you would in OneNote at the bottom of the [test Word file](https://github.com/alopezrivera/owo/blob/master/test/test.docx), and the respective export (failure) in the [Org Mode](https://github.com/alopezrivera/owo/blob/master/test/owo-test.org) and [markdown](https://github.com/alopezrivera/owo/blob/master/test/owo-test.md) conversions.
+You can see the actual test results in the [`test` directory](https://github.com/alopezrivera/one/tree/master/test) (as well as the Word file to which the test note was exported). I have attempted to identify all unsupported syntax, which you can see as you would in OneNote at the bottom of the [test Word file](https://github.com/alopezrivera/one/blob/master/test/test.docx), and the respective export (failure) in the [Org Mode](https://github.com/alopezrivera/one/blob/master/test/one-test.org) and [markdown](https://github.com/alopezrivera/one/blob/master/test/one-test.md) conversions.
 
 As you can see in the image above, the Markup Packs shipping for Org Mode and markdown (`OrgPack1` and `MarkdownPack1` respectively) will give your notes:
 
@@ -56,22 +56,21 @@ As you can see in the image above, the Markup Packs shipping for Org Mode and ma
 
 Some notes:
 
-* As expected, elaborate formatting doesn't survive export
-* Underscored text is annotated as such in markdown, but does not render correctly (at least in VSCode)
-* Images resized within OneNote are rendered with size information when exporting to markdown. Be mindful of the markdown flavour you are using. Pandoc markdown (`markdown` in the [Pandoc call in your config.ps1](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66)) image size notation will not render properly in GitHub or other GitHub-flavoured markdown renderers such as the VSCode markdown preview window.
-  * *If you want markdown output compatible with VSCode and GitHub*, specify `markdown_github` in the [line 66](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66) of your `config.ps1`
+- *If you want markdown output compatible with VSCode and GitHub*, specify `markdown_github` in the [line 66](https://github.com/alopezrivera/one/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66) of your `config.ps1`
 
     ```
     $conversion = 'markdown_github-simple_tables-multiline_tables-grid_tables+pipe_tables'
     ```
-
-* Unfortunately support for markdown lags behind that for Org Mode (eg: removal of empty list items). I haven't got the time to polish it, and neither the need. If you do please feel free to contribute!
+* Formatting using different fonts and colors doesn't survive export, as could be expected
+* Underscored text is annotated as such in markdown, but does not render correctly (at least in VSCode)
+* Images resized within OneNote are rendered with size information when exporting to markdown. Be mindful of the markdown flavour you are using. Pandoc markdown (`markdown` in the [Pandoc call in your config.ps1](https://github.com/alopezrivera/one/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66)) image size notation will not render properly in GitHub or other GitHub-flavoured markdown renderers such as the VSCode markdown preview window.
+* Unfortunately support for markdown lags behind that for Org Mode (eg: removal of empty list items). I haven't got the time to polish it any further unfortunately. If you do, please feel free to contribute!
 
 ## Supported Markups
 
-With support is meant that `owo` understands which file type you are trying to export your notes to: it will use this knowledge to appropriately name files and apply [default Markup Packs](#markup-packs) if `markupPack` is set to `''` in [line 74 of your config.ps1](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L74).
+With support is meant that `one` understands which file type you are trying to export your notes to: it will use this knowledge to appropriately name files and apply [default Markup Packs](#markup-packs) if `markupPack` is set to `''` in [line 74 of your config.ps1](https://github.com/alopezrivera/one/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L74).
 
-`owo` supports all (as of June 2022) Pandoc supported markups, as follows (from the [Pandoc manual](https://pandoc.org/MANUAL.html)),
+`one` supports all (as of June 2022) Pandoc supported markups, as follows (from the [Pandoc manual](https://pandoc.org/MANUAL.html)),
 
 - Emacs Org Mode
   - `org`
@@ -98,7 +97,7 @@ With support is meant that `owo` understands which file type you are trying to e
 
 ## Markup Packs
 
-You can specify your Markup Pack of choice [line 74 of your config.ps1](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L74). `markupPack` may have three values, as follows:
+You can specify your Markup Pack of choice [line 74 of your config.ps1](https://github.com/alopezrivera/one/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L74). `markupPack` may have three values, as follows:
 
 ### Configuration
 
@@ -108,7 +107,7 @@ You Markup Pack of choice.
 
 #### `''`
 
-The default Markup Pack for your export format. `owo` determines which Markup Pack to use by first [identifying the extension](https://github.com/alopezrivera/owo/blob/7a6e7f9769eb8a05ca9e8f169699cd21fff55761/src/Conversion/Conversion-Markup.psm1#L3) of the file format you have specified in your [Pandoc call](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66) (currently `.org` and `.md`), and then choosing the [default Markup Pack](https://github.com/alopezrivera/owo/blob/7a6e7f9769eb8a05ca9e8f169699cd21fff55761/src/Conversion/Conversion-Markup.psm1#L94) for that format.
+The default Markup Pack for your export format. `one` determines which Markup Pack to use by first [identifying the extension](https://github.com/alopezrivera/one/blob/7a6e7f9769eb8a05ca9e8f169699cd21fff55761/src/Conversion/Conversion-Markup.psm1#L3) of the file format you have specified in your [Pandoc call](https://github.com/alopezrivera/one/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66) (currently `.org` and `.md`), and then choosing the [default Markup Pack](https://github.com/alopezrivera/one/blob/7a6e7f9769eb8a05ca9e8f169699cd21fff55761/src/Conversion/Conversion-Markup.psm1#L94) for that format.
 
 #### `'none'`
 
@@ -116,14 +115,14 @@ No post-processing will be applied.
 
 ### Adding Markup Packs
 
-Markup Packs are *markup-format-specific* **functions** containing search and replace queries executed at runtime against a string containing the entire markup content. If search and replace doesn't cut it, you can add a `postprocessing` scriptblock to increase your freedom (check the scriptblock to "Remove over-indentation of list items" in [Markdown MarkdownPack1](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Markdown.psm1)).
+Markup Packs are *markup-format-specific* **functions** containing search and replace queries executed at runtime against a string containing the entire markup content. If search and replace doesn't cut it, you can add a `postprocessing` scriptblock to increase your freedom (check the scriptblock to "Remove over-indentation of list items" in [Markdown MarkdownPack1](https://github.com/alopezrivera/one/blob/master/src/Conversion/Markup-Packs/Markdown.psm1)).
 
-A Markup Pack template is available in the [`templates` directory](https://github.com/alopezrivera/owo/tree/master/templates). It's an annotated version of the [Emacs Org Mode **OrgPack1**](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Org.psm1) Markup Pack. If you're interested in exporting to a Markdown format, check the [Markdown MarkdownPack1](https://github.com/alopezrivera/owo/blob/master/src/Conversion/Markup-Packs/Markdown.psm1) Markup Pack for inspiration.
+A Markup Pack template is available in the [`templates` directory](https://github.com/alopezrivera/one/tree/master/templates). It's an annotated version of the [Emacs Org Mode **OrgPack1**](https://github.com/alopezrivera/one/blob/master/src/Conversion/Markup-Packs/Org.psm1) Markup Pack. If you're interested in exporting to a Markdown format, check the [Markdown MarkdownPack1](https://github.com/alopezrivera/one/blob/master/src/Conversion/Markup-Packs/Markdown.psm1) Markup Pack for inspiration.
 
 To add a Markup Pack, follow these steps:
 
 1. Write your Markup Pack in the file containing the Markup Packs of your markup format of choice (`Org.psm1` or `Markdown.psm1` in `src/Conversion/Markup-Packs`). 
-2. Set `markupPack` in your [config.ps1](https://github.com/alopezrivera/owo/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1) to the name of your markup pack. That is, the name of the **function** you have written.
+2. Set `markupPack` in your [config.ps1](https://github.com/alopezrivera/one/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1) to the name of your markup pack. That is, the name of the **function** you have written.
 
 ## Requirements
 
@@ -149,7 +148,7 @@ To add a Markup Pack, follow these steps:
 1. Start the OneNote desktop application
 1. Rename `config_example.ps1` to `config.ps1` and configure the available options to your liking.
 1. Open a PowerShell terminal at the directory containing the script and run it.
-      * `.\owo.ps1`
+      * `.\one.ps1`
 1. Sit back and wait until the process completes. To stop the process at any time, press Ctrl+C.
 * **While running the conversion OneNote will be unusable**, as the Object Model might be interrupted if OneNote is used through the conversion process.
 
@@ -187,14 +186,14 @@ All of the following are configured from `config.ps1` (assuming you have renamed
 
 1. You may want to consider using VS Code and its embedded Powershell terminal, as this allows you to edit and run your configuration and check conversion results. To make things easier, consider setting `$notesdestpath` in `config.ps1` to a `notes` directory in the project while adjusting the settings to your preference.
 1. If you aren't actively editing your pages in OneNote, it is highly recommended that you don't delete the intermediate Word docs, as their generation takes a large part of runtime. They are stored in their own folder, out of the way. You can then quickly re-run the script with different parameters until you find what you like.
-1. If you happen to collapse paragraphs in OneNote, consider installing [Onetastic](https://getonetastic.com/download) and the [attached macro](https://github.com/alopezrivera/owo/blob/master/Expand%20All%20Paragraphs%20in%20Notebook.xml), which will automatically expand any collapsed paragraphs in the notebook. They won't be exported otherwise.
+1. If you happen to collapse paragraphs in OneNote, consider installing [Onetastic](https://getonetastic.com/download) and the [attached macro](https://github.com/alopezrivera/one/blob/master/Expand%20All%20Paragraphs%20in%20Notebook.xml), which will automatically expand any collapsed paragraphs in the notebook. They won't be exported otherwise.
    * To install the macro, click the New Macro Button within the Onetastic Toolbar and then select File -> Import and select the .xml macro included in the release.
    * Run the macro for each Notebook that is open
 1. Unlock all password-protected sections before continuing, the Object Model will not have access to them otherwise
 
 ## Attribution
 
-`owo` is built on the base of [ConvertOneNote2markdown](https://github.com/theohbrothers/ConvertOneNote2markdown), by
+`one` is built on the base of [ConvertOneNote2markdown](https://github.com/theohbrothers/ConvertOneNote2markdown), by
 
 * [SjoerdV](https://github.com/SjoerdV)
 * [nixsee](https://github.com/nixsee/)
@@ -202,4 +201,4 @@ All of the following are configured from `config.ps1` (assuming you have renamed
 
 ---
 
-[Back to top](#owo)
+[Back to top](#one)

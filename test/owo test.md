@@ -1,4 +1,4 @@
-# owo test
+# one test
 
 Tuesday, June 5, 2022 `19:45`
 
@@ -48,7 +48,7 @@ _TABLES_
 
 _FIGURES_
 
-<img src="media/owo test-image1.jpeg" style="width:2.27361in;height:1.70764in" />
+<img src="media/one test-image1.jpeg" style="width:2.27361in;height:1.70764in" />
 
 _UNSUPPORTED_
 

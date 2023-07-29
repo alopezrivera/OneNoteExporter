@@ -75,7 +75,7 @@ Function MarkdownPack1
         #                     CONVERSION ARTIFACTS                    #
         ###############################################################
         @{
-            description = 'Wrap media (eg: images, attachments) paths in <> to allow media paths with spaces. Reference: https://github.com/alopezrivera/owo/issues/3'
+            description = 'Wrap media (eg: images, attachments) paths in <> to allow media paths with spaces. Reference: https://github.com/alopezrivera/one/issues/3'
             replacements = @(
                 @{
                     #  ![](**/media/a page with spaces in its name-image1-timestamp.jpg)

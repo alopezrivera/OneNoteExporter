@@ -1,6 +1,6 @@
 Import-Module -DisableNameChecking .\src\Import-All.psm1
 
-Function owo {
+Function one {
     [CmdletBinding()]
     param (
         [Parameter()]
@@ -97,5 +97,5 @@ if (!$Exit) {
     $params = @{
         ConversionConfigurationExportPath = $ConversionConfigurationExportPath
     }
-    owo @params
+    one @params
 }

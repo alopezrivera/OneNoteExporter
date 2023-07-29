@@ -81,7 +81,7 @@ Function Get-MarkupPack
 {
     [CmdletBinding()]
     param (
-        # owo configuration object
+        # one configuration object
         [Parameter(Mandatory)]
         [object]
         $config
