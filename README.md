@@ -191,9 +191,9 @@ All of the following are configured from `config.ps1` (assuming you have renamed
    * Run the macro for each Notebook that is open
 1. Unlock all password-protected sections before continuing, the Object Model will not have access to them otherwise
 
-## Attribution
+## Credit
 
-`one` is built on the base of [ConvertOneNote2markdown](https://github.com/theohbrothers/ConvertOneNote2markdown), by
+`one` started from the base of [ConvertOneNote2markdown](https://github.com/theohbrothers/ConvertOneNote2markdown), by
 
 * [SjoerdV](https://github.com/SjoerdV)
 * [nixsee](https://github.com/nixsee/)
@@ -201,4 +201,4 @@ All of the following are configured from `config.ps1` (assuming you have renamed
 
 ---
 
-[Back to top](#one)
+[Back to top](#onenote-exporter)
