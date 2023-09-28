@@ -1,6 +1,8 @@
 # OneNote Exporter
 
-OneNote Exporter (in short, `one`) is a PowerShell program to export all your OneNote notes to any [Pandoc-supported plain text markup format](https://pandoc.org/MANUAL.html) using the OneNote Object Model and Pandoc.
+Thinking of moving your OneNote collection to another note-taking app such as Obsidian, Logseq, Org Mode and more? Your in the right place!
+
+OneNote Exporter (in short, `one`) is a PowerShell program which is capable of exporting all your OneNote notes to any [Pandoc-supported plain text markup format](https://pandoc.org/MANUAL.html) using the OneNote Object Model and Pandoc. That is to say: markdown, org-mode and more!
 
 ---
 
@@ -64,7 +66,6 @@ Some notes:
 * Formatting using different fonts and colors doesn't survive export, as could be expected
 * Underscored text is annotated as such in markdown, but does not render correctly (at least in VSCode)
 * Images resized within OneNote are rendered with size information when exporting to markdown. Be mindful of the markdown flavour you are using. Pandoc markdown (`markdown` in the [Pandoc call in your config.ps1](https://github.com/alopezrivera/one/blob/6ec09267553cec5848c02fa2f20531185b2b2289/config_example.ps1#L66)) image size notation will not render properly in GitHub or other GitHub-flavoured markdown renderers such as the VSCode markdown preview window.
-* Unfortunately support for markdown lags behind that for Org Mode (eg: removal of empty list items). I haven't got the time to polish it any further unfortunately. If you do, please feel free to contribute!
 
 ## Supported Markups
 
