@@ -5,6 +5,11 @@ Thinking of moving your OneNote collection to another note-taking app such as Ob
 OneNote Exporter (in short, `one`) is a PowerShell program which is capable of exporting all your OneNote notes to any [Pandoc-supported plain text markup format](https://pandoc.org/MANUAL.html) using the OneNote Object Model and Pandoc. That is to say: markdown, org-mode and more!
 
 ---
+**Notable alternatives**
+
+- [onenote-md-exporter](https://github.com/alxnbl/onenote-md-exporter)
+
+---
 
 ### Table of Contents
 
